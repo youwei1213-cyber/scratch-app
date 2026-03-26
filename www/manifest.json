@@ -1,0 +1,10 @@
+{
+  "name": "幸運刮刮樂",
+  "short_name": "刮刮樂",
+  "description": "每天免費刮刮樂，試試你的手氣！",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1a2e",
+  "theme_color": "#ffd700"
+}
