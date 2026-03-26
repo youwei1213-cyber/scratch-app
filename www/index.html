@@ -1,0 +1,292 @@
+<!DOCTYPE html> <html lang="zh-TW"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <meta name="mobile-web-app-capable" content="yes"> <meta name="apple-mobile-web-app-capable" content="yes"> <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> <title>幸運刮刮樂</title> <style> * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+font-family: -apple-system, 'Noto Sans TC', 'PingFang TC', sans-serif;
+background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+color: #fff;
+overflow-x: hidden;
+padding: 20px 16px;
+user-select: none;
+-webkit-user-select: none;
+}
+
+.top-bar {
+width: 100%;
+max-width: 380px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 12px;
+}
+
+.top-bar h1 {
+font-size: 1.5rem;
+text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.coins {
+background: rgba(255, 215, 0, 0.15);
+border: 1px solid rgba(255, 215, 0, 0.3);
+border-radius: 20px;
+padding: 6px 14px;
+font-size: 0.9rem;
+color: #ffd700;
+}
+
+.card-wrapper {
+width: 100%;
+max-width: 380px;
+margin-bottom: 16px;
+}
+
+.card-header {
+background: linear-gradient(90deg, #ffd700, #f0a500);
+color: #1a1a2e;
+text-align: center;
+padding: 10px;
+border-radius: 16px 16px 0 0;
+font-weight: bold;
+font-size: 1.1rem;
+letter-spacing: 2px;
+}
+
+.card-container {
+position: relative;
+width: 100%;
+height: 220px;
+overflow: hidden;
+border-radius: 0 0 16px 16px;
+box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+border: 2px solid #ffd700;
+border-top: none;
+}
+
+.prize-layer {
+position: absolute;
+top: 0; left: 0;
+width: 100%; height: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+z-index: 1;
+}
+
+.prize-layer .prize-emoji { font-size: 3.2rem; margin-bottom: 6px; }
+.prize-layer .prize-text {
+font-size: 1.8rem;
+font-weight: bold;
+text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+.prize-layer .prize-sub {
+font-size: 0.9rem;
+margin-top: 4px;
+opacity: 0.8;
+}
+
+canvas {
+position: absolute;
+top: 0; left: 0;
+z-index: 2;
+cursor: pointer;
+}
+
+.progress-bar {
+width: 100%;
+max-width: 380px;
+height: 6px;
+background: rgba(255,255,255,0.1);
+border-radius: 3px;
+overflow: hidden;
+margin-bottom: 6px;
+}
+
+.progress-fill {
+height: 100%;
+width: 0%;
+background: linear-gradient(90deg, #ffd700, #ff6b6b);
+border-radius: 3px;
+transition: width 0.3s;
+}
+
+.hint {
+font-size: 0.8rem;
+color: #888;
+margin-bottom: 16px;
+}
+
+/* Stats grid */
+.stats-grid {
+width: 100%;
+max-width: 380px;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+margin-bottom: 16px;
+}
+
+.stat-box {
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 12px;
+padding: 12px 8px;
+text-align: center;
+}
+
+.stat-box .label { font-size: 0.75rem; color: #888; margin-bottom: 4px; }
+.stat-box .value { font-size: 1.3rem; font-weight: bold; color: #ffd700; }
+
+/* Buttons */
+.btn-row {
+width: 100%;
+max-width: 380px;
+display: flex;
+gap: 10px;
+margin-bottom: 16px;
+}
+
+.btn {
+flex: 1;
+padding: 14px;
+font-size: 1rem;
+font-weight: bold;
+border: none;
+border-radius: 12px;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.btn-primary {
+background: linear-gradient(135deg, #ffd700, #f0a500);
+color: #1a1a2e;
+box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.btn-secondary {
+background: rgba(255,255,255,0.1);
+color: #fff;
+border: 1px solid rgba(255,255,255,0.2);
+}
+
+.btn:active { transform: scale(0.96); }
+
+/* Daily challenge */
+.daily-box {
+width: 100%;
+max-width: 380px;
+background: linear-gradient(135deg, rgba(255,107,107,0.15), rgba(255,215,0,0.15));
+border: 1px solid rgba(255,215,0,0.2);
+border-radius: 12px;
+padding: 14px;
+margin-bottom: 16px;
+text-align: center;
+}
+
+.daily-box .title { font-size: 0.9rem; color: #ffd700; margin-bottom: 4px; }
+.daily-box .desc { font-size: 0.8rem; color: #aaa; }
+
+/* Ad placeholder */
+.ad-space {
+width: 100%;
+max-width: 380px;
+height: 60px;
+background: rgba(0,0,0,0.3);
+border: 1px dashed rgba(255,255,255,0.15);
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #555;
+font-size: 0.75rem;
+margin-bottom: 12px;
+}
+
+/* History */
+.history {
+width: 100%;
+max-width: 380px;
+margin-bottom: 16px;
+}
+
+.history h3 {
+font-size: 0.9rem;
+color: #888;
+margin-bottom: 8px;
+}
+
+.history-list {
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.history-item {
+background: rgba(255,255,255,0.05);
+border-radius: 8px;
+padding: 10px 14px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 0.85rem;
+}
+
+.history-item .win { color: #ffd700; }
+.history-item .lose { color: #888; }
+.history-item .time { color: #666; font-size: 0.75rem; }
+
+/* Confetti */
+.confetti-container {
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none;
+z-index: 100;
+}
+
+@keyframes confetti-fall {
+0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes prize-pop {
+0% { transform: scale(0.5); opacity: 0; }
+50% { transform: scale(1.15); }
+100% { transform: scale(1); opacity: 1; }
+}
+
+.prize-revealed { animation: prize-pop 0.5s ease-out; }
+
+/* Modal */
+.modal-overlay {
+display: none;
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+background: rgba(0,0,0,0.7);
+z-index: 50;
+align-items: center;
+justify-content: center;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal {
+background: #1e2a4a;
+border: 2px solid #ffd700;
+border-radius: 20px;
+padding: 30px;
+text-align: center;
+max-width: 320px;
+width: 90%;
+}
+
+.modal .emoji { font-size: 4rem; margin-bottom: 10px; }
+.modal .title { font-size: 1.5rem; font-weight: bold; color: #ffd700; margin-bottom: 6px; }
+.modal .sub { color: #aaa; margin-bottom: 20px; }
+.modal .btn { width: 100%; }
+</style>
+
+</head> <body> <div class="top-bar"> <h1>🎰 幸運刮刮樂</h1> <div class="coins" id="coinsDisplay">🪙 0</div> </div> <div class="daily-box"> <div class="title">🔥 每日挑戰：刮滿 5 張拿獎勵！</div> <div class="desc" id="dailyProgress">進度：0 / 5</div> </div> <div class="card-wrapper"> <div class="card-header" id="cardTitle">第 1 張刮刮樂</div> <div class="card-container" id="cardContainer"> <div class="prize-layer" id="prizeLayer"></div> <canvas id="scratchCanvas"></canvas> </div> </div> <div class="progress-bar"> <div class="progress-fill" id="progressFill"></div> </div> <p class="hint" id="hintText">👆 用手指刮開灰色塗層，刮到 60% 揭曉</p> <div class="ad-space" id="adSpace">📢 廣告位 — AdMob 串接後顯示</div> <div class="stats-grid"> <div class="stat-box"> <div class="label">已刮</div> <div class="value" id="totalCards">0</div> </div> <div class="stat-box"> <div class="label">中獎</div> <div class="value" id="totalWins">0</div> </div> <div class="stat-box"> <div class="label">累計獎金</div> <div class="value" id="totalPrize">$0</div> </div> </div> <div class="btn-row"> <button class="btn btn-primary" id="newCardBtn">🎫 再來一張</button> <button class="btn btn-secondary" id="shareBtn">📢 分享</button> </div> <div class="history" id="historySection"> <h3>📋 最近紀錄</h3> <div class="history-list" id="historyList"></div> </div> <div class="confetti-container" id="confettiContainer"></div> <div class="modal-overlay" id="winModal"> <div class="modal"> <div class="emoji" id="modalEmoji">🎉</div> <div class="title" id="modalTitle">恭喜中獎！</div> <div class="sub" id="modalSub">NT$ 1,000</div> <button class="btn btn-primary" id="modalBtn">🎰 繼續刮</button> </div> </div> <script> const PRIZES = [ { emoji: '💰', text: 'NT$ 1,000,000', sub: '頭獎！百萬大獎！', value: 1000000, weight: 1, bg: 'linear-gradient(135deg, #ff416c, #ff4b2b)' }, { emoji: '🎉', text: 'NT$ 100,000', sub: '十萬獎金！', value: 100000, weight: 2, bg: 'linear-gradient(135deg, #f857a6, #ff5858)' }, { emoji: '🏆', text: 'NT$ 10,000', sub: '恭喜中獎！', value: 10000, weight: 5, bg: 'linear-gradient(135deg, #ffd700, #ff8c00)' }, { emoji: '🎁', text: 'NT$ 1,000', sub: '小獎不錯！', value: 1000, weight: 12, bg: 'linear-gradient(135deg, #56ab2f, #a8e063)' }, { emoji: '🍀', text: 'NT$ 500', sub: '幸運五百', value: 500, weight: 18, bg: 'linear-gradient(135deg, #11998e, #38ef7d)' }, { emoji: '🎈', text: 'NT$ 100', sub: '回本了！', value: 100, weight: 25, bg: 'linear-gradient(135deg, #667eea, #764ba2)' }, { emoji: '😅', text: '再接再厲', sub: '下次一定中！', value: 0, weight: 37, bg: 'linear-gradient(135deg, #434343, #000000)' }, ]; const canvas = document.getElementById('scratchCanvas'); const ctx = canvas.getContext('2d'); const container = document.getElementById('cardContainer'); const prizeLayer = document.getElementById('prizeLayer'); const progressFill = document.getElementById('progressFill'); const hintText = document.getElementById('hintText'); const newCardBtn = document.getElementById('newCardBtn'); const shareBtn = document.getElementById('shareBtn'); const confettiContainer = document.getElementById('confettiContainer'); const winModal = document.getElementById('winModal'); const modalBtn = document.getElementById('modalBtn'); let isDrawing = false; let revealed = false; let history = JSON.parse(localStorage.getItem('scratchHistory') || '[]'); let stats = JSON.parse(localStorage.getItem('scratchStats') || '{"cards":0,"wins":0,"prize":0,"coins":0,"dailyPlays":0,"lastDay":""}'); // Check daily reset const today = new Date().toISOString().slice(0, 10); if (stats.lastDay !== today) { stats.dailyPlays = 0; stats.lastDay = today; } function save() { localStorage.setItem('scratchStats', JSON.stringify(stats)); localStorage.setItem('scratchHistory', JSON.stringify(history.slice(0, 20))); } function updateUI() { document.getElementById('totalCards').textContent = stats.cards; document.getElementById('totalWins').textContent = stats.wins; document.getElementById('totalPrize').textContent = '$' + stats.prize.toLocaleString(); document.getElementById('coinsDisplay').textContent = '🪙 ' + stats.coins; document.getElementById('dailyProgress').textContent = '進度：' + Math.min(stats.dailyPlays, 5) + ' / 5'; document.getElementById('cardTitle').textContent = '第 ' + (stats.cards + 1) + ' 張刮刮樂'; renderHistory(); } function renderHistory() { const list = document.getElementById('historyList'); list.innerHTML = ''; history.slice(0, 5).forEach(h => { const div = document.createElement('div'); div.className = 'history-item'; div.innerHTML = `<span class="${h.value > 0 ? 'win' : 'lose'}">${h.emoji} ${h.text}</span><span class="time">${h.time}</span>`; list.appendChild(div); }); } function weightedRandom() { const total = PRIZES.reduce((s, p) => s + p.weight, 0); let r = Math.random() * total; for (const p of PRIZES) { r -= p.weight; if (r <= 0) return p; } return PRIZES[PRIZES.length - 1]; } function initCard() { const w = container.offsetWidth; const h = container.offsetHeight; canvas.width = w; canvas.height = h; revealed = false; hintText.textContent = '👆 用手指刮開灰色塗層，刮到 60% 揭曉'; progressFill.style.width = '0%'; const prize = weightedRandom(); prizeLayer.innerHTML = ''; prizeLayer.style.background = prize.bg; prizeLayer.className = 'prize-layer'; prizeLayer.dataset.value = prize.value; prizeLayer.dataset.emoji = prize.emoji; prizeLayer.dataset.text = prize.text; prizeLayer.dataset.sub = prize.sub; const e = document.createElement('div'); e.className = 'prize-emoji'; e.textContent = prize.emoji; const t = document.createElement('div'); t.className = 'prize-text'; t.textContent = prize.text; t.style.color = prize.value > 0 ? '#fff' : '#ccc'; cons ...(truncated)...
