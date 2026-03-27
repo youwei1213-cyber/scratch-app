@@ -397,18 +397,9 @@ function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
 
 /* ===== INVENTORY SYSTEM ===== */
 function initInventory(){
-let needReset=false;
-if(state.inventory){
-CARDS.forEach((c,idx)=>{
-const inv=state.inventory[idx];
-if(!inv){needReset=true;return;}
-const oldTotal=inv.prizesLeft.reduce((s,p)=>s+p.cnt,0)+inv.zerosLeft+(c.total-inv.remaining-inv.prizesLeft.reduce((s,p)=>s+p.cnt,0)-inv.zerosLeft);
-const expectedTotal=inv.remaining+inv.prizesLeft.reduce((s,p)=>s+(c.prizes.find(cp=>cp.amt===p.amt)?c.prizes.find(cp=>cp.amt===p.amt).cnt:p.cnt)-p.cnt,0);
-if(Math.abs(inv.remaining+inv.prizesLeft.reduce((s,p)=>s+p.cnt,0)+inv.zerosLeft-c.total)>c.total*0.5){needReset=true;}
-});
-}
-if(!state.inventory||needReset){
-if(needReset)console.log('配率已更新，自動重設獎池');
+const POOL_VERSION='v3';
+if(!state.inventory||state.poolVersion!==POOL_VERSION){
+// Only reset if no inventory exists or version changed (admin updated prizes)
 state.inventory={};
 CARDS.forEach((c,idx)=>{
 const prizesLeft=c.prizes.map(p=>({amt:p.amt,cnt:p.cnt}));
@@ -417,6 +408,7 @@ const zerosLeft=c.total-totalPrizeCards;
 state.inventory[idx]={remaining:c.total,prizesLeft:prizesLeft,zerosLeft:zerosLeft};
 });
 state.myCards=[];
+state.poolVersion=POOL_VERSION;
 save();
 }
 if(!state.myCards){state.myCards=[];save();}
