@@ -169,12 +169,12 @@ prizes:[{amt:40,cnt:50000},{amt:100,cnt:30000},{amt:200,cnt:12000},{amt:400,cnt:
 prizes:[{amt:100,cnt:50000},{amt:250,cnt:30000},{amt:500,cnt:12000},{amt:1000,cnt:5000},{amt:2500,cnt:2000},{amt:5000,cnt:800},{amt:10000,cnt:150},{amt:50000,cnt:45},{amt:500000,cnt:5}]}
 ];
 const GAME_TYPES=[
-{type:'number_match',name:'號碼對對碰',icon:'🔢'},
-{type:'compare',name:'比大小',icon:'⬆️'},
-{type:'triple',name:'三同金額',icon:'💰'},
-{type:'lucky_symbol',name:'幸運符號',icon:'🎰'},
-{type:'multiplier',name:'翻倍樂',icon:'🎯'},
-{type:'bonus',name:'紅利區',icon:'💣'}
+{type:'number_match',name:'號碼對對碰',icon:'🔢',desc:'刮開中獎號碼與我的號碼，號碼相同即可獲得對應獎金！'},
+{type:'compare',name:'比大小',icon:'⬆️',desc:'我的數字比莊家大就能贏得獎金！'},
+{type:'triple',name:'三同金額',icon:'💰',desc:'9格中找出3個相同金額，即可獲得該金額獎金！'},
+{type:'lucky_symbol',name:'幸運符號',icon:'🎰',desc:'8格中找到隱藏的 💎 鑽石符號，即可獲得下方獎金！'},
+{type:'multiplier',name:'翻倍樂',icon:'🎯',desc:'獎金 = 基礎金額 × 倍數，倍數越大獎越多！'},
+{type:'bonus',name:'紅利區',icon:'💣',desc:'刮開看看有沒有隱藏的額外紅利獎金！'}
 ];
 let state=JSON.parse(localStorage.getItem('scratchState')||'null')||{tokens:500,prize:0,history:[]};
 let currentCard=null,currentWinnings=0,zonesTotal=0,zonesRevealed=0;
@@ -196,11 +196,11 @@ function genCompare(win,card){let myNum,dealerNum;if(win>0){dealerNum=Math.floor
 
 function genTriple(win,card){const grid=[];if(win>0){for(let i=0;i<3;i++)grid.push(win);const oa=card.prizes.map(p=>p.amt).filter(a=>a!==win);for(let i=0;i<6;i++)grid.push(oa[Math.floor(Math.random()*oa.length)])}else{const amts=card.prizes.slice(0,4).map(p=>p.amt);for(let i=0;i<9;i++)grid.push(amts[Math.floor(Math.random()*amts.length)]);const cnt={};grid.forEach(a=>{cnt[a]=(cnt[a]||0)+1});for(const[a] of Object.entries(cnt)){while(cnt[a]>=3){const idx=grid.lastIndexOf(parseInt(a));let nw;do{nw=amts[Math.floor(Math.random()*amts.length)]}while(nw===parseInt(a));grid[idx]=nw;cnt[a]--;cnt[nw]=(cnt[nw]||0)+1}}}grid.sort(()=>Math.random()-0.5);let html='<div class="match-grid">';grid.forEach(a=>{html+=`<div class="match-cell">$${a.toLocaleString()}</div>`});html+='</div>';return html}
 
-function genLuckySymbol(win){const syms=['🍒','🍋','🔔','⭐','💎','🍀','7️⃣','🎰'];const grid=[];if(win>0){for(let i=0;i<8;i++)grid.push(syms[Math.floor(Math.random()*syms.length)]);grid[Math.floor(Math.random()*8)]='💎';let html='<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">';grid.forEach(s=>{html+=`<div class="match-cell" style="font-size:24px">${s}</div>`});html+='</div>';return html}else{for(let i=0;i<8;i++)grid.push(syms[Math.floor(Math.random()*6)]);let html='<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">';grid.forEach(s=>html+=`<div class="match-cell" style="font-size:24px">${s}</div>`);html+='</div>';return html}}
+function genLuckySymbol(win,card){const syms=['🍒','🍋','🔔','⭐','💎','🍀','7️⃣','🎰'];const grid=[];const amt=win>0?win:card.prizes[Math.floor(Math.random()*3)].amt;if(win>0){for(let i=0;i<8;i++)grid.push(syms[Math.floor(Math.random()*6)]);grid[Math.floor(Math.random()*8)]='💎'}else{for(let i=0;i<8;i++)grid.push(syms[Math.floor(Math.random()*6)])}let html=`<div style="text-align:center;margin-bottom:10px;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px"><span style="font-size:12px;color:rgba(255,255,255,0.5)">找到 💎 可獲得 </span><span style="font-size:20px;font-weight:900;color:#ffd700">$${amt.toLocaleString()}</span></div>`;html+='<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">';grid.forEach(s=>html+=`<div class="match-cell" style="font-size:24px">${s}</div>`);html+='</div>';return html}
 
 function genMultiplier(win,card){if(win>0){const possible=[[1,win],[2,win/2],[3,win/3],[5,win/5]].filter(p=>p[1]===Math.floor(p[1])&&p[1]>0);const pick=possible.length>0?possible[Math.floor(Math.random()*possible.length)]:[1,win];return `<div style="text-align:center"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">基礎金額</div><div style="font-size:28px;font-weight:900">$${pick[1].toLocaleString()}</div><div style="font-size:14px;color:rgba(255,255,255,0.5);margin:8px 0">倍數</div><div style="font-size:36px;font-weight:900;color:#ffd700">${pick[0]}x</div><div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.3)">獎金 = 基礎金額 × 倍數</div></div>`}else{const ms=[1,2,3,5];const m=ms[Math.floor(Math.random()*ms.length)];const base=card.prizes[Math.floor(Math.random()*3)].amt;return `<div style="text-align:center"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">基礎金額</div><div style="font-size:28px;font-weight:900">$${base.toLocaleString()}</div><div style="font-size:14px;color:rgba(255,255,255,0.5);margin:8px 0">倍數</div><div style="font-size:36px;font-weight:900;color:#ffd700">${m}x</div><div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.3)">獎金 = 基礎金額 × 倍數</div></div>`}}
 
-function genBonus(win){const amt=win>0?'$'+win.toLocaleString():'$0';return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px">💣 紅利區</div><div style="font-size:28px;font-weight:900;color:#fff">${amt}</div></div>`}
+function genBonus(win,card){const amt=win>0?win:0;return `<div class="bonus-area"><div style="text-align:center;padding:12px;background:rgba(255,255,255,0.05);border-radius:10px"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">紅利獎金</div><div style="font-size:36px;font-weight:900;color:#ffd700">$${amt.toLocaleString()}</div></div></div>`}
 function buyCard(idx){const c=CARDS[idx];if(state.tokens<c.price){showToast('代幣不足！請先儲值 💳');return}state.tokens-=c.price;save();updateUI();currentCard=idx;currentWinnings=rollPrize(idx);setupScratchCard(idx,currentWinnings);showScreen('scratchScreen');document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name}
 
 function setupScratchCard(cardIdx,totalWin){
@@ -220,14 +220,15 @@ switch(gt.type){
 case 'number_match':content=genNumberMatch(zw,c);break;
 case 'compare':content=genCompare(zw,c);break;
 case 'triple':content=genTriple(zw,c);break;
-case 'lucky_symbol':content=genLuckySymbol(zw);break;
+case 'lucky_symbol':content=genLuckySymbol(zw,c);break;
 case 'multiplier':content=genMultiplier(zw,c);break;
-case 'bonus':content=genBonus(zw);break;
+case 'bonus':content=genBonus(zw,c);break;
 default:content=genTriple(zw,c);
 }
 html+=`<div class="game-zone" id="zone${i}">
 <div class="zone-content">
 <div class="game-zone-title"><span class="zone-icon">${gt.icon}</span>${gt.name}</div>
+<div style="font-size:11px;color:rgba(255,255,255,0.35);margin:-6px 0 10px 0">${gt.desc}</div>
 ${content}
 </div>
 <canvas class="zone-scratch" id="zcanvas${i}"></canvas>
