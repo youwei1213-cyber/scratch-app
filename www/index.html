@@ -22,6 +22,14 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .btn-topup:active{transform:scale(0.95)}
 .btn-ad{background:linear-gradient(135deg,#00c9ff,#92fe9d);color:#1a0a3e;box-shadow:0 4px 15px rgba(0,201,255,0.3)}
 .btn-history{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2)}
+.btn-exchange{background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;box-shadow:0 4px 15px rgba(255,107,107,0.3)}
+.exchange-input-row{display:flex;gap:10px;align-items:center;margin:16px 0}
+.exchange-input{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,215,0,0.3);background:rgba(255,255,255,0.05);color:#ffd700;font-size:18px;font-weight:700;text-align:center;font-family:inherit;outline:none}
+.exchange-input:focus{border-color:#ffd700}
+.exchange-info{font-size:13px;color:rgba(255,255,255,0.5);text-align:center;margin:8px 0}
+.exchange-preview{text-align:center;padding:12px;background:rgba(255,215,0,0.05);border-radius:12px;margin:12px 0;border:1px solid rgba(255,215,0,0.1)}
+.exchange-preview .ep-label{font-size:12px;color:rgba(255,255,255,0.4)}
+.exchange-preview .ep-value{font-size:24px;font-weight:900;color:#ffd700}
 .main-title{text-align:center;margin-bottom:24px}
 .main-title h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px}
 .main-title p{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px}
@@ -121,6 +129,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div class="header-right">
 <button class="btn-sm btn-ad" onclick="showAd()">📺 看廣告</button>
 <button class="btn-sm btn-topup" onclick="showTopup()">💳 儲值</button>
+<button class="btn-sm btn-exchange" onclick="showExchange()">🔄 兌換</button>
 <button class="btn-sm btn-history" onclick="showScreen('historyScreen')">📜</button>
 </div>
 </div>
@@ -146,6 +155,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div class="result-overlay" id="resultOverlay"><div class="result-card"><div class="result-emoji" id="resultEmoji">🎉</div><div class="result-text" id="resultText">恭喜中獎！</div><div class="result-amount" id="resultAmount">$0</div><button class="result-btn" onclick="closeResult()">收下獎金 💰</button></div></div>
 <div class="modal-overlay" id="prizeModal"><div class="modal"><h2 id="prizeModalTitle">獎項配率</h2><table class="prize-table" id="prizeTable"></table><br><button class="result-btn" style="width:100%" onclick="closePrizeModal()">知道了 👍</button></div></div>
 <div class="modal-overlay" id="topupModal"><div class="modal"><h2>💳 儲值代幣</h2><p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center">1 TWD = 1 代幣</p><div class="topup-grid"><div class="topup-option" onclick="doTopup(100)"><div class="coins">🪙 100</div><div class="price">NT$ 100</div></div><div class="topup-option" onclick="doTopup(500)"><div class="coins">🪙 500</div><div class="price">NT$ 500</div></div><div class="topup-option" onclick="doTopup(1000)"><div class="coins">🪙 1,000</div><div class="price">NT$ 1,000</div></div><div class="topup-option" onclick="doTopup(3000)"><div class="coins">🪙 3,000</div><div class="price">NT$ 3,000</div></div></div><br><button class="result-btn" style="width:100%;background:rgba(255,255,255,0.1);color:#fff" onclick="closeTopup()">取消</button></div></div>
+<div class="modal-overlay" id="exchangeModal"><div class="modal"><h2>🔄 獎金兌換代幣</h2><div class="exchange-info">將您的獎金兌換成代幣繼續遊戲！</div><div class="exchange-info">匯率：$1 獎金 = 1 代幣</div><div style="text-align:center;margin:12px 0"><span style="color:rgba(255,255,255,0.5)">目前獎金：</span><span style="color:#ff6b6b;font-weight:900;font-size:18px" id="exchangePrize">$0</span></div><div class="exchange-input-row"><input type="number" class="exchange-input" id="exchangeAmount" placeholder="輸入兌換金額" min="1" oninput="updateExchangePreview()"></div><div class="exchange-preview"><div class="ep-label">可獲得代幣</div><div class="ep-value" id="exchangePreview">🪙 0</div></div><div style="display:flex;gap:10px"><button class="result-btn" style="flex:1" onclick="doExchange()">確認兌換</button><button class="result-btn" style="flex:1;background:rgba(255,255,255,0.1);color:#fff" onclick="closeExchange()">取消</button></div><div style="margin-top:12px"><button class="result-btn" style="width:100%;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;font-size:14px;padding:10px" onclick="doExchangeAll()">全部兌換 💱</button></div></div></div>
 <div class="ad-overlay" id="adOverlay"><div class="ad-box"><div class="ad-text">📺 廣告播放中...</div><div class="ad-countdown" id="adCountdown">5</div></div><div class="ad-reward">觀看完畢可獲得 🪙 10 代幣</div></div>
 <script>
 const CARDS=[
