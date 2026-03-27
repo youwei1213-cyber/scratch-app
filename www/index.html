@@ -216,6 +216,9 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 .scratch-card-wrap .total-bar .total-amount{color:#ffd700}
 .scratch-card-wrap .zones-progress{color:rgba(255,255,255,0.5)}
 .scratch-card-wrap .zones-progress span{color:#ffd700}
+.game-zone .zone-content{color:#333}
+.game-zone .compare-card .label{color:#666}
+.game-zone .compare-card .value{color:#333}
 </style>
 </head>
 <body>
@@ -850,7 +853,7 @@ if(win>0){balls=3+Math.floor(Math.random()*3);}
 else{balls=1+Math.floor(Math.random()*2);}
 return `<div style="text-align:center">
 <div style="font-size:36px;margin:8px 0">🎪</div>
-<div style="font-size:22px;font-weight:900;margin:4px 0">拋球: ${balls}</div>
+<div style="font-size:22px;font-weight:900;color:#333;margin:4px 0">拋球: ${balls}</div>
 <div style="font-size:12px;color:rgba(0,0,0,0.4)">≥3 個球即過關</div>
 <div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${balls>=3?'成功接住':'球掉了'}</div>
 </div>`;
