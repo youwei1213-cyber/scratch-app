@@ -1211,6 +1211,7 @@ showBuyModal(idx);
 }
 
 function setupScratchCard(cardIdx,totalWin){
+document.getElementById('revealAllBtn').style.display='block';
 const c=CARDS[cardIdx];
 const wrap=document.getElementById('scratchWrap');
 wrap.style.background=c.bgGrad;
