@@ -978,9 +978,7 @@ return `<span style="display:inline-block;padding:2px 5px;margin:1px;border-radi
 }).join('');
 return `<div style="text-align:center;margin-bottom:6px"><div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">轉盤區域</div><div style="line-height:1.8">${wheel}</div></div>
 <div style="text-align:center;font-size:15px;font-weight:700;margin:8px 0">🎯 指針 → ${display}</div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 function genVaultMiniGame_champion(win){
@@ -994,9 +992,7 @@ return `<span style="display:inline-block;padding:3px 8px;margin:2px;border-radi
 }).join('');
 return `<div style="text-align:center;margin-bottom:6px"><div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">你押的: 🦁獅隊</div><div>${teamList}</div></div>
 <div style="text-align:center;font-size:15px;font-weight:700;margin:8px 0">🏆 冠軍: ${teams[champion]}</div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 function genVaultMiniGame_ring(win){
@@ -1017,9 +1013,7 @@ return `<div style="text-align:center"><div style="font-size:11px;color:rgba(0,0
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(0,0,0,0.5)">目標</div><div style="font-size:22px;font-weight:900">${targetDist}</div></div>
 </div>
 <div style="font-size:14px;font-weight:700;margin:8px 0">${hit?'⭕ 套中了！':'❌ 沒套中...'}</div></div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 function genVaultMiniGame_bomb(win){
@@ -1036,9 +1030,7 @@ return `<div style="text-align:center"><div style="font-size:11px;color:rgba(0,0
 <div style="margin-bottom:8px">${wireDisplay}</div>
 <div style="font-size:13px;color:rgba(0,0,0,0.5)">你剪: ${wires[cutIdx]} | 正確: ${wires[correctIdx]}</div>
 <div style="font-size:14px;font-weight:700;margin:6px 0">${cutIdx===correctIdx?'✅ 拆彈成功！':'💥 拆彈失敗...'}</div></div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 /* ===== OCEAN GAME (深海霸主) ===== */
@@ -1046,6 +1038,7 @@ function genGame_ocean(zones, zonePrizes, card){
 const creatureCount=15;
 const target=Math.floor(Math.random()*31)+30;
 const seaEmojis=['🐙','🦑','🐠','🐡','🦈','🐋','🐟','🦐','🦀','🐚'];
+const displayAmts=card.prizes.map(p=>p.amt);
 const creatures=[];
 for(let i=0;i<creatureCount;i++){
 let weight;
@@ -1055,7 +1048,8 @@ weight=target+Math.floor(Math.random()*(100-target));
 weight=Math.floor(Math.random()*target);
 if(weight<1)weight=1;
 }
-creatures.push({emoji:seaEmojis[Math.floor(Math.random()*seaEmojis.length)],weight:weight,prize:zonePrizes[i]});
+const displayPrize=zonePrizes[i]>0?zonePrizes[i]:displayAmts[Math.floor(Math.random()*displayAmts.length)];
+creatures.push({emoji:seaEmojis[Math.floor(Math.random()*seaEmojis.length)],weight:weight,prize:displayPrize});
 }
 // Extra mini-games prizes (index 15-20)
 const extraPrizes=[];
@@ -1082,9 +1076,7 @@ return `<div style="text-align:center"><div style="font-size:11px;color:rgba(0,0
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(0,0,0,0.5)">莊家牌</div><div style="font-size:22px;font-weight:900">${dealerPts}</div></div>
 </div>
 <div style="font-size:14px;font-weight:700;margin:8px 0">${(myPts<=21&&myPts>dealerPts)?'🃏 你贏了！':'😔 莊家贏...'}</div></div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 function genOceanMiniGame_reflex(win){
@@ -1105,9 +1097,7 @@ return `<div style="text-align:center"><div style="font-size:11px;color:rgba(0,0
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(0,0,0,0.5)">對手</div><div style="font-size:22px;font-weight:900">${opTime}<span style="font-size:11px;color:rgba(0,0,0,0.4)">ms</span></div></div>
 </div>
 <div style="font-size:14px;font-weight:700;margin:8px 0">${myTime<opTime?'⚡ 你更快！':'😔 對手更快...'}</div></div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 function genOceanMiniGame_bowling(win){
@@ -1126,9 +1116,7 @@ return `<div style="text-align:center"><div style="font-size:11px;color:rgba(0,0
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(0,0,0,0.5)">目標</div><div style="font-size:22px;font-weight:900">${target}</div></div>
 </div>
 <div style="font-size:14px;font-weight:700;margin:8px 0">${knocked>=target?'🎳 全倒！':'😔 差一點...'}</div></div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 function genOceanMiniGame_dart(win){
@@ -1148,9 +1136,7 @@ return `<div style="text-align:center"><div style="font-size:11px;color:rgba(0,0
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(0,0,0,0.5)">目標</div><div style="font-size:22px;font-weight:900">${target}環</div></div>
 </div>
 <div style="font-size:14px;font-weight:700;margin:8px 0">${hit>=target?'🏹 正中靶心！':'😔 射偏了...'}</div></div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 function genOceanMiniGame_dice(win){
@@ -1170,9 +1156,7 @@ return `<div style="text-align:center"><div style="font-size:11px;color:rgba(0,0
 </div>
 <div style="font-size:13px;color:rgba(0,0,0,0.5)">目標總和: ${target}</div>
 <div style="font-size:14px;font-weight:700;margin:6px 0">${d1+d2>=target?'🎲 達標！':'😔 不夠...'}</div></div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 function genOceanMiniGame_crystal(win){
@@ -1191,9 +1175,7 @@ return `<div style="text-align:center"><div style="font-size:11px;color:rgba(0,0
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(0,0,0,0.5)">預言</div><div style="font-size:22px;font-weight:900">${prophecy}</div></div>
 </div>
 <div style="font-size:14px;font-weight:700;margin:8px 0">${myNum===prophecy?'🔮 預言成真！':'😔 預言落空...'}</div></div>
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 /* ===== SETUP SCRATCH CARD ===== */
@@ -1347,10 +1329,7 @@ html+=`<div class="game-zone" id="zone${i}">
 <div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
 <div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:8px">${mg.desc}</div>
 ${mg.gen(prize)}
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${prize.toLocaleString()}</span>
-</div>
+
 </div>
 <canvas class="zone-scratch" id="zcanvas${i}"></canvas>
 </div>`;
@@ -1373,10 +1352,7 @@ html+=`<div class="game-zone" id="zone${i}">
 <div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
 <div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:8px">${mg.desc}</div>
 ${mg.gen(prize)}
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${prize.toLocaleString()}</span>
-</div>
+
 </div>
 <canvas class="zone-scratch" id="zcanvas${i}"></canvas>
 </div>`;
@@ -1399,10 +1375,7 @@ html+=`<div class="game-zone" id="zone${i}">
 <div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
 <div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:8px">${mg.desc}</div>
 ${mg.gen(prize)}
-<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(0,0,0,0.03);border-radius:6px">
-<span style="font-size:12px;color:rgba(0,0,0,0.4)">本區獎金 </span>
-<span style="font-size:16px;font-weight:700;color:#333">$${prize.toLocaleString()}</span>
-</div>
+
 </div>
 <canvas class="zone-scratch" id="zcanvas${i}"></canvas>
 </div>`;
