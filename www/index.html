@@ -91,7 +91,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .topup-option .coins{font-size:24px;font-weight:900;color:#ffd700}
 .topup-option .price{font-size:13px;color:rgba(255,255,255,0.6);margin-top:4px}
 .history-list{display:flex;flex-direction:column;gap:8px}
-.history-item{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:12px}
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.05)}
 .history-item .hi-left{display:flex;flex-direction:column;gap:2px}
 .history-item .hi-type{font-size:13px;font-weight:700}
 .history-item .hi-time{font-size:11px;color:rgba(255,255,255,0.4)}
@@ -129,8 +129,25 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div class="card-item card-gold" onclick="buyCard(0)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(0)">ℹ</button><div class="card-emoji">🌟</div><div class="card-name">金運來</div><div class="card-price">50 代幣</div></div>
 <div class="card-item card-ruby" onclick="buyCard(1)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button><div class="card-emoji">💎</div><div class="card-name">紅寶石</div><div class="card-price">100 代幣</div></div>
 <div class="card-item card-emerald" onclick="buyCard(2)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button><div class="card-emoji">🍀</div><div class="card-name">翡翠運</div><div class="card-price">200 代幣</div></div>
-<div class="card-item card-dia
-...(truncated)...<script>
+<div class="card-item card-diamond" onclick="buyCard(3)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button><div class="card-emoji">👑</div><div class="card-name">鑽石皇</div><div class="card-price">500 代幣</div></div>
+</div>
+</div>
+<div id="scratchScreen" class="screen">
+<div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title" id="scratchTitle">刮刮樂</div></div>
+<div class="scratch-card-wrap" id="scratchWrap"></div>
+<div class="zones-progress" id="zonesProgress"></div>
+<p style="text-align:center;margin-top:8px;font-size:13px;color:rgba(255,255,255,0.4)">一區一區刮開，揭曉每個遊戲！</p>
+</div>
+<div id="historyScreen" class="screen">
+<div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">📜 歷史紀錄</div></div>
+<div class="history-list" id="historyList"></div>
+</div>
+</div>
+<div class="result-overlay" id="resultOverlay"><div class="result-card"><div class="result-emoji" id="resultEmoji">🎉</div><div class="result-text" id="resultText">恭喜中獎！</div><div class="result-amount" id="resultAmount">$0</div><button class="result-btn" onclick="closeResult()">收下獎金 💰</button></div></div>
+<div class="modal-overlay" id="prizeModal"><div class="modal"><h2 id="prizeModalTitle">獎項配率</h2><table class="prize-table" id="prizeTable"></table><br><button class="result-btn" style="width:100%" onclick="closePrizeModal()">知道了 👍</button></div></div>
+<div class="modal-overlay" id="topupModal"><div class="modal"><h2>💳 儲值代幣</h2><p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center">1 TWD = 1 代幣</p><div class="topup-grid"><div class="topup-option" onclick="doTopup(100)"><div class="coins">🪙 100</div><div class="price">NT$ 100</div></div><div class="topup-option" onclick="doTopup(500)"><div class="coins">🪙 500</div><div class="price">NT$ 500</div></div><div class="topup-option" onclick="doTopup(1000)"><div class="coins">🪙 1,000</div><div class="price">NT$ 1,000</div></div><div class="topup-option" onclick="doTopup(3000)"><div class="coins">🪙 3,000</div><div class="price">NT$ 3,000</div></div></div><br><button class="result-btn" style="width:100%;background:rgba(255,255,255,0.1);color:#fff" onclick="closeTopup()">取消</button></div></div>
+<div class="ad-overlay" id="adOverlay"><div class="ad-box"><div class="ad-text">📺 廣告播放中...</div><div class="ad-countdown" id="adCountdown">5</div></div><div class="ad-reward">觀看完畢可獲得 🪙 10 代幣</div></div>
+<script>
 const CARDS=[
 {name:'金運來',emoji:'🌟',price:50,bgGrad:'linear-gradient(135deg,#3d2b00,#6b4c00)',total:100000,
 prizes:[{amt:10,cnt:50000},{amt:25,cnt:30000},{amt:50,cnt:12000},{amt:100,cnt:5000},{amt:250,cnt:2000},{amt:500,cnt:800},{amt:1000,cnt:150},{amt:5000,cnt:45},{amt:50000,cnt:5}]},
@@ -162,12 +179,19 @@ function doTopup(amt){state.tokens+=amt;save();updateUI();closeTopup();showToast
 function showAd(){const ov=document.getElementById('adOverlay');ov.classList.add('show');let t=5;document.getElementById('adCountdown').textContent=t;const iv=setInterval(()=>{t--;document.getElementById('adCountdown').textContent=t;if(t<=0){clearInterval(iv);ov.classList.remove('show');state.tokens+=10;save();updateUI();showToast('獲得 10 代幣！')}},1000)}
 function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
 function rollPrize(cardIdx){const c=CARDS[cardIdx];const r=Math.random()*c.total;let cum=0;for(const p of c.prizes){cum+=p.cnt;if(r<cum)return p.amt}return c.prizes[0].amt}
+
 function genNumberMatch(win,card){const winNums=new Set();while(winNums.size<3)winNums.add(Math.floor(Math.random()*20)+1);const playerNums=[];const winArr=[...winNums];if(win>0){playerNums.push({num:winArr[Math.floor(Math.random()*winArr.length)],amt:win});for(let i=0;i<5;i++){let n;do{n=Math.floor(Math.random()*20)+1}while(winNums.has(n)||playerNums.some(p=>p.num===n));playerNums.push({num:n,amt:card.prizes[Math.floor(Math.random()*3)].amt})}}else{for(let i=0;i<6;i++){let n;do{n=Math.floor(Math.random()*20)+1}while(winNums.has(n)||playerNums.some(p=>p.num===n));playerNums.push({num:n,amt:card.prizes[Math.floor(Math.random()*3)].amt})}}playerNums.sort(()=>Math.random()-0.5);let html=`<div class="number-label">🎯 中獎號碼</div><div class="number-match-row">`;winArr.forEach(n=>html+=`<div class="number-ball winning">${n}</div>`);html+=`</div><div class="number-label" style="margin-top:10px">🎫 我的號碼</div><div class="match-grid">`;playerNums.forEach(p=>{const hit=winNums.has(p.num);html+=`<div class="match-cell${hit?' winner':''}">${p.num}<br><span style="font-size:11px;color:${hit?'#ffd700':'rgba(255,255,255,0.4)'}">$${p.amt.toLocaleString()}</span></div>`});html+=`</div>`;return html}
+
 function genCompare(win){let myNum,dealerNum;if(win>0){dealerNum=Math.floor(Math.random()*40)+1;myNum=dealerNum+Math.floor(Math.random()*(99-dealerNum))+1}else{myNum=Math.floor(Math.random()*45)+1;dealerNum=myNum+Math.floor(Math.random()*(99-myNum))+1}const rt=win>0?`<span style="color:#ffd700">贏！+$${win.toLocaleString()}</span>`:`<span style="color:#ff4444">輸</span>`;return `<div class="compare-row"><div class="compare-card"><div class="label">我的</div><div class="value" style="color:${win>0?'#ffd700':'#fff'}">${myNum}</div></div><div class="compare-vs">VS</div><div class="compare-card"><div class="label">莊家</div><div class="value">${dealerNum}</div></div></div><div style="text-align:center;margin-top:8px;font-weight:700">${rt}</div>`}
+
 function genTriple(win,card){const grid=[];if(win>0){for(let i=0;i<3;i++)grid.push(win);const oa=card.prizes.map(p=>p.amt).filter(a=>a!==win);for(let i=0;i<6;i++)grid.push(oa[Math.floor(Math.random()*oa.length)])}else{const amts=card.prizes.slice(0,4).map(p=>p.amt);for(let i=0;i<9;i++)grid.push(amts[Math.floor(Math.random()*amts.length)]);const cnt={};grid.forEach(a=>{cnt[a]=(cnt[a]||0)+1});for(const[a] of Object.entries(cnt)){while(cnt[a]>=3){const idx=grid.lastIndexOf(parseInt(a));let nw;do{nw=amts[Math.floor(Math.random()*amts.length)]}while(nw===parseInt(a));grid[idx]=nw;cnt[a]--;cnt[nw]=(cnt[nw]||0)+1}}}grid.sort(()=>Math.random()-0.5);let html='<div class="match-grid">';grid.forEach(a=>{const w=(win>0&&a===win);html+=`<div class="match-cell${w?' winner':''}">$${a.toLocaleString()}</div>`});html+='</div>';if(win>0)html+=`<div style="text-align:center;margin-top:8px;color:#ffd700;font-weight:700">三個 $${win.toLocaleString()} → 中獎！🎉</div>`;return html}
+
 function genLuckySymbol(win){const syms=['🍒','🍋','🔔','⭐','💎','🍀','7️⃣','🎰'];const grid=[];if(win>0){for(let i=0;i<8;i++)grid.push(syms[Math.floor(Math.random()*syms.length)]);grid[Math.floor(Math.random()*8)]='💎';let html='<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">';grid.forEach(s=>{html+=`<div class="match-cell${s==='💎'?' winner':''}" style="font-size:24px">${s}</div>`});html+=`</div><div style="text-align:center;margin-top:8px;color:#ffd700;font-weight:700">找到 💎 → +$${win.toLocaleString()}！</div>`;return html}else{for(let i=0;i<8;i++)grid.push(syms[Math.floor(Math.random()*6)]);let html='<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">';grid.forEach(s=>html+=`<div class="match-cell" style="font-size:24px">${s}</div>`);html+='</div><div style="text-align:center;margin-top:8px;color:rgba(255,255,255,0.4);font-size:12px">未找到 💎</div>';return html}}
+
 function genMultiplier(win,card){const ms=['1x','2x','3x','5x'];const picked=ms[Math.floor(Math.random()*ms.length)];const base=win>0?Math.round(win/parseInt(picked)||win):card.prizes[Math.floor(Math.random()*3)].amt;return `<div style="text-align:center"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">基礎金額</div><div style="font-size:28px;font-weight:900">$${base.toLocaleString()}</div><div style="font-size:14px;color:rgba(255,255,255,0.5);margin:8px 0">倍數</div><div style="font-size:36px;font-weight:900;color:${win>0?'#ffd700':'#ff4444'}">${win>0?picked:'0x'}</div>${win>0?`<div style="margin-top:8px;color:#ffd700;font-weight:700">→ $${win.toLocaleString()}！🎯</div>`:`<div style="margin-top:8px;color:rgba(255,255,255,0.4)">未中獎</div>`}</div>`}
-function genBonus(win){if(win>0)return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px">🎊 紅利大獎 🎊</div><div class="bonus-amount">$${win.toLocaleString()}</div></div>`;return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px;color:rgba(255,255,255,0.4)">💣 紅利區</div><div style="font-size:24px;color:rgba(255,255,255,0.3)">未觸發</div></div>`}function buyCard(idx){const c=CARDS[idx];if(state.tokens<c.price){showToast('代幣不足！請先儲值 💳');return}state.tokens-=c.price;save();updateUI();currentCard=idx;currentWinnings=rollPrize(idx);setupScratchCard(idx,currentWinnings);showScreen('scratchScreen');document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name}
+
+function genBonus(win){if(win>0)return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px">🎊 紅利大獎 🎊</div><div class="bonus-amount">$${win.toLocaleString()}</div></div>`;return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px;color:rgba(255,255,255,0.4)">💣 紅利區</div><div style="font-size:24px;color:rgba(255,255,255,0.3)">未觸發</div></div>`}
+function buyCard(idx){const c=CARDS[idx];if(state.tokens<c.price){showToast('代幣不足！請先儲值 💳');return}state.tokens-=c.price;save();updateUI();currentCard=idx;currentWinnings=rollPrize(idx);setupScratchCard(idx,currentWinnings);showScreen('scratchScreen');document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name}
 
 function setupScratchCard(cardIdx,totalWin){
 const c=CARDS[cardIdx];
@@ -202,7 +226,12 @@ ${content}
 html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div>`;
 html+='</div>';
 wrap.innerHTML=html;
-requestAnimationFrame(()=>{for(let i=0;i<numZones;i++)initZoneCanvas(i)});
+
+requestAnimationFrame(()=>{
+for(let i=0;i<numZones;i++){
+initZoneCanvas(i);
+}
+});
 }
 
 function initZoneCanvas(idx){
@@ -211,19 +240,24 @@ const canvas=document.getElementById('zcanvas'+idx);
 canvas.width=zone.offsetWidth;
 canvas.height=zone.offsetHeight;
 const ctx=canvas.getContext('2d');
+// Silver scratch layer
 const g=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
 g.addColorStop(0,'#b8b8b8');g.addColorStop(0.3,'#d0d0d0');g.addColorStop(0.5,'#a0a0a0');g.addColorStop(0.7,'#c8c8c8');g.addColorStop(1,'#b0b0b0');
 ctx.fillStyle=g;
 ctx.fillRect(0,0,canvas.width,canvas.height);
+// Shimmer dots
 for(let j=0;j<40;j++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*0.4})`;ctx.beginPath();ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*2,0,Math.PI*2);ctx.fill()}
+// Text hint
 ctx.fillStyle='rgba(0,0,0,0.12)';
 ctx.font='bold 16px "Noto Sans TC"';
 ctx.textAlign='center';
 ctx.fillText('刮我',canvas.width/2,canvas.height/2+5);
+// Scratch logic
 let isDown=false,lastP={x:0,y:0},revealed=false;
 const getPos=(e)=>{const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}};
 canvas.onmousedown=canvas.ontouchstart=(e)=>{e.preventDefault();if(revealed)return;isDown=true;const p=getPos(e);lastP=p;ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(p.x,p.y,30,0,Math.PI*2);ctx.fill()};
 canvas.onmousemove=canvas.ontouchmove=(e)=>{e.preventDefault();if(!isDown||revealed)return;const p=getPos(e);ctx.globalCompositeOperation='destination-out';ctx.lineWidth=60;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(lastP.x,lastP.y);ctx.lineTo(p.x,p.y);ctx.stroke();lastP=p;
+// Check reveal
 const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let tr=0;for(let k=3;k<data.length;k+=16){if(data[k]===0)tr++}
 if(tr/(data.length/16)>0.40){revealed=true;canvas.classList.add('zone-revealed');zonesRevealed++;updateProgress();if(zonesRevealed>=zonesTotal){setTimeout(()=>{document.getElementById('totalAmount').textContent='$'+currentWinnings.toLocaleString();setTimeout(()=>showResult(currentWinnings),800)},400)}}};
 canvas.onmouseup=canvas.ontouchend=()=>isDown=false;
@@ -234,8 +268,11 @@ function updateProgress(){document.getElementById('zonesProgress').innerHTML=`�
 function showResult(amount){const ov=document.getElementById('resultOverlay');document.getElementById('resultAmount').textContent='$'+amount.toLocaleString();if(amount>=500){document.getElementById('resultEmoji').textContent='🎉';document.getElementById('resultText').textContent='大獎！恭喜中獎！';launchConfetti()}else{document.getElementById('resultEmoji').textContent='😊';document.getElementById('resultText').textContent='中獎了！'}ov.classList.add('show');const c=CARDS[currentCard];state.prize+=amount;state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:amount,time:Date.now()});if(state.history.length>50)state.history.pop();save()}
 function closeResult(){document.getElementById('resultOverlay').classList.remove('show');showScreen('homeScreen');updateUI()}
 function renderHistory(){const list=document.getElementById('historyList');if(!state.history.length){list.innerHTML='<p style="text-align:center;color:rgba(255,255,255,0.3);padding:40px">還沒有紀錄</p>';return}list.innerHTML=state.history.map(h=>{const d=new Date(h.time);const net=h.win-h.cost;return `<div class="history-item"><div class="hi-left"><div class="hi-type">${h.emoji} ${h.card} (-${h.cost}代幣)</div><div class="hi-time">${d.toLocaleString('zh-TW')}</div></div><div class="hi-amount ${net>=0?'win':'loss'}">$${h.win.toLocaleString()}</div></div>`}).join('')}
+
 function initParticles(){const cv=document.getElementById('particles');const ctx=cv.getContext('2d');let w=cv.width=innerWidth,h=cv.height=innerHeight;addEventListener('resize',()=>{w=cv.width=innerWidth;h=cv.height=innerHeight});const ps=[];for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,dx:(Math.random()-.5)*.5,dy:(Math.random()-.5)*.3,a:Math.random()*.4+.1,c:['#ffd700','#ff8c00','#4169e1','#00cc66','#ff4444'][Math.floor(Math.random()*5)]});(function draw(){ctx.clearRect(0,0,w,h);ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;requestAnimationFrame(draw)})()}
+
 function launchConfetti(){const cv=document.getElementById('confetti');const ctx=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;const pcs=[];const cols=['#ffd700','#ff4444','#00cc66','#4169e1','#ff8c00','#ff69b4'];for(let i=0;i<150;i++)pcs.push({x:cv.width/2+(Math.random()-.5)*200,y:cv.height/2,vx:(Math.random()-.5)*15,vy:Math.random()*-18-5,r:Math.random()*6+3,c:cols[Math.floor(Math.random()*cols.length)],g:.3,d:.98,rot:Math.random()*Math.PI*2,rv:(Math.random()-.5)*.3});let f=0;(function draw(){if(f>120){ctx.clearRect(0,0,cv.width,cv.height);return}ctx.clearRect(0,0,cv.width,cv.height);pcs.forEach(p=>{p.vy+=p.g;p.vx*=p.d;p.x+=p.vx;p.y+=p.vy;p.rot+=p.rv;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.globalAlpha=Math.max(0,1-f/120);ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);ctx.restore()});f++;requestAnimationFrame(draw)})()}
+
 updateUI();initParticles();
 </script>
 </body>
