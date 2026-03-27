@@ -53,10 +53,10 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 .scratch-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .back-btn{width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);color:#333;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .scratch-title{font-size:20px;font-weight:900;color:#1a1a1a}
-.scratch-card-wrap{max-width:440px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.5);border:2px solid rgba(255,215,0,0.3);padding:16px}
+.scratch-card-wrap{max-width:440px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.15);border:2px solid rgba(255,215,0,0.3);padding:16px}
 .game-desc{text-align:center;font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:14px;padding:8px 12px;background:rgba(0,0,0,0.03);border-radius:10px}
 .game-zones{display:flex;flex-direction:column;gap:16px}
-.game-zone{position:relative;background:rgba(0,0,0,0.2);border-radius:12px;padding:14px;border:1px solid rgba(0,0,0,0.08);overflow:hidden;min-height:80px}
+.game-zone{position:relative;background:#fff;border-radius:12px;padding:14px;border:1px solid rgba(0,0,0,0.08);overflow:hidden;min-height:80px}
 .game-zone-title{font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .zone-icon{font-size:16px}
 .zone-scratch{position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;touch-action:none;z-index:2;border-radius:12px}
@@ -1261,8 +1261,8 @@ ${mg.gen(prize)}
 html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div></div>`;
 wrap.innerHTML=html;
 requestAnimationFrame(()=>{
-for(let i=0;i<4;i++){initZoneCanvas2('vaultCode'+i,'vccanvas'+i,totalScratchZones)}
-for(let i=0;i<safeboxCount+extraGameCount;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}
+setTimeout(()=>{for(let i=0;i<4;i++){initZoneCanvas2('vaultCode'+i,'vccanvas'+i,totalScratchZones)}
+for(let i=0;i<safeboxCount+extraGameCount;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}},100)
 });
 return;
 }
@@ -1321,8 +1321,8 @@ ${mg.gen(prize)}
 html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div></div>`;
 wrap.innerHTML=html;
 requestAnimationFrame(()=>{
-initZoneCanvas2('oceanTarget','otcanvas',totalScratchZones);
-for(let i=0;i<creatureCount+extraGameCount;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}
+setTimeout(()=>{initZoneCanvas2('oceanTarget','otcanvas',totalScratchZones);
+for(let i=0;i<creatureCount+extraGameCount;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}},100)
 });
 return;
 }
@@ -1349,7 +1349,7 @@ ${mg.gen(prize)}
 }
 html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div></div>`;
 wrap.innerHTML=html;
-requestAnimationFrame(()=>{for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,numZones)}});
+setTimeout(()=>{for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,numZones)}},100);
 return;
 }
 
@@ -1375,7 +1375,7 @@ ${mg.gen(prize)}
 }
 html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div></div>`;
 wrap.innerHTML=html;
-requestAnimationFrame(()=>{for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,numZones)}});
+setTimeout(()=>{for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,numZones)}},100);
 return;
 }
 
@@ -1401,7 +1401,7 @@ ${mg.gen(prize)}
 }
 html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div></div>`;
 wrap.innerHTML=html;
-requestAnimationFrame(()=>{for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,numZones)}});
+setTimeout(()=>{for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,numZones)}},100);
 return;
 }
 
@@ -1430,13 +1430,14 @@ html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div
 html+='</div>';
 wrap.innerHTML=html;
 
-requestAnimationFrame(()=>{for(let i=0;i<numZones;i++){initZoneCanvas(i)}});
+setTimeout(()=>{for(let i=0;i<numZones;i++){initZoneCanvas(i)}},100);
 }
 
 function initZoneCanvas(idx){
 const zone=document.getElementById('zone'+idx);
 const canvas=document.getElementById('zcanvas'+idx);
 if(!zone||!canvas)return;
+if(zone.offsetWidth===0||zone.offsetHeight===0){setTimeout(()=>initZoneCanvas(idx),50);return;}
 canvas.width=zone.offsetWidth;
 canvas.height=zone.offsetHeight;
 const ctx=canvas.getContext('2d');
@@ -1483,6 +1484,7 @@ function initZoneCanvas2(zoneId,canvasId,totalZones){
 const zone=document.getElementById(zoneId);
 const canvas=document.getElementById(canvasId);
 if(!zone||!canvas)return;
+if(zone.offsetWidth===0||zone.offsetHeight===0){setTimeout(()=>initZoneCanvas2(zoneId,canvasId,totalZones),50);return;}
 canvas.width=zone.offsetWidth;
 canvas.height=zone.offsetHeight;
 const ctx=canvas.getContext('2d');
