@@ -344,6 +344,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 <div class="scratch-card-wrap" id="scratchWrap"></div>
 <div class="zones-progress" id="zonesProgress"></div>
 <button id="revealAllBtn" onclick="revealAll()" style="display:block;margin:12px auto;padding:10px 28px;border:none;border-radius:10px;background:rgba(0,0,0,0.06);color:#888;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.3s">⚡ 全部刮開</button>
+<div id="verifyNavBtns" style="display:none;margin:12px auto;max-width:440px"><button onclick="scratchNext()" style="width:100%;padding:12px;border:none;border-radius:10px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;margin-bottom:8px">下一張 ▶</button><button onclick="closeResult();showScreen('homeScreen')" style="width:100%;padding:12px;border:none;border-radius:10px;background:#f0f0f0;color:#333;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid #ddd">🏠 返回首頁</button></div>
 </div>
 <div id="historyScreen" class="screen">
 <div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">📜 歷史紀錄</div></div>
@@ -1200,6 +1201,7 @@ showBuyModal(idx);
 
 function setupScratchCard(cardIdx,totalWin){
 document.getElementById('revealAllBtn').style.display='block';
+document.getElementById('verifyNavBtns').style.display='none';
 const c=CARDS[cardIdx];
 const wrap=document.getElementById('scratchWrap');
 wrap.style.background=c.bgGrad;
@@ -1606,6 +1608,8 @@ if(totalWon>=500)launchConfetti();
 
 function verifyCard(){
 document.getElementById('resultOverlay').classList.remove('show');
+document.getElementById('verifyNavBtns').style.display='block';
+document.getElementById('revealAllBtn').style.display='none';
 window.scrollTo(0,0);
 }
 
