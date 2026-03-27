@@ -2,259 +2,193 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>幸運刮刮樂</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>🎰 幸運刮刮樂</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);min-height:100vh;display:flex;flex-direction:column;align-items:center;color:#fff;padding:20px 16px;user-select:none;-webkit-user-select:none}
-.top-bar{width:100%;max-width:380px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.top-bar h1{font-size:1.5rem;text-shadow:0 0 15px rgba(255,215,0,.4)}
-.coins{background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.3);border-radius:20px;padding:6px 14px;font-size:.9rem;color:#ffd700}
-.card-wrapper{width:100%;max-width:380px;margin-bottom:16px}
-.card-header{background:linear-gradient(90deg,#ffd700,#f0a500);color:#1a1a2e;text-align:center;padding:10px;border-radius:16px 16px 0 0;font-weight:bold;font-size:1.1rem;letter-spacing:2px}
-.card-container{position:relative;width:100%;height:220px;overflow:hidden;border-radius:0 0 16px 16px;box-shadow:0 8px 32px rgba(0,0,0,.4);border:2px solid #ffd700;border-top:none;background:#222}
-.prize-layer{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1}
-.prize-layer .prize-emoji{font-size:3.2rem;margin-bottom:6px}
-.prize-layer .prize-text{font-size:1.8rem;font-weight:bold;text-shadow:0 2px 10px rgba(0,0,0,.3)}
-.prize-layer .prize-sub{font-size:.9rem;margin-top:4px;opacity:.8}
-#scratchCanvas{position:absolute;top:0;left:0;z-index:2;cursor:pointer;touch-action:none}
-.progress-bar{width:100%;max-width:380px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;margin-bottom:6px}
-.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#ffd700,#ff6b6b);border-radius:3px;transition:width .3s}
-.hint{font-size:.8rem;color:#888;margin-bottom:16px}
-.stats-grid{width:100%;max-width:380px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.stat-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 8px;text-align:center}
-.stat-box .label{font-size:.75rem;color:#888;margin-bottom:4px}
-.stat-box .value{font-size:1.3rem;font-weight:bold;color:#ffd700}
-.btn-row{width:100%;max-width:380px;display:flex;gap:10px;margin-bottom:16px}
-.btn{flex:1;padding:14px;font-size:1rem;font-weight:bold;border:none;border-radius:12px;cursor:pointer;transition:all .2s}
-.btn-primary{background:linear-gradient(135deg,#ffd700,#f0a500);color:#1a1a2e;box-shadow:0 4px 15px rgba(255,215,0,.3)}
-.btn-secondary{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.btn:active{transform:scale(.96)}
-.daily-box{width:100%;max-width:380px;background:linear-gradient(135deg,rgba(255,107,107,.15),rgba(255,215,0,.15));border:1px solid rgba(255,215,0,.2);border-radius:12px;padding:14px;margin-bottom:16px;text-align:center}
-.daily-box .title{font-size:.9rem;color:#ffd700;margin-bottom:4px}
-.daily-box .desc{font-size:.8rem;color:#aaa}
-.ad-space{width:100%;max-width:380px;height:60px;background:rgba(0,0,0,.3);border:1px dashed rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#555;font-size:.75rem;margin-bottom:12px}
-.history{width:100%;max-width:380px;margin-bottom:16px}
-.history h3{font-size:.9rem;color:#888;margin-bottom:8px}
-.history-list{display:flex;flex-direction:column;gap:6px}
-.history-item{background:rgba(255,255,255,.05);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-size:.85rem}
-.history-item .win{color:#ffd700}
-.history-item .lose{color:#888}
-.history-item .time{color:#666;font-size:.75rem}
-.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100}
-@keyframes cf{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
-@keyframes pp{0%{transform:scale(.5);opacity:0}50%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
-.prize-revealed{animation:pp .5s ease-out}
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:50;align-items:center;justify-content:center}
-.modal-overlay.active{display:flex}
-.modal{background:#1e2a4a;border:2px solid #ffd700;border-radius:20px;padding:30px;text-align:center;max-width:320px;width:90%}
-.modal .emoji{font-size:4rem;margin-bottom:10px}
-.modal .title{font-size:1.5rem;font-weight:bold;color:#ffd700;margin-bottom:6px}
-.modal .sub{color:#aaa;margin-bottom:20px}
-.modal .btn{width:100%}
+body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a0015 0%,#1a0a3e 30%,#0d1b4a 60%,#0a0015 100%);color:#fff;min-height:100vh;overflow-x:hidden;position:relative}
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.app{position:relative;z-index:1;max-width:480px;margin:0 auto;min-height:100vh;padding:16px}
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,165,0,0.08));border:1px solid rgba(255,215,0,0.3);border-radius:16px;margin-bottom:20px;backdrop-filter:blur(10px)}
+.header-left{display:flex;flex-direction:column;gap:4px}
+.balance-row{display:flex;align-items:center;gap:8px;font-size:14px}
+.balance-row .icon{font-size:18px}
+.balance-row .amount{font-weight:900;color:#ffd700;font-size:18px;text-shadow:0 0 10px rgba(255,215,0,0.5)}
+.prize-row .amount{color:#ff6b6b}
+.header-right{display:flex;gap:8px}
+.btn-sm{padding:8px 14px;border:none;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.3s;font-family:inherit}
+.btn-topup{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;box-shadow:0 4px 15px rgba(255,215,0,0.4)}
+.btn-topup:active{transform:scale(0.95)}
+.btn-ad{background:linear-gradient(135deg,#00c9ff,#92fe9d);color:#1a0a3e;box-shadow:0 4px 15px rgba(0,201,255,0.3)}
+.btn-history{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2)}
+.main-title{text-align:center;margin-bottom:24px}
+.main-title h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;letter-spacing:2px}
+.main-title p{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.card-item{position:relative;border-radius:20px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.3s;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.card-item:active{transform:scale(0.96)}
+.card-item::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 60%);animation:shimmer 3s infinite;pointer-events:none}
+@keyframes shimmer{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.card-gold{background:linear-gradient(135deg,#b8860b,#ffd700,#daa520);box-shadow:0 8px 32px rgba(255,215,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-ruby{background:linear-gradient(135deg,#8b0000,#ff4444,#cc0000);box-shadow:0 8px 32px rgba(255,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-emerald{background:linear-gradient(135deg,#006400,#00cc66,#228b22);box-shadow:0 8px 32px rgba(0,200,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-diamond{background:linear-gradient(135deg,#1a1a6e,#4169e1,#6a5acd);box-shadow:0 8px 32px rgba(65,105,225,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-emoji{font-size:48px;margin-bottom:8px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
+.card-name{font-size:18px;font-weight:900;text-shadow:0 2px 4px rgba(0,0,0,0.5);margin-bottom:4px}
+.card-price{font-size:22px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,0.5)}
+.card-info-btn{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.card-info-btn:hover{background:rgba(255,255,255,0.2)}
+.screen{display:none}.screen.active{display:block}
+.scratch-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.back-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.scratch-title{font-size:20px;font-weight:900}
+.scratch-card-container{position:relative;width:100%;max-width:440px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.5);border:2px solid rgba(255,215,0,0.3)}
+.scratch-card-bg{width:100%;padding:20px;min-height:500px;position:relative}
+.game-zones{display:flex;flex-direction:column;gap:16px;padding:10px}
+.game-zone{background:rgba(0,0,0,0.2);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.1)}
+.game-zone-title{font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.game-zone-title .zone-icon{font-size:16px}
+.scratch-canvas{position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;border-radius:20px;touch-action:none}
+.match-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.match-cell{background:rgba(255,255,255,0.1);border-radius:8px;padding:10px 4px;text-align:center;font-size:14px;font-weight:700}
+.match-cell.winner{background:rgba(255,215,0,0.2);border:1px solid #ffd700}
+.compare-row{display:flex;justify-content:center;align-items:center;gap:16px}
+.compare-card{background:rgba(255,255,255,0.1);border-radius:10px;padding:12px 20px;text-align:center;min-width:80px}
+.compare-card .label{font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:4px}
+.compare-card .value{font-size:24px;font-weight:900}
+.compare-vs{font-size:20px;font-weight:900;color:#ffd700}
+.bonus-area{text-align:center;padding:16px}
+.bonus-amount{font-size:32px;font-weight:900;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.5)}
+.number-match-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;justify-content:center}
+.number-ball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+.number-ball.winning{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e}
+.number-ball.player{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.2)}
+.number-ball.player.hit{background:linear-gradient(135deg,#ff4444,#ff6b6b);color:#fff;border:none}
+.number-label{font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;text-align:center}
+.result-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:center;z-index:100;backdrop-filter:blur(8px)}
+.result-overlay.show{display:flex}
+.result-card{text-align:center;padding:40px;animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
+.result-emoji{font-size:72px;margin-bottom:16px}
+.result-text{font-size:16px;color:rgba(255,255,255,0.7);margin-bottom:8px}
+.result-amount{font-size:48px;font-weight:900;color:#ffd700;text-shadow:0 0 30px rgba(255,215,0,0.5);margin-bottom:24px}
+.result-btn{padding:14px 40px;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;box-shadow:0 4px 20px rgba(255,215,0,0.4)}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;justify-content:center;align-items:center;z-index:90;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal{background:linear-gradient(135deg,#1a1a3e,#2a1a5e);border:1px solid rgba(255,215,0,0.2);border-radius:20px;padding:28px;max-width:380px;width:90%;max-height:80vh;overflow-y:auto;animation:popIn 0.3s ease}
+.modal h2{font-size:20px;color:#ffd700;margin-bottom:16px;text-align:center}
+.prize-table{width:100%;border-collapse:collapse}
+.prize-table th{padding:8px;text-align:left;color:rgba(255,255,255,0.5);font-size:12px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.prize-table td{padding:8px;font-size:14px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.prize-table .amount-col{color:#ffd700;font-weight:700}
+.topup-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.topup-option{padding:20px;border-radius:14px;text-align:center;cursor:pointer;border:1px solid rgba(255,215,0,0.2);background:rgba(255,215,0,0.05);transition:all 0.3s}
+.topup-option:active{transform:scale(0.95);background:rgba(255,215,0,0.15)}
+.topup-option .coins{font-size:24px;font-weight:900;color:#ffd700}
+.topup-option .price{font-size:13px;color:rgba(255,255,255,0.6);margin-top:4px}
+.history-list{display:flex;flex-direction:column;gap:8px}
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.05)}
+.history-item .hi-left{display:flex;flex-direction:column;gap:2px}
+.history-item .hi-type{font-size:13px;font-weight:700}
+.history-item .hi-time{font-size:11px;color:rgba(255,255,255,0.4)}
+.history-item .hi-amount{font-weight:900;font-size:16px}
+.history-item .hi-amount.win{color:#ffd700}
+.history-item .hi-amount.loss{color:#ff4444}
+.ad-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;justify-content:center;align-items:center;z-index:95;flex-direction:column;gap:20px}
+.ad-overlay.show{display:flex}
+.ad-box{width:300px;height:250px;background:linear-gradient(135deg,#333,#555);border-radius:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px}
+.ad-box .ad-text{font-size:14px;color:rgba(255,255,255,0.5)}
+.ad-countdown{font-size:48px;font-weight:900;color:#00c9ff}
+.ad-reward{font-size:14px;color:#92fe9d}
+#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:2px}
 </style>
 </head>
 <body>
-<div class="top-bar"><h1>🎰 幸運刮刮樂</h1><div class="coins" id="coinsDisplay">🪙 0</div></div>
-<div class="daily-box"><div class="title">🔥 每日挑戰：刮滿 5 張拿獎勵！</div><div class="desc" id="dailyProgress">進度：0 / 5</div></div>
-<div class="card-wrapper">
-  <div class="card-header" id="cardTitle">第 1 張刮刮樂</div>
-  <div class="card-container" id="cardContainer">
-    <div class="prize-layer" id="prizeLayer"></div>
-    <canvas id="scratchCanvas"></canvas>
-  </div>
+<canvas id="particles"></canvas>
+<canvas id="confetti"></canvas>
+<div class="app">
+<div id="homeScreen" class="screen active">
+<div class="header">
+<div class="header-left">
+<div class="balance-row"><span class="icon">🪙</span><span>代幣</span><span class="amount" id="tokenDisplay">500</span></div>
+<div class="balance-row prize-row"><span class="icon">💰</span><span>獎金</span><span class="amount" id="prizeDisplay">0</span></div>
 </div>
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-<p class="hint" id="hintText">👆 用手指刮開灰色塗層</p>
-<div class="ad-space">📢 廣告位</div>
-<div class="stats-grid">
-  <div class="stat-box"><div class="label">已刮</div><div class="value" id="totalCards">0</div></div>
-  <div class="stat-box"><div class="label">中獎</div><div class="value" id="totalWins">0</div></div>
-  <div class="stat-box"><div class="label">累計獎金</div><div class="value" id="totalPrize">$0</div></div>
+<div class="header-right">
+<button class="btn-sm btn-ad" onclick="showAd()">📺 看廣告</button>
+<button class="btn-sm btn-topup" onclick="showTopup()">💳 儲值</button>
+<button class="btn-sm btn-history" onclick="showScreen('historyScreen')">📜</button>
 </div>
-<div class="btn-row">
-  <button class="btn btn-primary" id="newCardBtn">🎫 再來一張</button>
-  <button class="btn btn-secondary" id="shareBtn">📢 分享</button>
 </div>
-<div class="history"><h3>📋 最近紀錄</h3><div class="history-list" id="historyList"></div></div>
-<div class="confetti-container" id="confettiContainer"></div>
-<div class="modal-overlay" id="winModal">
-  <div class="modal">
-    <div class="emoji" id="modalEmoji">🎉</div>
-    <div class="title" id="modalTitle">恭喜中獎！</div>
-    <div class="sub" id="modalSub"></div>
-    <button class="btn btn-primary" id="modalBtn">🎰 繼續刮</button>
-  </div>
+<div class="main-title"><h1>🎰 幸運刮刮樂</h1><p>選擇面額，刮出好運！</p></div>
+<div class="card-grid">
+<div class="card-item card-gold" onclick="buyCard(0)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(0)">ℹ</button><div class="card-emoji">🌟</div><div class="card-name">金運來</div><div class="card-price">50 代幣</div></div>
+<div class="card-item card-ruby" onclick="buyCard(1)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button><div class="card-emoji">💎</div><div class="card-name">紅寶石</div><div class="card-price">100 代幣</div></div>
+<div class="card-item card-emerald" onclick="buyCard(2)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button><div class="card-emoji">🍀</div><div class="card-name">翡翠運</div><div class="card-price">200 代幣</div></div>
+<div class="card-item card-diamond" onclick="buyCard(3)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button><div class="card-emoji">👑</div><div class="card-name">鑽石皇</div><div class="card-price">500 代幣</div></div>
 </div>
-<script>
-var PRIZES=[
-{emoji:'💰',text:'NT$ 1,000,000',sub:'頭獎！百萬大獎！',value:1000000,weight:1,bg:'linear-gradient(135deg,#ff416c,#ff4b2b)'},
-{emoji:'🎉',text:'NT$ 100,000',sub:'十萬獎金！',value:100000,weight:2,bg:'linear-gradient(135deg,#f857a6,#ff5858)'},
-{emoji:'🏆',text:'NT$ 10,000',sub:'恭喜中獎！',value:10000,weight:5,bg:'linear-gradient(135deg,#ffd700,#ff8c00)'},
-{emoji:'🎁',text:'NT$ 1,000',sub:'小獎不錯！',value:1000,weight:12,bg:'linear-gradient(135deg,#56ab2f,#a8e063)'},
-{emoji:'🍀',text:'NT$ 500',sub:'幸運五百',value:500,weight:18,bg:'linear-gradient(135deg,#11998e,#38ef7d)'},
-{emoji:'🎈',text:'NT$ 100',sub:'回本了！',value:100,weight:25,bg:'linear-gradient(135deg,#667eea,#764ba2)'},
-{emoji:'😅',text:'再接再厲',sub:'下次一定中！',value:0,weight:37,bg:'linear-gradient(135deg,#434343,#000)'}
+</div>
+<div id="scratchScreen" class="screen">
+<div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title" id="scratchTitle">刮刮樂</div></div>
+<div class="scratch-card-container" id="scratchContainer"><div class="scratch-card-bg" id="scratchBg"></div><canvas class="scratch-canvas" id="scratchCanvas"></canvas></div>
+<p style="text-align:center;margin-top:12px;font-size:13px;color:rgba(255,255,255,0.4)">用手指或滑鼠刮開銀漆</p>
+</div>
+<div id="historyScreen" class="screen">
+<div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">📜 歷史紀錄</div></div>
+<div class="history-list" id="historyList"></div>
+</div>
+</div>
+<div class="result-overlay" id="resultOverlay"><div class="result-card"><div class="result-emoji" id="resultEmoji">🎉</div><div class="result-text" id="resultText">恭喜中獎！</div><div class="result-amount" id="resultAmount">$0</div><button class="result-btn" onclick="closeResult()">收下獎金 💰</button></div></div>
+<div class="modal-overlay" id="prizeModal"><div class="modal"><h2 id="prizeModalTitle">獎項配率</h2><table class="prize-table" id="prizeTable"></table><br><button class="result-btn" style="width:100%" onclick="closePrizeModal()">知道了 👍</button></div></div>
+<div class="modal-overlay" id="topupModal"><div class="modal"><h2>💳 儲值代幣</h2><p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center">1 TWD = 1 代幣</p><div class="topup-grid"><div class="topup-option" onclick="doTopup(100)"><div class="coins">🪙 100</div><div class="price">NT$ 100</div></div><div class="topup-option" onclick="doTopup(500)"><div class="coins">🪙 500</div><div class="price">NT$ 500</div></div><div class="topup-option" onclick="doTopup(1000)"><div class="coins">🪙 1,000</div><div class="price">NT$ 1,000</div></div><div class="topup-option" onclick="doTopup(3000)"><div class="coins">🪙 3,000</div><div class="price">NT$ 3,000</div></div></div><br><button class="result-btn" style="width:100%;background:rgba(255,255,255,0.1);color:#fff" onclick="closeTopup()">取消</button></div></div><script>
+const CARDS=[
+{name:'金運來',emoji:'🌟',price:50,cls:'card-gold',color:'#ffd700',bgGrad:'linear-gradient(135deg,#3d2b00,#6b4c00)',total:100000,
+prizes:[{amt:10,cnt:50000},{amt:25,cnt:30000},{amt:50,cnt:12000},{amt:100,cnt:5000},{amt:250,cnt:2000},{amt:500,cnt:800},{amt:1000,cnt:150},{amt:5000,cnt:45},{amt:50000,cnt:5}]},
+{name:'紅寶石',emoji:'💎',price:100,cls:'card-ruby',color:'#ff4444',bgGrad:'linear-gradient(135deg,#3d0000,#6b0000)',total:100000,
+prizes:[{amt:20,cnt:50000},{amt:50,cnt:30000},{amt:100,cnt:12000},{amt:200,cnt:5000},{amt:500,cnt:2000},{amt:1000,cnt:800},{amt:2000,cnt:150},{amt:10000,cnt:45},{amt:100000,cnt:5}]},
+{name:'翡翠運',emoji:'🍀',price:200,cls:'card-emerald',color:'#00cc66',bgGrad:'linear-gradient(135deg,#002a00,#004d00)',total:100000,
+prizes:[{amt:40,cnt:50000},{amt:100,cnt:30000},{amt:200,cnt:12000},{amt:400,cnt:5000},{amt:1000,cnt:2000},{amt:2000,cnt:800},{amt:4000,cnt:150},{amt:20000,cnt:45},{amt:200000,cnt:5}]},
+{name:'鑽石皇',emoji:'👑',price:500,cls:'card-diamond',color:'#4169e1',bgGrad:'linear-gradient(135deg,#0a0a3d,#1a1a6e)',total:100000,
+prizes:[{amt:100,cnt:50000},{amt:250,cnt:30000},{amt:500,cnt:12000},{amt:1000,cnt:5000},{amt:2500,cnt:2000},{amt:5000,cnt:800},{amt:10000,cnt:150},{amt:50000,cnt:45},{amt:500000,cnt:5}]}
 ];
-var canvas=document.getElementById('scratchCanvas');
-var ctx=canvas.getContext('2d');
-var container=document.getElementById('cardContainer');
-var prizeLayer=document.getElementById('prizeLayer');
-var progressFill=document.getElementById('progressFill');
-var hintText=document.getElementById('hintText');
-var confettiContainer=document.getElementById('confettiContainer');
-var winModal=document.getElementById('winModal');
-var isDrawing=false,revealed=false;
-var hist=[];try{hist=JSON.parse(localStorage.getItem('sh')||'[]')}catch(e){}
-var stats;try{stats=JSON.parse(localStorage.getItem('ss'))}catch(e){}
-if(!stats)stats={cards:0,wins:0,prize:0,coins:0,dp:0,ld:''};
-var today=new Date().toISOString().slice(0,10);
-if(stats.ld!==today){stats.dp=0;stats.ld=today}
-
-function save(){try{localStorage.setItem('ss',JSON.stringify(stats));localStorage.setItem('sh',JSON.stringify(hist.slice(0,20)))}catch(e){}}
-
-function updateUI(){
-document.getElementById('totalCards').textContent=stats.cards;
-document.getElementById('totalWins').textContent=stats.wins;
-document.getElementById('totalPrize').textContent='$'+stats.prize.toLocaleString();
-document.getElementById('coinsDisplay').textContent='🪙 '+stats.coins;
-document.getElementById('dailyProgress').textContent='進度：'+Math.min(stats.dp,5)+' / 5';
-document.getElementById('cardTitle').textContent='第 '+(stats.cards+1)+' 張刮刮樂';
-var list=document.getElementById('historyList');list.innerHTML='';
-hist.slice(0,5).forEach(function(h){
-var d=document.createElement('div');d.className='history-item';
-d.innerHTML='<span class="'+(h.v>0?'win':'lose')+'">'+h.e+' '+h.t+'</span><span class="time">'+h.tm+'</span>';
-list.appendChild(d);
-});
-}
-
-function pick(){
-var total=0;for(var i=0;i<PRIZES.length;i++)total+=PRIZES[i].weight;
-var r=Math.random()*total;
-for(var i=0;i<PRIZES.length;i++){r-=PRIZES[i].weight;if(r<=0)return PRIZES[i];}
-return PRIZES[PRIZES.length-1];
-}
-
-function initCard(){
-var w=container.clientWidth;
-var h=container.clientHeight;
-if(w<10||h<10){setTimeout(initCard,200);return;}
-canvas.width=w;
-canvas.height=h;
-canvas.style.width=w+'px';
-canvas.style.height=h+'px';
-revealed=false;
-hintText.textContent='👆 用手指刮開灰色塗層';
-progressFill.style.width='0%';
-var prize=pick();
-prizeLayer.innerHTML='';
-prizeLayer.style.background=prize.bg;
-prizeLayer.className='prize-layer';
-prizeLayer.setAttribute('data-v',prize.value);
-prizeLayer.setAttribute('data-e',prize.emoji);
-prizeLayer.setAttribute('data-t',prize.text);
-prizeLayer.setAttribute('data-s',prize.sub);
-var pe=document.createElement('div');pe.className='prize-emoji';pe.textContent=prize.emoji;
-var pt=document.createElement('div');pt.className='prize-text';pt.textContent=prize.text;pt.style.color=prize.value>0?'#fff':'#ccc';
-var ps=document.createElement('div');ps.className='prize-sub';ps.textContent=prize.sub;
-prizeLayer.appendChild(pe);prizeLayer.appendChild(pt);prizeLayer.appendChild(ps);
-// draw grey scratch layer
-ctx.globalCompositeOperation='source-over';
-var g=ctx.createLinearGradient(0,0,w,h);
-g.addColorStop(0,'#b8b8b8');g.addColorStop(0.5,'#d0d0d0');g.addColorStop(1,'#a8a8a8');
-ctx.fillStyle=g;
-ctx.fillRect(0,0,w,h);
-ctx.fillStyle='#aaa';ctx.font='bold 20px sans-serif';ctx.textAlign='center';
-ctx.fillText('✨ 刮開這裡 ✨',w/2,h/2-10);
-ctx.font='13px sans-serif';ctx.fillStyle='#999';
-ctx.fillText('Scratch Here',w/2,h/2+15);
-ctx.globalCompositeOperation='destination-out';
-updateUI();
-}
-
-function doScratch(x,y){
-ctx.beginPath();ctx.arc(x,y,24,0,Math.PI*2);ctx.fill();
-if(!revealed)checkPct();
-}
-
-function getXY(e){
-var r=canvas.getBoundingClientRect();
-var src=e.touches?e.touches[0]:e;
-return{x:src.clientX-r.left,y:src.clientY-r.top};
-}
-
-function checkPct(){
-var d=ctx.getImageData(0,0,canvas.width,canvas.height).data;
-var t=0,c=0;
-for(var i=3;i<d.length;i+=16){t++;if(d[i]===0)c++;}
-var pct=c/t;
-progressFill.style.width=Math.min(pct*100,100)+'%';
-if(pct>=0.55)reveal();
-}
-
-function reveal(){
-if(revealed)return;
-revealed=true;
-ctx.globalCompositeOperation='source-over';
-ctx.clearRect(0,0,canvas.width,canvas.height);
-prizeLayer.className='prize-layer prize-revealed';
-progressFill.style.width='100%';
-var v=parseInt(prizeLayer.getAttribute('data-v'));
-var em=prizeLayer.getAttribute('data-e');
-var tx=prizeLayer.getAttribute('data-t');
-var sb=prizeLayer.getAttribute('data-s');
-stats.cards++;stats.dp++;
-var now=new Date();
-var tm=('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);
-if(v>0){
-stats.wins++;stats.prize+=v;stats.coins+=Math.floor(v/100);
-hintText.textContent='🎊 恭喜中獎！';
-confetti();
-document.getElementById('modalEmoji').textContent=em;
-document.getElementById('modalTitle').textContent='恭喜中獎！';
-document.getElementById('modalSub').textContent=tx+' — '+sb;
-winModal.classList.add('active');
-}else{
-stats.coins+=1;
-hintText.textContent='😅 沒中，再試試！';
-}
-hist.unshift({e:em,t:tx,v:v,tm:tm});
-if(hist.length>20)hist.pop();
-if(stats.dp===5){stats.coins+=50;setTimeout(function(){alert('🎯 每日挑戰完成！+50 🪙')},800);}
-save();updateUI();
-}
-
-function confetti(){
-var colors=['#ffd700','#ff6b6b','#4ecdc4','#45b7d1','#96e6a1','#dda0dd','#ff9a56'];
-for(var i=0;i<50;i++){
-var c=document.createElement('div');
-c.style.cssText='position:absolute;left:'+Math.random()*100+'%;top:-10px;width:'+(Math.random()*8+4)+'px;height:'+(Math.random()*8+4)+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';border-radius:'+(Math.random()>.5?'50%':'2px')+';opacity:0;animation:cf '+(Math.random()*2+1.5)+'s ease-out '+(Math.random()*0.5)+'s forwards;';
-confettiContainer.appendChild(c);
-}
-setTimeout(function(){confettiContainer.innerHTML='';},4000);
-}
-
-// Touch & mouse events
-canvas.addEventListener('mousedown',function(e){isDrawing=true;var p=getXY(e);doScratch(p.x,p.y);});
-canvas.addEventListener('mousemove',function(e){if(isDrawing){var p=getXY(e);doScratch(p.x,p.y);}});
-canvas.addEventListener('mouseup',function(){isDrawing=false;});
-canvas.addEventListener('mouseleave',function(){isDrawing=false;});
-canvas.addEventListener('touchstart',function(e){e.preventDefault();isDrawing=true;var p=getXY(e);doScratch(p.x,p.y);},{passive:false});
-canvas.addEventListener('touchmove',function(e){e.preventDefault();if(isDrawing){var p=getXY(e);doScratch(p.x,p.y);}},{passive:false});
-canvas.addEventListener('touchend',function(){isDrawing=false;});
-
-document.getElementById('newCardBtn').addEventListener('click',function(){initCard();});
-document.getElementById('modalBtn').addEventListener('click',function(){winModal.classList.remove('active');initCard();});
-document.getElementById('shareBtn').addEventListener('click',function(){
-if(navigator.share){navigator.share({title:'幸運刮刮樂',text:'來試試你的手氣 🎰',url:location.href});}
-else{alert('把這個網址分享給朋友：\n'+location.href);}
-});
-
-// INIT
-window.addEventListener('DOMContentLoaded',function(){
-updateUI();
-setTimeout(initCard,300);
-});
+const GAME_TYPES=[
+{type:'number_match',name:'號碼對對碰',icon:'🔢'},
+{type:'compare',name:'比大小',icon:'⬆️'},
+{type:'triple',name:'三同金額',icon:'💰'},
+{type:'lucky_symbol',name:'幸運符號',icon:'🎰'},
+{type:'multiplier',name:'翻倍樂',icon:'🎯'},
+{type:'bonus',name:'紅利區',icon:'💣'}
+];
+let state=JSON.parse(localStorage.getItem('scratchState')||'null')||{tokens:500,prize:0,history:[]};
+let currentCard=null,currentWinnings=0,scratchRevealed=false;
+function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
+function updateUI(){document.getElementById('tokenDisplay').textContent=state.tokens.toLocaleString();document.getElementById('prizeDisplay').textContent=state.prize.toLocaleString()}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='historyScreen')renderHistory();if(id==='homeScreen')updateUI()}
+function showPrizeInfo(idx){const c=CARDS[idx];document.getElementById('prizeModalTitle').textContent=c.name+' - 獎項配率';let html='<tr><th>獎金</th><th>張數</th><th>機率</th></tr>';c.prizes.forEach(p=>{const pct=(p.cnt/c.total*100).toFixed(p.cnt<100?3:1);html+=`<tr><td class="amount-col">$${p.amt.toLocaleString()}</td><td>${p.cnt.toLocaleString()}</td><td>${pct}%</td></tr>`});html+=`<tr><td colspan="3" style="color:rgba(255,255,255,0.3);font-size:12px;padding-top:12px">總張數: ${c.total.toLocaleString()}</td></tr>`;document.getElementById('prizeTable').innerHTML=html;document.getElementById('prizeModal').classList.add('show')}
+function closePrizeModal(){document.getElementById('prizeModal').classList.remove('show')}
+function showTopup(){document.getElementById('topupModal').classList.add('show')}
+function closeTopup(){document.getElementById('topupModal').classList.remove('show')}
+function doTopup(amt){state.tokens+=amt;save();updateUI();closeTopup();showToast(`成功儲值 ${amt} 代幣！`)}
+function showAd(){const overlay=document.getElementById('adOverlay');overlay.classList.add('show');let t=5;document.getElementById('adCountdown').textContent=t;const iv=setInterval(()=>{t--;document.getElementById('adCountdown').textContent=t;if(t<=0){clearInterval(iv);overlay.classList.remove('show');state.tokens+=10;save();updateUI();showToast('獲得 10 代幣！')}},1000)}
+function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
+function rollPrize(cardIdx){const c=CARDS[cardIdx];const r=Math.random()*c.total;let cum=0;for(const p of c.prizes){cum+=p.cnt;if(r<cum)return p.amt}return c.prizes[0].amt}
+function generateGameZones(cardIdx,totalWin){const numZones=4+Math.floor(Math.random()*5);const zones=[];const mainZoneIdx=Math.floor(Math.random()*numZones);for(let i=0;i<numZones;i++){const gt=GAME_TYPES[Math.floor(Math.random()*GAME_TYPES.length)];const zoneWin=(i===mainZoneIdx)?totalWin:0;zones.push(generateZone(gt,zoneWin,CARDS[cardIdx]))}return zones}
+function generateZone(gameType,winAmount,card){const zone={type:gameType.type,name:gameType.name,icon:gameType.icon,win:winAmount,html:''};switch(gameType.type){case 'number_match':zone.html=genNumberMatch(winAmount,card);break;case 'compare':zone.html=genCompare(winAmount);break;case 'triple':zone.html=genTriple(winAmount,card);break;case 'lucky_symbol':zone.html=genLuckySymbol(winAmount);break;case 'multiplier':zone.html=genMultiplier(winAmount,card);break;case 'bonus':zone.html=genBonus(winAmount,card);break;default:zone.html=genTriple(winAmount,card)}return zone}
+function genNumberMatch(win,card){const winNums=new Set();while(winNums.size<3)winNums.add(Math.floor(Math.random()*20)+1);const playerNums=[];const winArr=[...winNums];if(win>0){playerNums.push({num:winArr[Math.floor(Math.random()*winArr.length)],amt:win});for(let i=0;i<5;i++){let n;do{n=Math.floor(Math.random()*20)+1}while(winNums.has(n)||playerNums.some(p=>p.num===n));playerNums.push({num:n,amt:card.prizes[Math.floor(Math.random()*3)].amt})}}else{for(let i=0;i<6;i++){let n;do{n=Math.floor(Math.random()*20)+1}while(winNums.has(n)||playerNums.some(p=>p.num===n));playerNums.push({num:n,amt:card.prizes[Math.floor(Math.random()*3)].amt})}}playerNums.sort(()=>Math.random()-0.5);let html=`<div class="number-label">🎯 中獎號碼</div><div class="number-match-row">`;winArr.forEach(n=>html+=`<div class="number-ball winning">${n}</div>`);html+=`</div><div class="number-label" style="margin-top:10px">🎫 我的號碼</div><div class="match-grid">`;playerNums.forEach(p=>{const hit=winNums.has(p.num);html+=`<div class="match-cell${hit?' winner':''}">${p.num}<br><span style="font-size:11px;color:${hit?'#ffd700':'rgba(255,255,255,0.4)'}">$${p.amt.toLocaleString()}</span></div>`});html+=`</div>`;return html}
+function genCompare(win){let myNum,dealerNum;if(win>0){dealerNum=Math.floor(Math.random()*40)+1;myNum=dealerNum+Math.floor(Math.random()*(99-dealerNum))+1}else{myNum=Math.floor(Math.random()*45)+1;dealerNum=myNum+Math.floor(Math.random()*(99-myNum))+1}const resultText=win>0?`<span style="color:#ffd700">贏！+$${win.toLocaleString()}</span>`:`<span style="color:#ff4444">輸</span>`;return `<div class="compare-row"><div class="compare-card"><div class="label">我的</div><div class="value" style="color:${win>0?'#ffd700':'#fff'}">${myNum}</div></div><div class="compare-vs">VS</div><div class="compare-card"><div class="label">莊家</div><div class="value">${dealerNum}</div></div></div><div style="text-align:center;margin-top:8px;font-weight:700">${resultText}</div>`}function genTriple(win,card){const grid=[];if(win>0){for(let i=0;i<3;i++)grid.push(win);const otherAmts=card.prizes.map(p=>p.amt).filter(a=>a!==win);for(let i=0;i<6;i++)grid.push(otherAmts[Math.floor(Math.random()*otherAmts.length)])}else{const amts=card.prizes.slice(0,4).map(p=>p.amt);for(let i=0;i<9;i++)grid.push(amts[Math.floor(Math.random()*amts.length)]);const counts={};grid.forEach(a=>{counts[a]=(counts[a]||0)+1});for(const[a,c] of Object.entries(counts)){while(counts[a]>=3){const idx=grid.lastIndexOf(parseInt(a));let newAmt;do{newAmt=amts[Math.floor(Math.random()*amts.length)]}while(newAmt===parseInt(a));grid[idx]=newAmt;counts[a]--;counts[newAmt]=(counts[newAmt]||0)+1}}}grid.sort(()=>Math.random()-0.5);let html='<div class="match-grid">';grid.forEach(a=>{const isWin=(win>0&&a===win);html+=`<div class="match-cell${isWin?' winner':''}">$${a.toLocaleString()}</div>`});html+='</div>';if(win>0)html+=`<div style="text-align:center;margin-top:8px;color:#ffd700;font-weight:700">三個 $${win.toLocaleString()} → 中獎！🎉</div>`;return html}
+function genLuckySymbol(win){const symbols=['🍒','🍋','🔔','⭐','💎','🍀','7️⃣','🎰'];const grid=[];if(win>0){for(let i=0;i<8;i++)grid.push(symbols[Math.floor(Math.random()*symbols.length)]);grid[Math.floor(Math.random()*8)]='💎';let html=`<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">`;grid.forEach(s=>{const isLucky=s==='💎';html+=`<div class="match-cell${isLucky?' winner':''}" style="font-size:24px">${s}</div>`});html+=`</div><div style="text-align:center;margin-top:8px;color:#ffd700;font-weight:700">找到 💎 → +$${win.toLocaleString()}！</div>`;return html}else{for(let i=0;i<8;i++)grid.push(symbols[Math.floor(Math.random()*6)]);let html=`<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">`;grid.forEach(s=>html+=`<div class="match-cell" style="font-size:24px">${s}</div>`);html+=`</div><div style="text-align:center;margin-top:8px;color:rgba(255,255,255,0.4);font-size:12px">未找到 💎</div>`;return html}}
+function genMultiplier(win,card){const multipliers=['1x','1x','2x','3x','5x'];const picked=multipliers[Math.floor(Math.random()*multipliers.length)];const baseAmt=win>0?Math.round(win/parseInt(picked)||win):card.prizes[Math.floor(Math.random()*3)].amt;return `<div style="text-align:center"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">基礎金額</div><div style="font-size:28px;font-weight:900;color:#fff">$${baseAmt.toLocaleString()}</div><div style="font-size:14px;color:rgba(255,255,255,0.5);margin:8px 0">倍數</div><div style="font-size:36px;font-weight:900;color:${win>0?'#ffd700':'#ff4444'}">${win>0?picked:'0x'}</div>${win>0?`<div style="margin-top:8px;color:#ffd700;font-weight:700">→ $${win.toLocaleString()}！🎯</div>`:`<div style="margin-top:8px;color:rgba(255,255,255,0.4)">未中獎</div>`}</div>`}
+function genBonus(win,card){if(win>0)return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px">🎊 紅利大獎 🎊</div><div class="bonus-amount">$${win.toLocaleString()}</div><div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.5)">恭喜觸發紅利區！</div></div>`;return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px;color:rgba(255,255,255,0.4)">💣 紅利區</div><div style="font-size:24px;color:rgba(255,255,255,0.3)">未觸發</div></div>`}
+function buyCard(idx){const c=CARDS[idx];if(state.tokens<c.price){showToast('代幣不足！請先儲值 💳');return}state.tokens-=c.price;save();updateUI();currentCard=idx;scratchRevealed=false;currentWinnings=rollPrize(idx);setupScratchCard(idx,currentWinnings);showScreen('scratchScreen');document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name}
+function setupScratchCard(cardIdx,totalWin){const c=CARDS[cardIdx];const bg=document.getElementById('scratchBg');bg.style.background=c.bgGrad;const zones=generateGameZones(cardIdx,totalWin);let html='<div class="game-zones">';zones.forEach(z=>{html+=`<div class="game-zone"><div class="game-zone-title"><span class="zone-icon">${z.icon}</span>${z.name}</div>${z.html}</div>`});html+=`<div style="text-align:center;padding:16px;margin-top:8px"><div style="font-size:14px;color:rgba(255,255,255,0.5)">本張總獎金</div><div style="font-size:36px;font-weight:900;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.5)">$${totalWin.toLocaleString()}</div></div></div>`;bg.innerHTML=html;requestAnimationFrame(()=>{const container=document.getElementById('scratchContainer');const canvas=document.getElementById('scratchCanvas');canvas.width=container.offsetWidth;canvas.height=container.offsetHeight;const ctx=canvas.getContext('2d');const grad=ctx.createLinearGradient(0,0,canvas.width,canvas.height);grad.addColorStop(0,'#c0c0c0');grad.addColorStop(0.3,'#d8d8d8');grad.addColorStop(0.5,'#a8a8a8');grad.addColorStop(0.7,'#d0d0d0');grad.addColorStop(1,'#b0b0b0');ctx.fillStyle=grad;ctx.fillRect(0,0,canvas.width,canvas.height);for(let i=0;i<200;i++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*0.3})`;ctx.beginPath();ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*2,0,Math.PI*2);ctx.fill()}ctx.fillStyle='rgba(0,0,0,0.15)';ctx.font='bold 24px "Noto Sans TC"';ctx.textAlign='center';ctx.fillText('刮開此處',canvas.width/2,canvas.height/2-10);ctx.font='16px "Noto Sans TC"';ctx.fillText(c.emoji+' '+c.name,canvas.width/2,canvas.height/2+20);let isDown=false;const scratch=(x,y)=>{ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(x,y,28,0,Math.PI*2);ctx.fill();checkScratchPercent(ctx,canvas)};const getPos=(e)=>{const rect=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-rect.left,y:t.clientY-rect.top}};canvas.onmousedown=canvas.ontouchstart=(e)=>{e.preventDefault();isDown=true;const p=getPos(e);scratch(p.x,p.y)};canvas.onmousemove=canvas.ontouchmove=(e)=>{e.preventDefault();if(!isDown)return;const p=getPos(e);scratch(p.x,p.y)};canvas.onmouseup=canvas.ontouchend=()=>isDown=false})}
+function checkScratchPercent(ctx,canvas){if(scratchRevealed)return;const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let transparent=0;for(let i=3;i<data.length;i+=16){if(data[i]===0)transparent++}const pct=transparent/(data.length/16);if(pct>0.45){scratchRevealed=true;ctx.clearRect(0,0,canvas.width,canvas.height);setTimeout(()=>showResult(currentWinnings),500)}}
+function showResult(amount){const overlay=document.getElementById('resultOverlay');document.getElementById('resultAmount').textContent='$'+amount.toLocaleString();if(amount>=500){document.getElementById('resultEmoji').textContent='🎉';document.getElementById('resultText').textContent='大獎！恭喜中獎！';launchConfetti()}else{document.getElementById('resultEmoji').textContent='😊';document.getElementById('resultText').textContent='中獎了！'}overlay.classList.add('show');const c=CARDS[currentCard];state.prize+=amount;state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:amount,time:Date.now()});if(state.history.length>50)state.history.pop();save()}
+function closeResult(){document.getElementById('resultOverlay').classList.remove('show');showScreen('homeScreen');updateUI()}
+function renderHistory(){const list=document.getElementById('historyList');if(state.history.length===0){list.innerHTML='<p style="text-align:center;color:rgba(255,255,255,0.3);padding:40px">還沒有紀錄</p>';return}list.innerHTML=state.history.map(h=>{const d=new Date(h.time);const net=h.win-h.cost;return `<div class="history-item"><div class="hi-left"><div class="hi-type">${h.emoji} ${h.card} (-${h.cost}代幣)</div><div class="hi-time">${d.toLocaleString('zh-TW')}</div></div><div class="hi-amount ${net>=0?'win':'loss'}">$${h.win.toLocaleString()}</div></div>`}).join('')}
+function initParticles(){const canvas=document.getElementById('particles');const ctx=canvas.getContext('2d');let w=canvas.width=window.innerWidth;let h=canvas.height=window.innerHeight;window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight});const particles=[];for(let i=0;i<60;i++){particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.5,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.3,a:Math.random()*0.4+0.1,color:['#ffd700','#ff8c00','#4169e1','#00cc66','#ff4444'][Math.floor(Math.random()*5)]})}function draw(){ctx.clearRect(0,0,w,h);particles.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.fillStyle=p.color;ctx.globalAlpha=p.a;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;requestAnimationFrame(draw)}draw()}
+function launchConfetti(){const canvas=document.getElementById('confetti');const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;const pieces=[];const colors=['#ffd700','#ff4444','#00cc66','#4169e1','#ff8c00','#ff69b4'];for(let i=0;i<150;i++){pieces.push({x:canvas.width/2+(Math.random()-0.5)*200,y:canvas.height/2,vx:(Math.random()-0.5)*15,vy:Math.random()*-18-5,r:Math.random()*6+3,color:colors[Math.floor(Math.random()*colors.length)],gravity:0.3,drag:0.98,rot:Math.random()*Math.PI*2,rotV:(Math.random()-0.5)*0.3})}let frame=0;function draw(){if(frame>120){ctx.clearRect(0,0,canvas.width,canvas.height);return}ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{p.vy+=p.gravity;p.vx*=p.drag;p.x+=p.vx;p.y+=p.vy;p.rot+=p.rotV;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.color;ctx.globalAlpha=Math.max(0,1-frame/120);ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6);ctx.restore()});frame++;requestAnimationFrame(draw)}draw()}
+updateUI();initParticles();
 </script>
 </body>
 </html>
