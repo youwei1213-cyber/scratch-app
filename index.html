@@ -143,6 +143,22 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .ocean-header-zone{position:relative;background:rgba(0,0,0,0.3);border-radius:12px;padding:14px;border:1px solid rgba(0,150,255,0.3);overflow:hidden;min-height:80px}
 .safebox-zone{position:relative;background:rgba(0,0,0,0.2);border-radius:10px;overflow:hidden;min-height:60px}
 .creature-zone{position:relative;background:rgba(0,0,0,0.2);border-radius:10px;overflow:hidden;min-height:60px}
+.card-stock{font-size:11px;margin-top:6px;color:rgba(255,255,255,0.6)}
+.card-item.sold-out{opacity:0.5;pointer-events:none;position:relative}
+.card-item.sold-out::after{content:'已售罄';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:24px;font-weight:900;color:#ff4444;text-shadow:0 2px 8px rgba(0,0,0,0.8);z-index:5}
+.qty-btn{padding:12px 24px;border-radius:12px;border:2px solid rgba(255,215,0,0.3);background:rgba(255,215,0,0.05);color:#ffd700;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.3s}
+.qty-btn:active,.qty-btn.selected{background:rgba(255,215,0,0.2);border-color:#ffd700}
+.my-card-item{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.1);margin-bottom:8px;cursor:pointer;transition:all 0.3s}
+.my-card-item:active{transform:scale(0.98);background:rgba(255,255,255,0.1)}
+.my-card-emoji{font-size:32px}
+.my-card-info{flex:1}
+.my-card-name{font-size:15px;font-weight:700}
+.my-card-price{font-size:12px;color:rgba(255,255,255,0.4)}
+.my-card-arrow{color:rgba(255,255,255,0.3);font-size:18px}
+.btn-mycard{background:linear-gradient(135deg,#9b59b6,#8e44ad);color:#fff;position:relative}
+.mycard-badge{position:absolute;top:-4px;right:-4px;background:#ff4444;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:1}
+.reset-pool-btn{margin-top:24px;padding:10px 20px;border:1px solid rgba(255,255,255,0.15);border-radius:12px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;display:block;width:100%;text-align:center;transition:all 0.3s}
+.reset-pool-btn:active{background:rgba(255,255,255,0.1)}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:2px}
 </style>
 </head>
@@ -160,17 +176,18 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <button class="btn-sm btn-ad" onclick="showAd()">📺 看廣告</button>
 <button class="btn-sm btn-topup" onclick="showTopup()">💳 儲值</button>
 <button class="btn-sm btn-exchange" onclick="showExchange()">🔄 兌換</button>
+<button class="btn-sm btn-mycard" onclick="showScreen('myCardsScreen')" id="myCardBtn">🎴<span class="mycard-badge" id="myCardBadge" style="display:none">0</span></button>
 <button class="btn-sm btn-history" onclick="showScreen('historyScreen')">📜</button>
 </div>
 </div>
 <div class="main-title"><h1>🎰 幸運刮刮樂</h1><p>選擇面額，刮出好運！</p></div>
 <div class="card-grid">
-<div class="card-item card-fire" onclick="buyCard(0)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(0)">ℹ</button><div class="card-emoji">🔥</div><div class="card-name">火焰骰子</div><div class="card-price">50 代幣</div></div>
-<div class="card-item card-horse" onclick="buyCard(1)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button><div class="card-emoji">🏇</div><div class="card-name">極速賽馬</div><div class="card-price">100 代幣</div></div>
-<div class="card-item card-tomb" onclick="buyCard(2)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button><div class="card-emoji">🗝️</div><div class="card-name">古墓探險</div><div class="card-price">200 代幣</div></div>
-<div class="card-item card-dragon" onclick="buyCard(3)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button><div class="card-emoji">🐉</div><div class="card-name">神龍奪寶</div><div class="card-price">500 代幣</div></div>
-<div class="card-item card-vault" onclick="buyCard(4)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(4)">ℹ</button><div class="card-emoji">💰</div><div class="card-name">皇家金庫</div><div class="card-price">1,000 代幣</div></div>
-<div class="card-item card-ocean" onclick="buyCard(5)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(5)">ℹ</button><div class="card-emoji">🌊</div><div class="card-name">深海霸主</div><div class="card-price">2,000 代幣</div></div>
+<div class="card-item card-fire" onclick="showBuyModal(0)" id="cardItem0"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(0)">ℹ</button><div class="card-emoji">🔥</div><div class="card-name">火焰骰子</div><div class="card-price">50 代幣</div><div class="card-stock" id="stock0"></div></div>
+<div class="card-item card-horse" onclick="showBuyModal(1)" id="cardItem1"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button><div class="card-emoji">🏇</div><div class="card-name">極速賽馬</div><div class="card-price">100 代幣</div><div class="card-stock" id="stock1"></div></div>
+<div class="card-item card-tomb" onclick="showBuyModal(2)" id="cardItem2"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button><div class="card-emoji">🗝️</div><div class="card-name">古墓探險</div><div class="card-price">200 代幣</div><div class="card-stock" id="stock2"></div></div>
+<div class="card-item card-dragon" onclick="showBuyModal(3)" id="cardItem3"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button><div class="card-emoji">🐉</div><div class="card-name">神龍奪寶</div><div class="card-price">500 代幣</div><div class="card-stock" id="stock3"></div></div>
+<div class="card-item card-vault" onclick="showBuyModal(4)" id="cardItem4"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(4)">ℹ</button><div class="card-emoji">💰</div><div class="card-name">皇家金庫</div><div class="card-price">1,000 代幣</div><div class="card-stock" id="stock4"></div></div>
+<div class="card-item card-ocean" onclick="showBuyModal(5)" id="cardItem5"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(5)">ℹ</button><div class="card-emoji">🌊</div><div class="card-name">深海霸主</div><div class="card-price">2,000 代幣</div><div class="card-stock" id="stock5"></div></div>
 </div>
 </div>
 <div id="scratchScreen" class="screen">
@@ -181,12 +198,18 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div id="historyScreen" class="screen">
 <div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">📜 歷史紀錄</div></div>
 <div class="history-list" id="historyList"></div>
+<button class="reset-pool-btn" onclick="resetInventory()">🔄 重設所有獎池</button>
+</div>
+<div id="myCardsScreen" class="screen">
+<div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">🎴 我的刮刮卡</div></div>
+<div id="myCardsList"></div>
 </div>
 </div>
 <div class="result-overlay" id="resultOverlay"><div class="result-card"><div class="result-emoji" id="resultEmoji">🎉</div><div class="result-text" id="resultText">恭喜中獎！</div><div class="result-amount" id="resultAmount">$0</div><button class="result-btn" onclick="closeResult()">收下獎金 💰</button></div></div>
 <div class="modal-overlay" id="prizeModal"><div class="modal"><h2 id="prizeModalTitle">獎項配率</h2><table class="prize-table" id="prizeTable"></table><br><button class="result-btn" style="width:100%" onclick="closePrizeModal()">知道了 👍</button></div></div>
 <div class="modal-overlay" id="topupModal"><div class="modal"><h2>💳 儲值代幣</h2><p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center">1 TWD = 1 代幣</p><div class="topup-grid"><div class="topup-option" onclick="doTopup(100)"><div class="coins">🔸 100</div><div class="price">NT$ 100</div></div><div class="topup-option" onclick="doTopup(500)"><div class="coins">🔸 500</div><div class="price">NT$ 500</div></div><div class="topup-option" onclick="doTopup(1000)"><div class="coins">🔸 1,000</div><div class="price">NT$ 1,000</div></div><div class="topup-option" onclick="doTopup(3000)"><div class="coins">🔸 3,000</div><div class="price">NT$ 3,000</div></div></div><br><button class="result-btn" style="width:100%;background:rgba(255,255,255,0.1);color:#fff" onclick="closeTopup()">取消</button></div></div>
 <div class="modal-overlay" id="exchangeModal"><div class="modal"><h2>🔄 獎金兌換代幣</h2><div class="exchange-info">將您的獎金兌換成代幣繼續遊戲！</div><div class="exchange-info">匯率：$1 獎金 = 1 代幣</div><div style="text-align:center;margin:12px 0"><span style="color:rgba(255,255,255,0.5)">目前獎金：</span><span style="color:#ff6b6b;font-weight:900;font-size:18px" id="exchangePrize">$0</span></div><div class="exchange-input-row"><input type="number" class="exchange-input" id="exchangeAmount" placeholder="輸入兌換金額" min="1" oninput="updateExchangePreview()"></div><div class="exchange-preview"><div class="ep-label">可獲得代幣</div><div class="ep-value" id="exchangePreview">🔸 0</div></div><div style="display:flex;gap:10px"><button class="result-btn" style="flex:1" onclick="doExchange()">確認兌換</button><button class="result-btn" style="flex:1;background:rgba(255,255,255,0.1);color:#fff" onclick="closeExchange()">取消</button></div><div style="margin-top:12px"><button class="result-btn" style="width:100%;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;font-size:14px;padding:10px" onclick="doExchangeAll()">全部兌換 💱</button></div></div></div>
+<div class="modal-overlay" id="buyModal"><div class="modal"><h2 id="buyModalTitle">購買刮刮卡</h2><div id="buyModalInfo"></div><div style="text-align:center;margin:12px 0"><div style="font-size:13px;color:rgba(255,255,255,0.5)">剩餘張數</div><div style="font-size:24px;font-weight:900;color:#ffd700" id="buyRemaining">0 / 100,000</div><div style="width:100%;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;margin-top:8px"><div id="buyProgressBar" style="height:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);border-radius:4px;transition:width 0.3s"></div></div></div><div style="display:flex;gap:10px;margin:16px 0;justify-content:center"><button class="qty-btn" id="qtyBtn1" onclick="setBuyQty(1)">1 張</button><button class="qty-btn" id="qtyBtn5" onclick="setBuyQty(5)">5 張</button><button class="qty-btn" id="qtyBtn10" onclick="setBuyQty(10)">10 張</button></div><div style="text-align:center;margin:12px 0"><span style="color:rgba(255,255,255,0.5)">總價：</span><span style="font-size:24px;font-weight:900;color:#ffd700" id="buyTotalPrice">0</span><span style="color:rgba(255,255,255,0.5)"> 代幣</span></div><button class="result-btn" style="width:100%" id="buyConfirmBtn" onclick="confirmBuy()">確認購買</button><button class="result-btn" style="width:100%;background:rgba(255,255,255,0.1);color:#fff;margin-top:8px" onclick="closeBuyModal()">取消</button></div></div>
 <div class="ad-overlay" id="adOverlay"><div class="ad-box"><div class="ad-text">📺 廣告播放中...</div><div class="ad-countdown" id="adCountdown">5</div></div><div class="ad-reward">觀看完畢可獲得 🔸 10 代幣</div></div>
 <script>
 const CARDS=[
@@ -215,10 +238,152 @@ const CARD_DESCS=[
 
 let state=JSON.parse(localStorage.getItem('scratchState')||'null')||{tokens:500,prize:0,history:[]};
 let currentCard=null,currentWinnings=0,zonesTotal=0,zonesRevealed=0;
+let currentBuyIdx=0,currentBuyQty=1;
+let currentScratchCardId=null; // track which myCard is being scratched
 
 function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
-function updateUI(){document.getElementById('tokenDisplay').textContent=state.tokens.toLocaleString();document.getElementById('prizeDisplay').textContent=state.prize.toLocaleString()}
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='historyScreen')renderHistory();if(id==='homeScreen')updateUI()}
+
+/* ===== INVENTORY SYSTEM ===== */
+function initInventory(){
+if(!state.inventory){
+state.inventory={};
+CARDS.forEach((c,idx)=>{
+const prizesLeft=c.prizes.map(p=>({amt:p.amt,cnt:p.cnt}));
+const totalPrizeCards=c.prizes.reduce((s,p)=>s+p.cnt,0);
+const zerosLeft=c.total-totalPrizeCards;
+state.inventory[idx]={remaining:c.total,prizesLeft:prizesLeft,zerosLeft:zerosLeft};
+});
+save();
+}
+if(!state.myCards){state.myCards=[];save();}
+}
+
+function drawFromPool(idx){
+const inv=state.inventory[idx];
+const totalPrizes=inv.prizesLeft.reduce((s,p)=>s+p.cnt,0);
+const totalItems=totalPrizes+inv.zerosLeft;
+if(totalItems<=0)return 0;
+const r=Math.floor(Math.random()*totalItems);
+let cum=0;
+for(const p of inv.prizesLeft){
+cum+=p.cnt;
+if(r<cum){p.cnt--;return p.amt;}
+}
+inv.zerosLeft--;
+return 0;
+}
+
+function resetInventory(){
+if(!confirm('確定要重設所有獎池？庫存和已購買的卡片將全部清除！'))return;
+delete state.inventory;
+state.myCards=[];
+save();
+initInventory();
+updateUI();
+showToast('獎池已重設！');
+}
+
+/* ===== BUY MODAL ===== */
+function showBuyModal(idx){
+const c=CARDS[idx];
+const inv=state.inventory[idx];
+if(!inv||inv.remaining<=0){showToast('已售罄！');return;}
+currentBuyIdx=idx;
+currentBuyQty=1;
+document.getElementById('buyModalTitle').textContent='購買 '+c.emoji+' '+c.name;
+document.getElementById('buyRemaining').textContent=inv.remaining.toLocaleString()+' / '+c.total.toLocaleString();
+document.getElementById('buyProgressBar').style.width=(inv.remaining/c.total*100)+'%';
+setBuyQty(1);
+document.getElementById('buyModal').classList.add('show');
+}
+function closeBuyModal(){document.getElementById('buyModal').classList.remove('show')}
+function setBuyQty(q){
+currentBuyQty=q;
+const c=CARDS[currentBuyIdx];
+document.getElementById('buyTotalPrice').textContent=(c.price*q).toLocaleString();
+document.querySelectorAll('.qty-btn').forEach(b=>b.classList.remove('selected'));
+const btn=document.getElementById('qtyBtn'+q);
+if(btn)btn.classList.add('selected');
+}
+function confirmBuy(){
+const idx=currentBuyIdx;
+const qty=currentBuyQty;
+const c=CARDS[idx];
+const total=c.price*qty;
+const inv=state.inventory[idx];
+if(state.tokens<total){showToast('代幣不足！');return;}
+if(inv.remaining<qty){showToast('庫存不足！');return;}
+state.tokens-=total;
+for(let i=0;i<qty;i++){
+const prize=drawFromPool(idx);
+inv.remaining--;
+state.myCards.push({id:Date.now()+'_'+Math.random().toString(36).substr(2,5),cardIdx:idx,prize:prize,purchasedAt:Date.now(),scratched:false});
+}
+save();updateUI();closeBuyModal();
+showToast('成功購買 '+qty+' 張 '+c.emoji+' '+c.name+'！');
+}
+
+/* ===== MY CARDS ===== */
+function renderMyCards(){
+const list=document.getElementById('myCardsList');
+const unscratched=state.myCards.filter(c=>!c.scratched);
+if(unscratched.length===0){
+list.innerHTML='<p style="text-align:center;color:rgba(255,255,255,0.3);padding:40px">還沒有刮刮卡，去首頁購買吧！</p>';
+return;
+}
+list.innerHTML=unscratched.map(card=>{
+const c=CARDS[card.cardIdx];
+return '<div class="my-card-item" onclick="startScratchMyCard(\''+card.id+'\')">'+
+'<div class="my-card-emoji">'+c.emoji+'</div>'+
+'<div class="my-card-info">'+
+'<div class="my-card-name">'+c.name+'</div>'+
+'<div class="my-card-price">'+c.price+' 代幣</div>'+
+'</div>'+
+'<div class="my-card-arrow">▶</div>'+
+'</div>';
+}).join('');
+}
+
+function startScratchMyCard(id){
+const card=state.myCards.find(c=>c.id===id);
+if(!card||card.scratched)return;
+currentCard=card.cardIdx;
+currentWinnings=card.prize;
+currentScratchCardId=id;
+setupScratchCard(card.cardIdx,card.prize);
+showScreen('scratchScreen');
+const c=CARDS[card.cardIdx];
+document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name;
+}
+
+function updateUI(){
+document.getElementById('tokenDisplay').textContent=state.tokens.toLocaleString();
+document.getElementById('prizeDisplay').textContent=state.prize.toLocaleString();
+// Update stock display
+if(state.inventory){
+CARDS.forEach((c,idx)=>{
+const inv=state.inventory[idx];
+const stockEl=document.getElementById('stock'+idx);
+const cardEl=document.getElementById('cardItem'+idx);
+if(stockEl&&inv){
+stockEl.textContent='剩餘 '+inv.remaining.toLocaleString()+' 張';
+if(inv.remaining<=0){
+if(cardEl)cardEl.classList.add('sold-out');
+}else{
+if(cardEl)cardEl.classList.remove('sold-out');
+}
+}
+});
+}
+// Update myCard badge
+const badge=document.getElementById('myCardBadge');
+if(badge&&state.myCards){
+const count=state.myCards.filter(c=>!c.scratched).length;
+if(count>0){badge.style.display='flex';badge.textContent=count>99?'99+':count;}
+else{badge.style.display='none';}
+}
+}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='historyScreen')renderHistory();if(id==='myCardsScreen')renderMyCards();if(id==='homeScreen')updateUI()}
 function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
 
 function showPrizeInfo(idx){const c=CARDS[idx];document.getElementById('prizeModalTitle').textContent=c.emoji+' '+c.name+' - 獎項配率';let html='<tr><th>獎金</th><th>張數</th><th>機率</th></tr>';c.prizes.forEach(p=>{const pct=(p.cnt/c.total*100).toFixed(p.cnt<100?3:1);html+=`<tr><td class="amount-col">$${p.amt.toLocaleString()}</td><td>${p.cnt.toLocaleString()}</td><td>${pct}%</td></tr>`});const noWin=c.total-c.prizes.reduce((s,p)=>s+p.cnt,0);if(noWin>0){html+=`<tr><td style="color:rgba(255,255,255,0.4)">未中獎</td><td>${noWin.toLocaleString()}</td><td>${(noWin/c.total*100).toFixed(1)}%</td></tr>`}html+=`<tr><td colspan="3" style="color:rgba(255,255,255,0.3);font-size:12px;padding-top:12px">總張數: ${c.total.toLocaleString()}</td></tr>`;document.getElementById('prizeTable').innerHTML=html;document.getElementById('prizeModal').classList.add('show')}
@@ -845,14 +1010,8 @@ return `<div style="text-align:center"><div style="font-size:11px;color:rgba(255
 /* ===== SETUP SCRATCH CARD ===== */
 
 function buyCard(idx){
-const c=CARDS[idx];
-if(state.tokens<c.price){showToast('代幣不足！請先儲值 💳');return}
-state.tokens-=c.price;save();updateUI();
-currentCard=idx;
-currentWinnings=rollPrize(idx);
-setupScratchCard(idx,currentWinnings);
-showScreen('scratchScreen');
-document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name;
+// Legacy: now handled by showBuyModal → confirmBuy → startScratchMyCard
+showBuyModal(idx);
 }
 
 function setupScratchCard(cardIdx,totalWin){
@@ -1203,6 +1362,12 @@ document.getElementById('resultText').textContent='未中獎，再試試！';
 ov.classList.add('show');
 const c=CARDS[currentCard];
 state.prize+=amount;
+// Mark myCard as scratched
+if(currentScratchCardId){
+const card=state.myCards.find(mc=>mc.id===currentScratchCardId);
+if(card)card.scratched=true;
+currentScratchCardId=null;
+}
 state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:amount,time:Date.now()});
 if(state.history.length>50)state.history.pop();
 save();
@@ -1249,7 +1414,7 @@ let f=0;
 (function draw(){if(f>120){ctx.clearRect(0,0,cv.width,cv.height);return}ctx.clearRect(0,0,cv.width,cv.height);pcs.forEach(p=>{p.vy+=p.g;p.vx*=p.d;p.x+=p.vx;p.y+=p.vy;p.rot+=p.rv;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.globalAlpha=Math.max(0,1-f/120);ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);ctx.restore()});f++;requestAnimationFrame(draw)})();
 }
 
-updateUI();initParticles();
+initInventory();updateUI();initParticles();
 </script>
 </body>
 </html>
