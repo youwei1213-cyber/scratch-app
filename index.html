@@ -397,7 +397,18 @@ function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
 
 /* ===== INVENTORY SYSTEM ===== */
 function initInventory(){
-if(!state.inventory){
+let needReset=false;
+if(state.inventory){
+CARDS.forEach((c,idx)=>{
+const inv=state.inventory[idx];
+if(!inv){needReset=true;return;}
+const oldTotal=inv.prizesLeft.reduce((s,p)=>s+p.cnt,0)+inv.zerosLeft+(c.total-inv.remaining-inv.prizesLeft.reduce((s,p)=>s+p.cnt,0)-inv.zerosLeft);
+const expectedTotal=inv.remaining+inv.prizesLeft.reduce((s,p)=>s+(c.prizes.find(cp=>cp.amt===p.amt)?c.prizes.find(cp=>cp.amt===p.amt).cnt:p.cnt)-p.cnt,0);
+if(Math.abs(inv.remaining+inv.prizesLeft.reduce((s,p)=>s+p.cnt,0)+inv.zerosLeft-c.total)>c.total*0.5){needReset=true;}
+});
+}
+if(!state.inventory||needReset){
+if(needReset)console.log('配率已更新，自動重設獎池');
 state.inventory={};
 CARDS.forEach((c,idx)=>{
 const prizesLeft=c.prizes.map(p=>({amt:p.amt,cnt:p.cnt}));
@@ -405,6 +416,7 @@ const totalPrizeCards=c.prizes.reduce((s,p)=>s+p.cnt,0);
 const zerosLeft=c.total-totalPrizeCards;
 state.inventory[idx]={remaining:c.total,prizesLeft:prizesLeft,zerosLeft:zerosLeft};
 });
+state.myCards=[];
 save();
 }
 if(!state.myCards){state.myCards=[];save();}
@@ -523,7 +535,7 @@ const maxPrizeEl=document.getElementById('maxPrize'+idx);
 if(inv){
 // Stock bar and text
 if(stockBar)stockBar.style.width=(inv.remaining/c.total*100)+'%';
-if(stockText)stockText.textContent='剩餘 '+inv.remaining.toLocaleString()+' 張';
+if(stockText)stockText.textContent='剩餘 '+inv.remaining.toLocaleString()+' / '+c.total.toLocaleString()+' 張';
 // Win rate (from CARDS prizes)
 if(winRateEl){
 const totalPrizeCards=c.prizes.reduce((s,p)=>s+p.cnt,0);
