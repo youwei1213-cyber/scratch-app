@@ -346,6 +346,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 <div id="myCardsScreen" class="screen">
 <div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">🎴 我的刮刮卡</div></div>
 <div id="myCardsList"></div>
+<button id="scratchAllBtn" onclick="scratchAllCards()" style="display:none;margin:16px auto;padding:12px 28px;border:none;border-radius:12px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;width:100%;box-shadow:0 4px 12px rgba(255,215,0,0.3)">⚡ 全部刮開</button>
 </div>
 <div class="bottom-nav" id="bottomNav">
 <div class="nav-item active" id="navHome" onclick="showScreen('homeScreen')">
@@ -482,6 +483,7 @@ showToast('成功購買 '+qty+' 張 '+c.emoji+' '+c.name+'！');
 /* ===== MY CARDS ===== */
 function renderMyCards(){
 const list=document.getElementById('myCardsList');
+const scratchAllBtn=document.getElementById('scratchAllBtn');
 const unscratched=state.myCards.filter(c=>!c.scratched);
 if(unscratched.length===0){
 list.innerHTML='<p style="text-align:center;color:rgba(0,0,0,0.3);padding:40px">還沒有刮刮卡，去首頁購買吧！</p>';
@@ -1547,6 +1549,39 @@ currentScratchCardId=null;
 state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:amount,time:Date.now()});
 if(state.history.length>50)state.history.pop();
 save();
+}
+
+
+function scratchAllCards(){
+const unscratched=state.myCards.filter(c=>!c.scratched);
+if(unscratched.length===0){showToast('沒有未刮的卡片');return;}
+if(!confirm('確定要全部刮開 '+unscratched.length+' 張嗎？將直接顯示所有結果'))return;
+let totalWon=0;
+const results=[];
+unscratched.forEach(card=>{
+card.scratched=true;
+const c=CARDS[card.cardIdx];
+totalWon+=card.prize;
+results.push({emoji:c.emoji,name:c.name,cost:c.price,prize:card.prize});
+state.prize+=card.prize;
+state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:card.prize,time:Date.now()});
+});
+if(state.history.length>200)state.history.splice(200);
+save();
+updateUI();
+renderMyCards();
+const resultHtml=results.map(r=>{
+const net=r.prize-r.cost;
+return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.06)"><span>'+r.emoji+' '+r.name+'</span><span style="font-weight:700;color:'+(net>=0?'#b8860b':'#e74c3c')+'">$'+r.prize.toLocaleString()+'</span></div>';
+}).join('');
+const overlay=document.getElementById('resultOverlay');
+document.getElementById('resultEmoji').textContent=totalWon>0?'🎉':'😔';
+document.getElementById('resultText').innerHTML='全部 '+results.length+' 張結果<div style="max-height:200px;overflow-y:auto;margin:12px 0;text-align:left;font-size:13px">'+resultHtml+'</div>';
+document.getElementById('resultAmount').textContent='總獎金 $'+totalWon.toLocaleString();
+document.getElementById('resultBtn').textContent='收下全部獎金 💰';
+document.getElementById('resultBtn').onclick=function(){overlay.classList.remove('show');showScreen('myCardsScreen');updateUI()};
+overlay.classList.add('show');
+if(totalWon>=500)launchConfetti();
 }
 
 function scratchNext(){
