@@ -1239,10 +1239,10 @@ for(let i=0;i<extraGameCount;i++){
 const mg=vaultMiniGames[i];
 const zoneIdx=1+i;  // zone0 = safebox block, zone1+ = extra games
 const prize=vd.extraPrizes[i];
-html+=`<div class="game-zone" id="zone${zoneIdx}">
+html+=`<div class="game-zone-title" style="margin-top:12px"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
+<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">${mg.desc}</div>
+<div class="game-zone" id="zone${zoneIdx}">
 <div class="zone-content">
-<div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
-<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:8px">${mg.desc}</div>
 ${mg.gen(prize)}
 <div style="text-align:center;margin-top:10px;padding:8px;background:rgba(0,0,0,0.03);border-radius:8px"><span style="font-size:12px;color:rgba(0,0,0,0.4)">獎金 </span><span style="font-size:20px;font-weight:900;color:#b8860b">$${(prize>0?prize:[500,1000,2000,5000,10000][Math.floor(Math.random()*5)]).toLocaleString()}</span></div>
 </div>
@@ -1301,10 +1301,10 @@ for(let i=0;i<extraGameCount;i++){
 const mg=oceanMiniGames[i];
 const zoneIdx=1+i;  // zone0 = creatures block, zone1+ = extra games
 const prize=od.extraPrizes[i];
-html+=`<div class="game-zone" id="zone${zoneIdx}">
+html+=`<div class="game-zone-title" style="margin-top:12px"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
+<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">${mg.desc}</div>
+<div class="game-zone" id="zone${zoneIdx}">
 <div class="zone-content">
-<div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
-<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:8px">${mg.desc}</div>
 ${mg.gen(prize)}
 <div style="text-align:center;margin-top:10px;padding:8px;background:rgba(0,0,0,0.03);border-radius:8px"><span style="font-size:12px;color:rgba(0,0,0,0.4)">獎金 </span><span style="font-size:20px;font-weight:900;color:#b8860b">$${(prize>0?prize:[500,1000,2000,5000,10000][Math.floor(Math.random()*5)]).toLocaleString()}</span></div>
 </div>
@@ -1329,10 +1329,10 @@ let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div><div class="game-z
 for(let i=0;i<numZones;i++){
 const mg=HORSE_GAMES[i];
 const prize=zoneAmts[i];
-html+=`<div class="game-zone" id="zone${i}">
+html+=`<div class="game-zone-title" style="margin-top:12px"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
+<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">${mg.desc}</div>
+<div class="game-zone" id="zone${i}">
 <div class="zone-content">
-<div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
-<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:8px">${mg.desc}</div>
 ${mg.gen(prize)}
 <div style="text-align:center;margin-top:10px;padding:8px;background:rgba(0,0,0,0.03);border-radius:8px"><span style="font-size:12px;color:rgba(0,0,0,0.4)">獎金 </span><span style="font-size:20px;font-weight:900;color:#b8860b">$${(prize>0?prize:[500,1000,2000,5000,10000][Math.floor(Math.random()*5)]).toLocaleString()}</span></div>
 
@@ -1353,10 +1353,10 @@ let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div><div class="game-z
 for(let i=0;i<numZones;i++){
 const mg=TOMB_GAMES[i];
 const prize=zoneAmts[i];
-html+=`<div class="game-zone" id="zone${i}">
+html+=`<div class="game-zone-title" style="margin-top:12px"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
+<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">${mg.desc}</div>
+<div class="game-zone" id="zone${i}">
 <div class="zone-content">
-<div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
-<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:8px">${mg.desc}</div>
 ${mg.gen(prize)}
 <div style="text-align:center;margin-top:10px;padding:8px;background:rgba(0,0,0,0.03);border-radius:8px"><span style="font-size:12px;color:rgba(0,0,0,0.4)">獎金 </span><span style="font-size:20px;font-weight:900;color:#b8860b">$${(prize>0?prize:[500,1000,2000,5000,10000][Math.floor(Math.random()*5)]).toLocaleString()}</span></div>
 
@@ -1377,10 +1377,10 @@ let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div><div class="game-z
 for(let i=0;i<numZones;i++){
 const mg=DRAGON_GAMES[i];
 const prize=zoneAmts[i];
-html+=`<div class="game-zone" id="zone${i}">
+html+=`<div class="game-zone-title" style="margin-top:12px"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
+<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">${mg.desc}</div>
+<div class="game-zone" id="zone${i}">
 <div class="zone-content">
-<div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
-<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:8px">${mg.desc}</div>
 ${mg.gen(prize)}
 <div style="text-align:center;margin-top:10px;padding:8px;background:rgba(0,0,0,0.03);border-radius:8px"><span style="font-size:12px;color:rgba(0,0,0,0.4)">獎金 </span><span style="font-size:20px;font-weight:900;color:#b8860b">$${(prize>0?prize:[500,1000,2000,5000,10000][Math.floor(Math.random()*5)]).toLocaleString()}</span></div>
 
@@ -1406,9 +1406,9 @@ const zw=zoneAmts[i];
 let title=`<span class="zone-icon">🎲</span>第 ${i+1} 場`;
 let content=genFireDice(zw);
 
-html+=`<div class="game-zone" id="zone${i}">
+html+=`<div class="game-zone-title" style="margin-top:12px">${title}</div>
+<div class="game-zone" id="zone${i}">
 <div class="zone-content">
-<div class="game-zone-title">${title}</div>
 ${content}
 <div style="text-align:center;margin-top:10px;padding:8px;background:rgba(0,0,0,0.03);border-radius:8px"><span style="font-size:12px;color:rgba(0,0,0,0.4)">獎金 </span><span style="font-size:20px;font-weight:900;color:#b8860b">$${(zw>0?zw:[500,1000,2000,5000,10000][Math.floor(Math.random()*5)]).toLocaleString()}</span></div>
 </div>
