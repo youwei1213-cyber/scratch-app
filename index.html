@@ -501,6 +501,7 @@ return '<div class="my-card-item" onclick="startScratchMyCard(\''+card.id+'\')">
 }
 
 function startScratchMyCard(id){
+window.scrollTo(0,0);
 const card=state.myCards.find(c=>c.id===id);
 if(!card||card.scratched)return;
 currentCard=card.cardIdx;
@@ -1569,6 +1570,7 @@ save();
 
 function scratchNext(){
 document.getElementById('resultOverlay').classList.remove('show');
+window.scrollTo(0,0);
 const unscratched=state.myCards.filter(c=>!c.scratched);
 if(unscratched.length===0){
 showToast('沒有更多刮刮卡了！');
