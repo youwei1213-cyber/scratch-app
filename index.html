@@ -612,7 +612,7 @@ return `<div class="compare-row">
 <div class="compare-vs">VS</div>
 <div class="compare-card"><div class="label">莊家骰子 🎲</div><div class="value" style="font-size:36px">${diceEmojis[dealerDice-1]}</div><div style="font-size:12px;color:rgba(0,0,0,0.4)">${dealerDice} 點</div></div>
 </div>
-<div class="zone-prize">獎金 <span class="amt">$${win.toLocaleString()}</span></div>`;
+`;
 }
 
 /* ===== 極速賽馬 5 個獨立遊戲 (cardIdx=1) ===== */
@@ -620,7 +620,7 @@ function genHorse1_coin(win){
 const result=win>0;
 return `<div style="text-align:center">
 <div style="font-size:48px;margin:8px 0">${result?'👑':'✗'}</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${result?'正面 — 中獎！':'反面 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${result?'正面 👑':'反面 ✗'}</div>
 </div>`;
 }
 function genHorse2_roulette(win){
@@ -628,7 +628,7 @@ const result=win>0;
 return `<div style="text-align:center">
 <div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">你押: 🔴 紅</div>
 <div style="font-size:48px;margin:8px 0">${result?'🔴':'⚫'}</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">結果: ${result?'紅 — 中獎！':'黑 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">結果: ${result?'🔴 紅':'⚫ 黑'}</div>
 </div>`;
 }
 function genHorse3_suit(win){
@@ -657,7 +657,7 @@ return `<div style="text-align:center">
 <div style="font-size:16px;font-weight:900;color:rgba(0,0,0,0.5)">vs</div>
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(0,0,0,0.5)">物品</div><div style="font-size:22px;font-weight:900">${item}</div></div>
 </div>
-<div style="font-size:14px;font-weight:700;margin:8px 0">${weight>=item?'⚖️ 平衡 — 中獎！':'⚖️ 不平衡 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;margin:8px 0">${weight>=item?'⚖️ 平衡':'⚖️ 不平衡'}</div>
 </div>`;
 }
 function genHorse5_number(win){
@@ -666,14 +666,14 @@ if(win>0){const evens=[2,4,6];num=evens[Math.floor(Math.random()*evens.length)];
 else{const odds=[1,3,5];num=odds[Math.floor(Math.random()*odds.length)];}
 return `<div style="text-align:center">
 <div style="font-size:48px;margin:8px 0">${num}</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${num%2===0?'偶數 — 中獎！':'奇數 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${num%2===0?'偶數':'奇數'}</div>
 </div>`;
 }
 const HORSE_GAMES=[
-{icon:'🪙',name:'幸運翻幣',desc:'正面👑中獎，反面✗未中獎',gen:genHorse1_coin},
+{icon:'🪙',name:'幸運翻幣',desc:'翻開硬幣，正面👑即可獲得獎金',gen:genHorse1_coin},
 {icon:'🎯',name:'幸運輪盤',desc:'你押紅🔴，結果紅就中，黑⚫未中',gen:genHorse2_roulette},
-{icon:'🎴',name:'猜花色',desc:'你猜♥，開牌♥中獎，其他未中',gen:genHorse3_suit},
-{icon:'⚖️',name:'天秤之量',desc:'砝碼 ≥ 物品就平衡中獎',gen:genHorse4_balance},
+{icon:'🎴',name:'猜花色',desc:'你猜 ♥，刮開看花色是否命中',gen:genHorse3_suit},
+{icon:'⚖️',name:'天秤之量',desc:'砝碼 ≥ 物品重量天秤即平衡',gen:genHorse4_balance},
 {icon:'🔢',name:'幸運數字',desc:'開數字(1-6)，偶數中獎',gen:genHorse5_number}
 ];
 
@@ -682,7 +682,7 @@ function genTomb1_antique(win){
 const result=win>0;
 return `<div style="text-align:center">
 <div style="font-size:48px;margin:8px 0">${result?'🏺':'🏺'}</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${result?'✅ 真品 — 中獎！':'❌ 贗品 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${result?'✅ 真品':'❌ 贗品'}</div>
 </div>`;
 }
 function genTomb2_map(win){
@@ -727,7 +727,7 @@ return `<div style="text-align:center">
 <div style="display:flex;justify-content:center;gap:12px;margin:8px 0">
 ${pieces.map((p,i)=>`<div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 14px;font-size:24px">${p}</div>`).join('')}
 </div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${pieces.every(p=>p==='✅')?'🧩 拼圖完成 — 中獎！':'🧩 拼圖缺失 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${pieces.every(p=>p==='✅')?'🧩 拼圖完成':'🧩 拼圖缺失'}</div>
 </div>`;
 }
 function genTomb5_temp(win){
@@ -743,7 +743,7 @@ if(temp<0)temp=0;
 return `<div style="text-align:center">
 <div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">目標範圍: ${lo}°C ~ ${hi}°C</div>
 <div style="font-size:36px;font-weight:900;margin:8px 0">🌡️ ${temp}°C</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${(temp>=lo&&temp<=hi)?'在範圍內 — 中獎！':'超出範圍 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${(temp>=lo&&temp<=hi)?'在範圍內':'超出範圍'}</div>
 </div>`;
 }
 function genTomb6_music(win){
@@ -756,7 +756,7 @@ return `<div style="text-align:center">
 <div style="font-size:36px">${n1}</div>
 <div style="font-size:36px">${n2}</div>
 </div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${n1===n2?'🎵 配對成功 — 中獎！':'🎵 配對失敗 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${n1===n2?'🎵 配對成功':'🎵 配對失敗'}</div>
 </div>`;
 }
 function genTomb7_siege(win){
@@ -774,14 +774,14 @@ return `<div style="text-align:center">
 <div style="font-size:16px;font-weight:900;color:rgba(0,0,0,0.5)">vs</div>
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(0,0,0,0.5)">城牆</div><div style="font-size:22px;font-weight:900">${wall}</div></div>
 </div>
-<div style="font-size:14px;font-weight:700;margin:8px 0">${army>wall?'🏰 攻城成功！':'🏰 攻城失敗...'}</div>
+<div style="font-size:14px;font-weight:700;margin:8px 0">${army>wall?'🏰 攻城成功':'🏰 攻城失敗'}</div>
 </div>`;
 }
 const TOMB_GAMES=[
-{icon:'🏺',name:'古董鑑定',desc:'真品✅中獎，贗品❌未中',gen:genTomb1_antique},
+{icon:'🏺',name:'古董鑑定',desc:'刮開鑑定結果，看看是真品還是贗品',gen:genTomb1_antique},
 {icon:'🗺️',name:'藏寶圖',desc:'你的方位 = 寶藏方位就中',gen:genTomb2_map},
 {icon:'⚔️',name:'勇者戰鬥',desc:'攻擊力 > 防禦力就中',gen:genTomb3_battle},
-{icon:'🧩',name:'拼圖挑戰',desc:'3片都✅完成就中，有❌就未中',gen:genTomb4_puzzle},
+{icon:'🧩',name:'拼圖挑戰',desc:'三片拼圖全部✅即可獲得獎金',gen:genTomb4_puzzle},
 {icon:'🌡️',name:'溫度猜猜',desc:'溫度落在目標範圍內就中',gen:genTomb5_temp},
 {icon:'🎵',name:'音符配對',desc:'2個音符相同就中',gen:genTomb6_music},
 {icon:'🏰',name:'攻城戰',desc:'兵力 > 城牆就中',gen:genTomb7_siege}
@@ -797,13 +797,13 @@ return `<div style="text-align:center">
 <div style="display:flex;justify-content:center;gap:16px;margin:8px 0">
 <div style="font-size:36px">${s1}</div><div style="font-size:36px">${s2}</div>
 </div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${s1===s2?'💫 連線成功 — 中獎！':'💫 未連線 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${s1===s2?'💫 連線成功':'💫 未連線'}</div>
 </div>`;
 }
 function genDragon2_instant(win){
 return `<div style="text-align:center">
 <div style="font-size:36px;margin:8px 0">🎁</div>
-<div style="font-size:22px;font-weight:900;color:#333;margin:8px 0">$${win.toLocaleString()}</div>
+
 <div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${win>0?'恭喜獲獎！':'很遺憾，沒有獎金'}</div>
 </div>`;
 }
@@ -826,7 +826,7 @@ return `<div style="text-align:center">
 ${cells.map(c=>`<span style="font-size:22px">${c}</span>`).join('')}
 </div>
 <div style="font-size:12px;color:rgba(0,0,0,0.4);margin:4px 0">✨ × ${count} / 7（≥3 中獎）</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${count>=3?'🐲 龍珠收集成功！':'🐲 龍珠不足...'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${count>=3?'🐲 龍珠收集成功':'🐲 龍珠不足'}</div>
 </div>`;
 }
 function genDragon4_circus(win){
@@ -836,8 +836,8 @@ else{balls=1+Math.floor(Math.random()*2);}
 return `<div style="text-align:center">
 <div style="font-size:36px;margin:8px 0">🎪</div>
 <div style="font-size:22px;font-weight:900;margin:4px 0">拋球: ${balls}</div>
-<div style="font-size:12px;color:rgba(0,0,0,0.4)">≥3 個球中獎</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${balls>=3?'成功接住 — 中獎！':'球掉了 — 未中獎'}</div>
+<div style="font-size:12px;color:rgba(0,0,0,0.4)">≥3 個球即過關</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${balls>=3?'成功接住':'球掉了'}</div>
 </div>`;
 }
 function genDragon5_rainbow(win){
@@ -857,7 +857,7 @@ return `<div style="text-align:center">
 <div style="display:flex;justify-content:center;gap:12px;margin:8px 0">
 ${cells.map(c=>`<span style="font-size:32px">${c}</span>`).join('')}
 </div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${unique.size===3?'🌈 三色齊全 — 中獎！':'🌈 顏色不全 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${unique.size===3?'🌈 三色齊全':'🌈 顏色不全'}</div>
 </div>`;
 }
 function genDragon6_pirate(win){
@@ -894,7 +894,7 @@ return `<div style="text-align:center">
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 14px;font-size:28px">${f2}</div>
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 14px;font-size:28px">${f3}</div>
 </div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${(f1===f2&&f2===f3)?'🎰 三連線 — 中獎！':'🎰 未連線 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${(f1===f2&&f2===f3)?'🎰 三連線':'🎰 未連線'}</div>
 </div>`;
 }
 function genDragon8_flame(win){
@@ -905,8 +905,8 @@ const flames='🔥'.repeat(lv);
 return `<div style="text-align:center">
 <div style="font-size:28px;margin:8px 0">${flames}</div>
 <div style="font-size:22px;font-weight:900;margin:4px 0">等級: ${lv}</div>
-<div style="font-size:12px;color:rgba(0,0,0,0.4)">≥4 中獎</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${lv>=4?'🔥 火焰爆發 — 中獎！':'🔥 火力不足 — 未中獎'}</div>
+<div style="font-size:12px;color:rgba(0,0,0,0.4)">≥4 即過關</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${lv>=4?'🔥 火焰爆發':'🔥 火力不足'}</div>
 </div>`;
 }
 function genDragon9_magnet(win){
@@ -919,14 +919,14 @@ return `<div style="text-align:center">
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 18px;font-size:24px;font-weight:900">${p1}</div>
 <div style="background:rgba(0,0,0,0.05);border-radius:10px;padding:10px 18px;font-size:24px;font-weight:900">${p2}</div>
 </div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${p1!==p2?'🧲 異極相吸 — 中獎！':'🧲 同極相斥 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${p1!==p2?'🧲 異極相吸':'🧲 同極相斥'}</div>
 </div>`;
 }
 function genDragon10_crown(win){
 const result=win>0;
 return `<div style="text-align:center">
 <div style="font-size:48px;margin:8px 0">${result?'👑':'🎩'}</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${result?'👑 皇冠加冕 — 中獎！':'🎩 未獲加冕 — 未中獎'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${result?'👑 皇冠':'🎩 帽子'}</div>
 </div>`;
 }
 const DRAGON_GAMES=[
@@ -939,7 +939,7 @@ const DRAGON_GAMES=[
 {icon:'🎰',name:'三欄連線',desc:'3個水果一樣就中',gen:genDragon7_slots},
 {icon:'🔥',name:'火焰挑戰',desc:'火焰等級 ≥4 就中',gen:genDragon8_flame},
 {icon:'🧲',name:'磁力配對',desc:'不同極(一N一S)就中',gen:genDragon9_magnet},
-{icon:'👑',name:'皇冠加冕',desc:'👑中獎，🎩未中',gen:genDragon10_crown}
+{icon:'👑',name:'皇冠加冕',desc:'刮開看是👑還是🎩',gen:genDragon10_crown}
 ];
 
 /* ===== VAULT GAME (皇家金庫) ===== */
@@ -1029,7 +1029,7 @@ return `<span style="display:inline-block;padding:4px 10px;margin:2px;border-rad
 return `<div style="text-align:center"><div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:8px">選一條線剪斷</div>
 <div style="margin-bottom:8px">${wireDisplay}</div>
 <div style="font-size:13px;color:rgba(0,0,0,0.5)">你剪: ${wires[cutIdx]} | 正確: ${wires[correctIdx]}</div>
-<div style="font-size:14px;font-weight:700;margin:6px 0">${cutIdx===correctIdx?'✅ 拆彈成功！':'💥 拆彈失敗...'}</div></div>
+<div style="font-size:14px;font-weight:700;margin:6px 0">${cutIdx===correctIdx?'✅ 拆彈成功':'💥 拆彈失敗'}</div></div>
 `;
 }
 
