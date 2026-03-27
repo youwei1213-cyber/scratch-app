@@ -755,9 +755,10 @@ else{temp=hi+1+Math.floor(Math.random()*20);}
 if(temp<0)temp=0;
 }
 return `<div style="text-align:center">
-<div style="font-size:11px;color:rgba(0,0,0,0.35);margin-bottom:6px">目標範圍: ${lo}°C ~ ${hi}°C</div>
-<div style="font-size:36px;font-weight:900;margin:8px 0">🌡️ ${temp}°C</div>
-<div style="font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">${(temp>=lo&&temp<=hi)?'在範圍內':'超出範圍'}</div>
+<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:8px">目標範圍: ${lo}°C ~ ${hi}°C</div>
+<div style="font-size:20px;margin:6px 0">🌡️</div>
+<div style="font-size:36px;font-weight:900;color:#fff;margin:4px 0">${temp}°C</div>
+<div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.8)">${(temp>=lo&&temp<=hi)?'在範圍內':'超出範圍'}</div>
 </div>`;
 }
 function genTomb6_music(win){
