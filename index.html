@@ -159,6 +159,55 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .mycard-badge{position:absolute;top:-4px;right:-4px;background:#ff4444;color:#fff;font-size:10px;font-weight:900;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:1}
 .reset-pool-btn{margin-top:24px;padding:10px 20px;border:1px solid rgba(255,255,255,0.15);border-radius:12px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;display:block;width:100%;text-align:center;transition:all 0.3s}
 .reset-pool-btn:active{background:rgba(255,255,255,0.1)}
+/* ===== NEW: Banner ===== */
+.banner{padding:20px 16px;text-align:center;background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,140,0,0.08));border:1px solid rgba(255,215,0,0.15);border-radius:16px;margin-bottom:20px}
+.banner-text div:first-child{font-size:24px;font-weight:900;background:linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.banner-text div:last-child{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px}
+/* ===== NEW: Lottery Grid (2-col) ===== */
+.lottery-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-bottom:80px}
+.lottery-card{border-radius:16px;overflow:hidden;background:#1a1a2e;border:2px solid rgba(255,215,0,0.2);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
+.lottery-card:active{transform:scale(0.97)}
+.ticket-art{position:relative;height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden}
+.ticket-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.6);color:#ffd700;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;backdrop-filter:blur(4px);z-index:3}
+.ticket-illustration{font-size:64px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));position:relative;z-index:1}
+.ticket-art .art-sub{font-size:20px;opacity:0.6;margin-top:-4px;position:relative;z-index:1}
+.ticket-title-overlay{position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(transparent,rgba(0,0,0,0.7));font-size:16px;font-weight:900;text-shadow:0 2px 4px rgba(0,0,0,0.5);z-index:2}
+.ticket-info-btn{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;backdrop-filter:blur(4px)}
+.ticket-info{padding:12px}
+.ticket-name{font-size:15px;font-weight:700;margin-bottom:4px}
+.ticket-meta{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.ticket-stock{margin-bottom:8px}
+.stock-bar{width:100%;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden}
+.stock-fill{height:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);border-radius:2px;transition:width 0.5s}
+.stock-text{font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px}
+.ticket-go-btn{width:100%;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit;letter-spacing:2px}
+.lottery-card.sold-out{opacity:0.5;pointer-events:none}
+.lottery-card.sold-out .ticket-go-btn{background:#666;color:#999}
+/* Ticket art themes */
+.ticket-fire{background:linear-gradient(135deg,#ff4500,#ff8c00,#ffd700)}
+.ticket-fire::before{content:'🔥';position:absolute;font-size:40px;top:10px;right:10px;opacity:0.5;z-index:1}
+.ticket-fire::after{content:'';position:absolute;font-size:20px;bottom:30px;left:10px;opacity:0.4}
+.ticket-horse{background:linear-gradient(135deg,#1a6b00,#2d8b00,#4CAF50)}
+.ticket-horse::before{content:'🏆';position:absolute;font-size:40px;top:10px;right:10px;opacity:0.5;z-index:1}
+.ticket-tomb{background:linear-gradient(135deg,#5c3d00,#8B7355,#DAA520)}
+.ticket-tomb::before{content:'⚔️';position:absolute;font-size:40px;top:10px;right:10px;opacity:0.5;z-index:1}
+.ticket-dragon{background:linear-gradient(135deg,#4a0080,#8B008B,#9b59b6)}
+.ticket-dragon::before{content:'💎';position:absolute;font-size:40px;top:10px;right:10px;opacity:0.5;z-index:1}
+.ticket-vault{background:linear-gradient(135deg,#B8860B,#FFD700,#FFA500)}
+.ticket-vault::before{content:'💎';position:absolute;font-size:40px;top:10px;right:10px;opacity:0.5;z-index:1}
+.ticket-ocean{background:linear-gradient(135deg,#001a3d,#0066CC,#00CED1)}
+.ticket-ocean::before{content:'🦈';position:absolute;font-size:40px;top:10px;right:10px;opacity:0.5;z-index:1}
+/* Shine animation on ticket art */
+.ticket-art .shine-layer{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,0.1) 50%,transparent 60%);animation:ticketShine 3s infinite;z-index:2;pointer-events:none}
+@keyframes ticketShine{0%{transform:translateX(-100%) rotate(45deg)}100%{transform:translateX(100%) rotate(45deg)}}
+/* ===== NEW: Bottom Navigation ===== */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:flex;justify-content:space-around;background:rgba(10,0,21,0.95);border-top:1px solid rgba(255,215,0,0.15);padding:8px 0 env(safe-area-inset-bottom,8px);backdrop-filter:blur(10px);z-index:50}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 16px;position:relative}
+.nav-icon{font-size:22px}
+.nav-label{font-size:10px;color:rgba(255,255,255,0.5)}
+.nav-item.active .nav-label{color:#ffd700}
+.nav-item.active .nav-icon{filter:drop-shadow(0 0 6px rgba(255,215,0,0.5))}
+.nav-badge{position:absolute;top:0;right:8px;background:#ff4444;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:2px}
 </style>
 </head>
@@ -176,18 +225,111 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <button class="btn-sm btn-ad" onclick="showAd()">📺 看廣告</button>
 <button class="btn-sm btn-topup" onclick="showTopup()">💳 儲值</button>
 <button class="btn-sm btn-exchange" onclick="showExchange()">🔄 兌換</button>
-<button class="btn-sm btn-mycard" onclick="showScreen('myCardsScreen')" id="myCardBtn">🎴<span class="mycard-badge" id="myCardBadge" style="display:none">0</span></button>
-<button class="btn-sm btn-history" onclick="showScreen('historyScreen')">📜</button>
 </div>
 </div>
-<div class="main-title"><h1>🎰 幸運刮刮樂</h1><p>選擇面額，刮出好運！</p></div>
-<div class="card-grid">
-<div class="card-item card-fire" onclick="showBuyModal(0)" id="cardItem0"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(0)">ℹ</button><div class="card-emoji">🔥</div><div class="card-name">火焰骰子</div><div class="card-price">50 代幣</div><div class="card-stock" id="stock0"></div></div>
-<div class="card-item card-horse" onclick="showBuyModal(1)" id="cardItem1"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button><div class="card-emoji">🏇</div><div class="card-name">極速賽馬</div><div class="card-price">100 代幣</div><div class="card-stock" id="stock1"></div></div>
-<div class="card-item card-tomb" onclick="showBuyModal(2)" id="cardItem2"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button><div class="card-emoji">🗝️</div><div class="card-name">古墓探險</div><div class="card-price">200 代幣</div><div class="card-stock" id="stock2"></div></div>
-<div class="card-item card-dragon" onclick="showBuyModal(3)" id="cardItem3"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button><div class="card-emoji">🐉</div><div class="card-name">神龍奪寶</div><div class="card-price">500 代幣</div><div class="card-stock" id="stock3"></div></div>
-<div class="card-item card-vault" onclick="showBuyModal(4)" id="cardItem4"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(4)">ℹ</button><div class="card-emoji">💰</div><div class="card-name">皇家金庫</div><div class="card-price">1,000 代幣</div><div class="card-stock" id="stock4"></div></div>
-<div class="card-item card-ocean" onclick="showBuyModal(5)" id="cardItem5"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(5)">ℹ</button><div class="card-emoji">🌊</div><div class="card-name">深海霸主</div><div class="card-price">2,000 代幣</div><div class="card-stock" id="stock5"></div></div>
+<div class="banner">
+<div class="banner-text">
+<div>🎰 幸運刮刮樂</div>
+<div>線上一番賞 · 限量發行 · 刮出好運</div>
+</div>
+</div>
+<div class="lottery-grid" id="lotteryGrid">
+<div class="lottery-card" id="cardItem0" onclick="showBuyModal(0)">
+<div class="ticket-art ticket-fire">
+<div class="shine-layer"></div>
+<div class="ticket-badge">50 代幣</div>
+<div class="ticket-illustration">🎲</div>
+<div class="art-sub">🔥🔥🔥</div>
+<div class="ticket-title-overlay">火焰骰子</div>
+<button class="ticket-info-btn" onclick="event.stopPropagation();showPrizeInfo(0)">ℹ</button>
+</div>
+<div class="ticket-info">
+<div class="ticket-name">🔥 火焰骰子</div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate0">50%</span></span><span>最高 <span id="maxPrize0">$25,000</span></span></div>
+<div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar0" style="width:100%"></div></div><div class="stock-text" id="stockText0">剩餘 100,000 張</div></div>
+<button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(0)">GO</button>
+</div>
+</div>
+<div class="lottery-card" id="cardItem1" onclick="showBuyModal(1)">
+<div class="ticket-art ticket-horse">
+<div class="shine-layer"></div>
+<div class="ticket-badge">100 代幣</div>
+<div class="ticket-illustration">🏇</div>
+<div class="art-sub">🏆🥇🏆</div>
+<div class="ticket-title-overlay">極速賽馬</div>
+<button class="ticket-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button>
+</div>
+<div class="ticket-info">
+<div class="ticket-name">🏇 極速賽馬</div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate1">50%</span></span><span>最高 <span id="maxPrize1">$100,000</span></span></div>
+<div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar1" style="width:100%"></div></div><div class="stock-text" id="stockText1">剩餘 100,000 張</div></div>
+<button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(1)">GO</button>
+</div>
+</div>
+<div class="lottery-card" id="cardItem2" onclick="showBuyModal(2)">
+<div class="ticket-art ticket-tomb">
+<div class="shine-layer"></div>
+<div class="ticket-badge">200 代幣</div>
+<div class="ticket-illustration">🗝️</div>
+<div class="art-sub">🏺⚔️🏺</div>
+<div class="ticket-title-overlay">古墓探險</div>
+<button class="ticket-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button>
+</div>
+<div class="ticket-info">
+<div class="ticket-name">🗝️ 古墓探險</div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate2">45%</span></span><span>最高 <span id="maxPrize2">$200,000</span></span></div>
+<div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar2" style="width:100%"></div></div><div class="stock-text" id="stockText2">剩餘 100,000 張</div></div>
+<button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(2)">GO</button>
+</div>
+</div>
+<div class="lottery-card" id="cardItem3" onclick="showBuyModal(3)">
+<div class="ticket-art ticket-dragon">
+<div class="shine-layer"></div>
+<div class="ticket-badge">500 代幣</div>
+<div class="ticket-illustration">🐉</div>
+<div class="art-sub">💎✨💎</div>
+<div class="ticket-title-overlay">神龍奪寶</div>
+<button class="ticket-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button>
+</div>
+<div class="ticket-info">
+<div class="ticket-name">🐉 神龍奪寶</div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate3">44%</span></span><span>最高 <span id="maxPrize3">$500,000</span></span></div>
+<div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar3" style="width:100%"></div></div><div class="stock-text" id="stockText3">剩餘 100,000 張</div></div>
+<button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(3)">GO</button>
+</div>
+</div>
+<div class="lottery-card" id="cardItem4" onclick="showBuyModal(4)">
+<div class="ticket-art ticket-vault">
+<div class="shine-layer"></div>
+<div class="ticket-badge">1,000 代幣</div>
+<div class="ticket-illustration">💰</div>
+<div class="art-sub">🏦💎🏦</div>
+<div class="ticket-title-overlay">皇家金庫</div>
+<button class="ticket-info-btn" onclick="event.stopPropagation();showPrizeInfo(4)">ℹ</button>
+</div>
+<div class="ticket-info">
+<div class="ticket-name">💰 皇家金庫</div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate4">46%</span></span><span>最高 <span id="maxPrize4">$1,000,000</span></span></div>
+<div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar4" style="width:100%"></div></div><div class="stock-text" id="stockText4">剩餘 100,000 張</div></div>
+<button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(4)">GO</button>
+</div>
+</div>
+<div class="lottery-card" id="cardItem5" onclick="showBuyModal(5)">
+<div class="ticket-art ticket-ocean">
+<div class="shine-layer"></div>
+<div class="ticket-badge">2,000 代幣</div>
+<div class="ticket-illustration">🌊</div>
+<div class="art-sub">🦈🐙🦈</div>
+<div class="ticket-title-overlay">深海霸主</div>
+<button class="ticket-info-btn" onclick="event.stopPropagation();showPrizeInfo(5)">ℹ</button>
+</div>
+<div class="ticket-info">
+<div class="ticket-name">🌊 深海霸主</div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate5">47%</span></span><span>最高 <span id="maxPrize5">$2,000,000</span></span></div>
+<div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar5" style="width:100%"></div></div><div class="stock-text" id="stockText5">剩餘 100,000 張</div></div>
+<button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(5)">GO</button>
+</div>
+</div>
 </div>
 </div>
 <div id="scratchScreen" class="screen">
@@ -203,6 +345,21 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div id="myCardsScreen" class="screen">
 <div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">🎴 我的刮刮卡</div></div>
 <div id="myCardsList"></div>
+</div>
+<div class="bottom-nav" id="bottomNav">
+<div class="nav-item active" id="navHome" onclick="showScreen('homeScreen')">
+<div class="nav-icon">🏠</div>
+<div class="nav-label">首頁</div>
+</div>
+<div class="nav-item" id="navMyCards" onclick="showScreen('myCardsScreen')">
+<div class="nav-icon">🎴</div>
+<div class="nav-label">我的刮刮卡</div>
+<div class="nav-badge" id="navBadge" style="display:none"></div>
+</div>
+<div class="nav-item" id="navHistory" onclick="showScreen('historyScreen')">
+<div class="nav-icon">📜</div>
+<div class="nav-label">紀錄</div>
+</div>
 </div>
 </div>
 <div class="result-overlay" id="resultOverlay"><div class="result-card"><div class="result-emoji" id="resultEmoji">🎉</div><div class="result-text" id="resultText">恭喜中獎！</div><div class="result-amount" id="resultAmount">$0</div><button class="result-btn" onclick="closeResult()">收下獎金 💰</button></div></div>
@@ -359,14 +516,30 @@ document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name;
 function updateUI(){
 document.getElementById('tokenDisplay').textContent=state.tokens.toLocaleString();
 document.getElementById('prizeDisplay').textContent=state.prize.toLocaleString();
-// Update stock display
+// Update stock display, win rate, max prize for new cards
 if(state.inventory){
 CARDS.forEach((c,idx)=>{
 const inv=state.inventory[idx];
-const stockEl=document.getElementById('stock'+idx);
 const cardEl=document.getElementById('cardItem'+idx);
-if(stockEl&&inv){
-stockEl.textContent='剩餘 '+inv.remaining.toLocaleString()+' 張';
+const stockBar=document.getElementById('stockBar'+idx);
+const stockText=document.getElementById('stockText'+idx);
+const winRateEl=document.getElementById('winRate'+idx);
+const maxPrizeEl=document.getElementById('maxPrize'+idx);
+if(inv){
+// Stock bar and text
+if(stockBar)stockBar.style.width=(inv.remaining/c.total*100)+'%';
+if(stockText)stockText.textContent='剩餘 '+inv.remaining.toLocaleString()+' 張';
+// Win rate (from CARDS prizes)
+if(winRateEl){
+const totalPrizeCards=c.prizes.reduce((s,p)=>s+p.cnt,0);
+winRateEl.textContent=((totalPrizeCards/c.total)*100).toFixed(0)+'%';
+}
+// Max prize
+if(maxPrizeEl){
+const maxAmt=c.prizes.length>0?c.prizes[0].amt:0;
+maxPrizeEl.textContent='$'+maxAmt.toLocaleString();
+}
+// Sold out
 if(inv.remaining<=0){
 if(cardEl)cardEl.classList.add('sold-out');
 }else{
@@ -375,15 +548,31 @@ if(cardEl)cardEl.classList.remove('sold-out');
 }
 });
 }
-// Update myCard badge
-const badge=document.getElementById('myCardBadge');
-if(badge&&state.myCards){
+// Update bottom nav badge
+const navBadge=document.getElementById('navBadge');
+if(navBadge&&state.myCards){
 const count=state.myCards.filter(c=>!c.scratched).length;
-if(count>0){badge.style.display='flex';badge.textContent=count>99?'99+':count;}
-else{badge.style.display='none';}
+if(count>0){navBadge.style.display='flex';navBadge.textContent=count>99?'99+':count;}
+else{navBadge.style.display='none';}
 }
 }
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='historyScreen')renderHistory();if(id==='myCardsScreen')renderMyCards();if(id==='homeScreen')updateUI()}
+function showScreen(id){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+if(id==='historyScreen')renderHistory();
+if(id==='myCardsScreen')renderMyCards();
+if(id==='homeScreen')updateUI();
+// Update bottom nav active state
+const bottomNav=document.getElementById('bottomNav');
+if(bottomNav){
+const navMap={'homeScreen':'navHome','myCardsScreen':'navMyCards','historyScreen':'navHistory'};
+document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+const activeNav=document.getElementById(navMap[id]);
+if(activeNav)activeNav.classList.add('active');
+// Hide bottom nav on scratch screen
+bottomNav.style.display=(id==='scratchScreen')?'none':'flex';
+}
+}
 function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
 
 function showPrizeInfo(idx){const c=CARDS[idx];document.getElementById('prizeModalTitle').textContent=c.emoji+' '+c.name+' - 獎項配率';let html='<tr><th>獎金</th><th>張數</th><th>機率</th></tr>';c.prizes.forEach(p=>{const pct=(p.cnt/c.total*100).toFixed(p.cnt<100?3:1);html+=`<tr><td class="amount-col">$${p.amt.toLocaleString()}</td><td>${p.cnt.toLocaleString()}</td><td>${pct}%</td></tr>`});const noWin=c.total-c.prizes.reduce((s,p)=>s+p.cnt,0);if(noWin>0){html+=`<tr><td style="color:rgba(255,255,255,0.4)">未中獎</td><td>${noWin.toLocaleString()}</td><td>${(noWin/c.total*100).toFixed(1)}%</td></tr>`}html+=`<tr><td colspan="3" style="color:rgba(255,255,255,0.3);font-size:12px;padding-top:12px">總張數: ${c.total.toLocaleString()}</td></tr>`;document.getElementById('prizeTable').innerHTML=html;document.getElementById('prizeModal').classList.add('show')}
