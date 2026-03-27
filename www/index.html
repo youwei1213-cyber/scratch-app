@@ -1216,7 +1216,7 @@ if(cardIdx===4){
 const safeboxCount=12;
 const extraGameCount=numZones-safeboxCount;
 const vd=genGame_vault(numZones,zoneAmts,c);
-const totalScratchZones=4+safeboxCount+extraGameCount;
+const totalScratchZones=4+1+extraGameCount;  // 4 codes + 1 safebox block + extras
 zonesTotal=totalScratchZones;zonesRevealed=0;updateProgress();
 
 let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div><div class="game-zones">';
@@ -1232,15 +1232,15 @@ html+=`<div class="vault-header-zone safebox-zone" id="vaultCode${i}" style="dis
 html+='</div>';
 
 // 保險箱區
-html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">🔒 保險箱</div>';
-html+='<div class="safebox-grid">';
+html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">🔒 保險箱（號碼對中密碼即中獎）</div>';
+html+=`<div class="game-zone" id="zone0" style="padding:8px">
+<div class="zone-content"><div class="safebox-grid">`;
 for(let i=0;i<safeboxCount;i++){
-html+=`<div class="safebox-zone" id="zone${i}">
-<div class="zone-content"><div class="safebox-cell"><div class="safebox-num">${String(vd.boxes[i].num).padStart(2,'0')}</div><div class="safebox-prize">$${vd.boxes[i].prize.toLocaleString()}</div></div></div>
-<canvas class="zone-scratch" id="zcanvas${i}"></canvas>
-</div>`;
+html+=`<div class="safebox-cell"><div class="safebox-num">${String(vd.boxes[i].num).padStart(2,'0')}</div><div class="safebox-prize">$${vd.boxes[i].prize.toLocaleString()}</div></div>`;
 }
-html+='</div>';
+html+=`</div></div>
+<canvas class="zone-scratch" id="zcanvas0"></canvas>
+</div>`;
 
 // 額外獨立小遊戲區
 const vaultMiniGames=[
@@ -1252,7 +1252,7 @@ const vaultMiniGames=[
 html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">🎮 獨立挑戰</div>';
 for(let i=0;i<extraGameCount;i++){
 const mg=vaultMiniGames[i];
-const zoneIdx=safeboxCount+i;
+const zoneIdx=1+i;  // zone0 = safebox block, zone1+ = extra games
 const prize=vd.extraPrizes[i];
 html+=`<div class="game-zone" id="zone${zoneIdx}">
 <div class="zone-content">
@@ -1268,7 +1268,8 @@ html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div
 wrap.innerHTML=html;
 requestAnimationFrame(()=>{
 setTimeout(()=>{for(let i=0;i<4;i++){initZoneCanvas2('vaultCode'+i,'vccanvas'+i,totalScratchZones)}
-for(let i=0;i<safeboxCount+extraGameCount;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}},100)
+initZoneCanvas2('zone0','zcanvas0',totalScratchZones);
+for(let i=0;i<extraGameCount;i++){initZoneCanvas2('zone'+(1+i),'zcanvas'+(1+i),totalScratchZones)}},100)
 });
 return;
 }
