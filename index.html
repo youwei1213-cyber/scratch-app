@@ -477,14 +477,19 @@ const total=c.price*qty;
 const inv=state.inventory[idx];
 if(state.tokens<total){showToast('代幣不足！');return;}
 if(inv.remaining<qty){showToast('庫存不足！');return;}
+showToast('購買中...');
+setTimeout(()=>{
 state.tokens-=total;
+const now=Date.now();
+const batch=[];
 for(let i=0;i<qty;i++){
-const prize=drawFromPool(idx);
+batch.push({id:now+'_'+i,cardIdx:idx,prize:drawFromPool(idx),purchasedAt:now,scratched:false});
 inv.remaining--;
-state.myCards.push({id:Date.now()+'_'+Math.random().toString(36).substr(2,5),cardIdx:idx,prize:prize,purchasedAt:Date.now(),scratched:false});
 }
+state.myCards=state.myCards.concat(batch);
 save();updateUI();closeBuyModal();
 showToast('成功購買 '+qty+' 張 '+c.emoji+' '+c.name+'！');
+},50);
 }
 
 /* ===== MY CARDS ===== */
@@ -497,7 +502,9 @@ if(unscratched.length===0){
 list.innerHTML='<p style="text-align:center;color:rgba(0,0,0,0.3);padding:40px">還沒有刮刮卡，去首頁購買吧！</p>';
 return;
 }
-list.innerHTML=unscratched.map(card=>{
+const displayCards=unscratched.slice(0,100);
+if(unscratched.length>100)list.innerHTML='<div style="text-align:center;padding:8px;color:rgba(0,0,0,0.5);font-size:13px">顯示前 100 張（共 '+unscratched.length+' 張未刮）</div>';
+list.innerHTML+=(unscratched.length>100?displayCards:unscratched).map(card=>{
 const c=CARDS[card.cardIdx];
 return '<div class="my-card-item" onclick="startScratchMyCard(\''+card.id+'\')">'+
 '<div class="my-card-emoji">'+c.emoji+'</div>'+
@@ -1565,35 +1572,39 @@ save();
 
 function scratchAllCards(){
 const unscratched=state.myCards.filter(c=>!c.scratched);
-if(scratchAllBtn){scratchAllBtn.style.display=unscratched.length>0?'block':'none';}
 if(unscratched.length===0){showToast('沒有未刮的卡片');return;}
 if(!confirm('確定要全部刮開 '+unscratched.length+' 張嗎？將直接顯示所有結果'))return;
+showToast('刮開中...');
+setTimeout(()=>{
 let totalWon=0;
-const results=[];
+const summary={};
 unscratched.forEach(card=>{
 card.scratched=true;
 const c=CARDS[card.cardIdx];
 totalWon+=card.prize;
-results.push({emoji:c.emoji,name:c.name,cost:c.price,prize:card.prize});
+if(!summary[card.cardIdx])summary[card.cardIdx]={emoji:c.emoji,name:c.name,count:0,totalPrize:0,cost:c.price};
+summary[card.cardIdx].count++;
+summary[card.cardIdx].totalPrize+=card.prize;
 state.prize+=card.prize;
-state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:card.prize,time:Date.now()});
 });
-if(state.history.length>200)state.history.splice(200);
-save();
-updateUI();
-renderMyCards();
-const resultHtml=results.map(r=>{
-const net=r.prize-r.cost;
-return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.06)"><span>'+r.emoji+' '+r.name+'</span><span style="font-weight:700;color:'+(net>=0?'#b8860b':'#e74c3c')+'">$'+r.prize.toLocaleString()+'</span></div>';
+// Add batch history (one entry per card type, not per card)
+Object.values(summary).forEach(s=>{
+state.history.unshift({card:s.name,emoji:s.emoji,cost:s.cost*s.count,win:s.totalPrize,time:Date.now(),batch:s.count});
+});
+if(state.history.length>500)state.history.splice(500);
+save();updateUI();renderMyCards();
+const resultHtml=Object.values(summary).map(s=>{
+return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06)"><span>'+s.emoji+' '+s.name+' × '+s.count+'</span><span style="font-weight:700;color:#b8860b">$'+s.totalPrize.toLocaleString()+'</span></div>';
 }).join('');
 const overlay=document.getElementById('resultOverlay');
 document.getElementById('resultEmoji').textContent=totalWon>0?'🎉':'😔';
-document.getElementById('resultText').innerHTML='全部 '+results.length+' 張結果<div style="max-height:200px;overflow-y:auto;margin:12px 0;text-align:left;font-size:13px">'+resultHtml+'</div>';
+document.getElementById('resultText').innerHTML='全部 '+unscratched.length+' 張結果<div style="max-height:200px;overflow-y:auto;margin:12px 0;text-align:left;font-size:14px">'+resultHtml+'</div>';
 document.getElementById('resultAmount').textContent='總獎金 $'+totalWon.toLocaleString();
 document.getElementById('resultBtn').textContent='收下全部獎金 💰';
 document.getElementById('resultBtn').onclick=function(){overlay.classList.remove('show');showScreen('myCardsScreen');updateUI()};
 overlay.classList.add('show');
 if(totalWon>=500)launchConfetti();
+},50);
 }
 
 function scratchNext(){
