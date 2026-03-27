@@ -1605,6 +1605,7 @@ document.getElementById('resultEmoji').textContent=totalWon>0?'🎉':'😔';
 document.getElementById('resultText').innerHTML='全部 '+unscratched.length+' 張結果<div style="max-height:200px;overflow-y:auto;margin:12px 0;text-align:left;font-size:14px">'+resultHtml+'</div>';
 document.getElementById('resultAmount').textContent='總獎金 $'+totalWon.toLocaleString();
 document.getElementById('resultBtn').textContent='收下全部獎金 💰';
+document.getElementById('verifyBtn').style.display='none';
 document.getElementById('resultBtn').onclick=function(){overlay.classList.remove('show');showScreen('myCardsScreen');updateUI();};
 overlay.classList.add('show');
 if(totalWon>=500)launchConfetti();
