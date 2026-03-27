@@ -1541,23 +1541,20 @@ document.getElementById('resultEmoji').textContent='🎉';
 document.getElementById('resultText').textContent='大獎！恭喜中獎！';
 document.getElementById('resultBtn').textContent='收下獎金 💰 下一張 ▶';
 document.getElementById('resultBtn').onclick=scratchNext;
-var unscratchedLeft=state.myCards.filter(function(c){return !c.scratched}).length;
-document.getElementById('verifyBtn').style.display=unscratchedLeft<=1?'block':'none';
+document.getElementById('verifyBtn').style.display='block';
 launchConfetti();
 }else if(amount>0){
 document.getElementById('resultEmoji').textContent='😊';
 document.getElementById('resultText').textContent='中獎了！';
 document.getElementById('resultBtn').textContent='收下獎金 💰 下一張 ▶';
 document.getElementById('resultBtn').onclick=scratchNext;
-var unscratchedLeft=state.myCards.filter(function(c){return !c.scratched}).length;
-document.getElementById('verifyBtn').style.display=unscratchedLeft<=1?'block':'none';
+document.getElementById('verifyBtn').style.display='block';
 }else{
 document.getElementById('resultEmoji').textContent='💪';
 document.getElementById('resultText').textContent='別氣餒，下一張就是你的！';
 document.getElementById('resultBtn').textContent='繼續挑戰 💪 下一張 ▶';
 document.getElementById('resultBtn').onclick=scratchNext;
-var unscratchedLeft2=state.myCards.filter(function(c){return !c.scratched}).length;
-document.getElementById('verifyBtn').style.display=unscratchedLeft2<=1?'block':'none';
+document.getElementById('verifyBtn').style.display='block';
 }
 ov.classList.add('show');
 const c=CARDS[currentCard];
