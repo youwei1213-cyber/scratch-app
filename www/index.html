@@ -34,6 +34,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .main-title h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px}
 .main-title p{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px}
 .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+@media(min-width:420px){.card-grid{grid-template-columns:repeat(3,1fr)}}
 .card-item{position:relative;border-radius:20px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.3s;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:center;align-items:center}
 .card-item:active{transform:scale(0.96)}
 .card-item::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 60%);animation:shimmer 3s infinite;pointer-events:none}
@@ -42,6 +43,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .card-horse{background:linear-gradient(135deg,#1a5c00,#2d8b00,#3daa00);box-shadow:0 8px 32px rgba(0,180,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
 .card-tomb{background:linear-gradient(135deg,#5c3d00,#8b6914,#b8860b);box-shadow:0 8px 32px rgba(184,134,11,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
 .card-dragon{background:linear-gradient(135deg,#2a1a6e,#4b0082,#6a3fad);box-shadow:0 8px 32px rgba(106,90,205,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-vault{background:linear-gradient(135deg,#8B7500,#FFD700,#B8860B);box-shadow:0 8px 32px rgba(255,215,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-ocean{background:linear-gradient(135deg,#003366,#0066CC,#004080);box-shadow:0 8px 32px rgba(0,102,204,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
 .card-emoji{font-size:48px;margin-bottom:8px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
 .card-name{font-size:18px;font-weight:900;text-shadow:0 2px 4px rgba(0,0,0,0.5);margin-bottom:4px}
 .card-price{font-size:22px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,0.5)}
@@ -117,6 +120,29 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .dragon-mini-label{font-size:11px;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:6px;padding:4px 8px;background:rgba(255,255,255,0.05);border-radius:6px;display:inline-block}
 .gem-row{display:flex;justify-content:center;gap:8px}
 .gem{font-size:28px}
+.vault-codes{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.vault-code-box{background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(184,134,11,0.3));border:2px solid rgba(255,215,0,0.4);border-radius:12px;padding:12px 18px;text-align:center;min-width:60px}
+.vault-code-num{font-size:28px;font-weight:900;color:#ffd700;text-shadow:0 2px 8px rgba(255,215,0,0.5)}
+.vault-code-label{font-size:10px;color:rgba(255,215,0,0.6);margin-top:2px}
+.safebox-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.safebox-cell{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 6px;text-align:center}
+.safebox-num{font-size:20px;font-weight:900;color:#fff}
+.safebox-prize{font-size:12px;color:#ffd700;font-weight:700;margin-top:2px}
+.ocean-target{display:flex;justify-content:center}
+.ocean-target-box{background:linear-gradient(135deg,rgba(0,102,204,0.3),rgba(0,51,102,0.4));border:2px solid rgba(0,150,255,0.4);border-radius:14px;padding:14px 28px;text-align:center}
+.ocean-target-num{font-size:36px;font-weight:900;color:#00bfff;text-shadow:0 2px 10px rgba(0,191,255,0.5)}
+.ocean-target-label{font-size:11px;color:rgba(0,191,255,0.7);margin-top:2px}
+.ocean-target-unit{font-size:13px;color:rgba(0,191,255,0.5)}
+.creature-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.creature-cell{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 4px;text-align:center}
+.creature-emoji{font-size:22px}
+.creature-weight{font-size:16px;font-weight:900;color:#fff;margin-top:2px}
+.creature-unit{font-size:10px;color:rgba(255,255,255,0.4)}
+.creature-prize{font-size:11px;color:#ffd700;font-weight:700;margin-top:2px}
+.vault-header-zone{position:relative;background:rgba(0,0,0,0.3);border-radius:12px;padding:14px;border:1px solid rgba(255,215,0,0.3);overflow:hidden;min-height:80px}
+.ocean-header-zone{position:relative;background:rgba(0,0,0,0.3);border-radius:12px;padding:14px;border:1px solid rgba(0,150,255,0.3);overflow:hidden;min-height:80px}
+.safebox-zone{position:relative;background:rgba(0,0,0,0.2);border-radius:10px;overflow:hidden;min-height:60px}
+.creature-zone{position:relative;background:rgba(0,0,0,0.2);border-radius:10px;overflow:hidden;min-height:60px}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:2px}
 </style>
 </head>
@@ -143,6 +169,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div class="card-item card-horse" onclick="buyCard(1)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button><div class="card-emoji">🏇</div><div class="card-name">極速賽馬</div><div class="card-price">100 代幣</div></div>
 <div class="card-item card-tomb" onclick="buyCard(2)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button><div class="card-emoji">🗝️</div><div class="card-name">古墓探險</div><div class="card-price">200 代幣</div></div>
 <div class="card-item card-dragon" onclick="buyCard(3)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button><div class="card-emoji">🐉</div><div class="card-name">神龍奪寶</div><div class="card-price">500 代幣</div></div>
+<div class="card-item card-vault" onclick="buyCard(4)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(4)">ℹ</button><div class="card-emoji">💰</div><div class="card-name">皇家金庫</div><div class="card-price">1,000 代幣</div></div>
+<div class="card-item card-ocean" onclick="buyCard(5)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(5)">ℹ</button><div class="card-emoji">🌊</div><div class="card-name">深海霸主</div><div class="card-price">2,000 代幣</div></div>
 </div>
 </div>
 <div id="scratchScreen" class="screen">
@@ -169,14 +197,20 @@ prizes:[{amt:100000,cnt:2},{amt:10000,cnt:8},{amt:5000,cnt:30},{amt:2000,cnt:200
 {name:'古墓探險',emoji:'🗝️',price:200,bgGrad:'linear-gradient(135deg,#2a1a00,#5c3d00)',total:100000,zones:7,
 prizes:[{amt:200000,cnt:2},{amt:20000,cnt:8},{amt:10000,cnt:25},{amt:5000,cnt:100},{amt:2000,cnt:600},{amt:1000,cnt:3000},{amt:500,cnt:6000},{amt:200,cnt:15000},{amt:100,cnt:10000}]},
 {name:'神龍奪寶',emoji:'🐉',price:500,bgGrad:'linear-gradient(135deg,#1a0a3d,#3d1a6e)',total:100000,zones:10,
-prizes:[{amt:500000,cnt:2},{amt:50000,cnt:8},{amt:20000,cnt:40},{amt:10000,cnt:150},{amt:5000,cnt:600},{amt:2000,cnt:3000},{amt:1000,cnt:6000},{amt:500,cnt:15000},{amt:200,cnt:10000}]}
+prizes:[{amt:500000,cnt:2},{amt:50000,cnt:8},{amt:20000,cnt:40},{amt:10000,cnt:150},{amt:5000,cnt:600},{amt:2000,cnt:3000},{amt:1000,cnt:6000},{amt:500,cnt:15000},{amt:200,cnt:10000}]},
+{name:'皇家金庫',emoji:'💰',price:1000,bgGrad:'linear-gradient(135deg,#3d2b00,#7a5c00)',total:100000,zones:12,
+prizes:[{amt:1000000,cnt:2},{amt:100000,cnt:10},{amt:50000,cnt:25},{amt:20000,cnt:150},{amt:10000,cnt:600},{amt:5000,cnt:2500},{amt:2000,cnt:7000},{amt:1000,cnt:16000},{amt:500,cnt:10000}]},
+{name:'深海霸主',emoji:'🌊',price:2000,bgGrad:'linear-gradient(135deg,#001a3d,#003366)',total:100000,zones:15,
+prizes:[{amt:2000000,cnt:2},{amt:200000,cnt:10},{amt:100000,cnt:25},{amt:50000,cnt:100},{amt:20000,cnt:500},{amt:10000,cnt:2000},{amt:5000,cnt:5000},{amt:2000,cnt:15000},{amt:1000,cnt:15000}]}
 ];
 
 const CARD_DESCS=[
 '每場擲出骰子，你的點數大於莊家即可贏得該場獎金！共 5 場機會',
 '每場賽馬你的馬是 #3 號 🐴，冠軍就是你的！共 5 場',
 '刮開寶箱和鑰匙，顏色配對即可獲得寶箱內的獎金！共 7 個寶箱',
-'10 次奪寶機會，每次都是不同挑戰！'
+'10 次奪寶機會，每次都是不同挑戰！',
+'刮開上方4個金庫密碼，再刮開12個保險箱。保險箱號碼對中任一密碼即可獲得獎金！',
+'刮開達標重量，再刮開15個海底生物。生物重量 ≥ 達標重量即可獲得獎金！'
 ];
 
 const DRAGON_TYPES=['dice','card','arrow','gem'];
@@ -322,6 +356,43 @@ return `<div class="gem-row">
 <div class="zone-prize">獎金 <span class="amt">$${win.toLocaleString()}</span></div>`;
 }
 
+/* ===== VAULT GAME (皇家金庫) ===== */
+function genGame_vault(zones, zonePrizes, card){
+const codes=[];
+while(codes.length<4){const n=Math.floor(Math.random()*30)+1;if(!codes.includes(n))codes.push(n)}
+const usedNonCodes=[];
+const boxes=[];
+for(let i=0;i<zones;i++){
+let num;
+if(zonePrizes[i]>0){
+num=codes[Math.floor(Math.random()*codes.length)];
+}else{
+do{num=Math.floor(Math.random()*30)+1}while(codes.includes(num)||usedNonCodes.includes(num));
+usedNonCodes.push(num);
+}
+boxes.push({num:num,prize:zonePrizes[i]});
+}
+return {codes,boxes};
+}
+
+/* ===== OCEAN GAME (深海霸主) ===== */
+function genGame_ocean(zones, zonePrizes, card){
+const target=Math.floor(Math.random()*31)+30;
+const seaEmojis=['🐙','🦑','🐠','🐡','🦈','🐋','🐟','🦐','🦀','🐚'];
+const creatures=[];
+for(let i=0;i<zones;i++){
+let weight;
+if(zonePrizes[i]>0){
+weight=target+Math.floor(Math.random()*(100-target));
+}else{
+weight=Math.floor(Math.random()*target);
+if(weight<1)weight=1;
+}
+creatures.push({emoji:seaEmojis[Math.floor(Math.random()*seaEmojis.length)],weight:weight,prize:zonePrizes[i]});
+}
+return {target,creatures};
+}
+
 /* ===== SETUP SCRATCH CARD ===== */
 
 function buyCard(idx){
@@ -340,10 +411,81 @@ const c=CARDS[cardIdx];
 const wrap=document.getElementById('scratchWrap');
 wrap.style.background=c.bgGrad;
 const numZones=c.zones;
+const zoneAmts=distributeWinnings(totalWin,numZones);
+
+/* ----- 皇家金庫 (cardIdx=4) ----- */
+if(cardIdx===4){
+const vd=genGame_vault(numZones,zoneAmts,c);
+const totalScratchZones=4+numZones;
+zonesTotal=totalScratchZones;zonesRevealed=0;updateProgress();
+
+let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div><div class="game-zones">';
+// 金庫密碼區 — 4 individual zones
+html+='<div style="margin-bottom:8px;text-align:center;font-size:14px;font-weight:700;color:#ffd700">🔐 金庫密碼</div>';
+html+='<div class="vault-codes">';
+for(let i=0;i<4;i++){
+html+=`<div class="vault-header-zone safebox-zone" id="vaultCode${i}" style="display:inline-block">
+<div class="zone-content"><div class="vault-code-box"><div class="vault-code-num">${String(vd.codes[i]).padStart(2,'0')}</div><div class="vault-code-label">密碼 ${i+1}</div></div></div>
+<canvas class="zone-scratch" id="vccanvas${i}"></canvas>
+</div>`;
+}
+html+='</div>';
+
+// 保險箱區
+html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">🔒 保險箱</div>';
+html+='<div class="safebox-grid">';
+for(let i=0;i<numZones;i++){
+html+=`<div class="safebox-zone" id="zone${i}">
+<div class="zone-content"><div class="safebox-cell"><div class="safebox-num">${String(vd.boxes[i].num).padStart(2,'0')}</div><div class="safebox-prize">$${vd.boxes[i].prize.toLocaleString()}</div></div></div>
+<canvas class="zone-scratch" id="zcanvas${i}"></canvas>
+</div>`;
+}
+html+='</div>';
+html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div></div>`;
+wrap.innerHTML=html;
+requestAnimationFrame(()=>{
+for(let i=0;i<4;i++){initZoneCanvas2('vaultCode'+i,'vccanvas'+i,totalScratchZones)}
+for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}
+});
+return;
+}
+
+/* ----- 深海霸主 (cardIdx=5) ----- */
+if(cardIdx===5){
+const od=genGame_ocean(numZones,zoneAmts,c);
+const totalScratchZones=1+numZones;
+zonesTotal=totalScratchZones;zonesRevealed=0;updateProgress();
+
+let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div><div class="game-zones">';
+// 達標重量區
+html+='<div style="margin-bottom:8px;text-align:center;font-size:14px;font-weight:700;color:#00bfff">⚓ 達標重量</div>';
+html+=`<div class="ocean-header-zone" id="oceanTarget" style="text-align:center">
+<div class="zone-content"><div class="ocean-target"><div class="ocean-target-box"><div class="ocean-target-num">${od.target}</div><div class="ocean-target-label">達標重量</div><div class="ocean-target-unit">kg</div></div></div></div>
+<canvas class="zone-scratch" id="otcanvas"></canvas>
+</div>`;
+
+// 海底生物區
+html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">🐠 海底生物</div>';
+html+='<div class="creature-grid">';
+for(let i=0;i<numZones;i++){
+html+=`<div class="creature-zone" id="zone${i}">
+<div class="zone-content"><div class="creature-cell"><div class="creature-emoji">${od.creatures[i].emoji}</div><div class="creature-weight">${od.creatures[i].weight}<span class="creature-unit">kg</span></div><div class="creature-prize">$${od.creatures[i].prize.toLocaleString()}</div></div></div>
+<canvas class="zone-scratch" id="zcanvas${i}"></canvas>
+</div>`;
+}
+html+='</div>';
+html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div></div>`;
+wrap.innerHTML=html;
+requestAnimationFrame(()=>{
+initZoneCanvas2('oceanTarget','otcanvas',totalScratchZones);
+for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}
+});
+return;
+}
+
+/* ----- 原有遊戲 (cardIdx 0-3) ----- */
 zonesTotal=numZones;zonesRevealed=0;
 updateProgress();
-
-const zoneAmts=distributeWinnings(totalWin,numZones);
 
 let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div>';
 html+='<div class="game-zones">';
@@ -417,6 +559,55 @@ canvas.addEventListener('mousemove',onMove);canvas.addEventListener('touchmove',
 canvas.addEventListener('mouseup',onUp);canvas.addEventListener('touchend',onUp);
 
 function checkReveal(ctx,canvas,idx){
+const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+let tr=0,total=0;
+for(let k=3;k<data.length;k+=16){if(data[k]===0)tr++;total++}
+if(tr/total>0.88){
+revealed=true;
+canvas.classList.add('zone-revealed');
+zonesRevealed++;
+updateProgress();
+if(zonesRevealed>=zonesTotal){
+setTimeout(()=>{
+document.getElementById('totalAmount').textContent='$'+currentWinnings.toLocaleString();
+setTimeout(()=>showResult(currentWinnings),800);
+},400);
+}
+}
+}
+}
+
+/* Generic canvas init for vault/ocean games */
+function initZoneCanvas2(zoneId,canvasId,totalZones){
+const zone=document.getElementById(zoneId);
+const canvas=document.getElementById(canvasId);
+if(!zone||!canvas)return;
+canvas.width=zone.offsetWidth;
+canvas.height=zone.offsetHeight;
+const ctx=canvas.getContext('2d');
+const g=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+g.addColorStop(0,'#b8b8b8');g.addColorStop(0.3,'#d0d0d0');g.addColorStop(0.5,'#a0a0a0');g.addColorStop(0.7,'#c8c8c8');g.addColorStop(1,'#b0b0b0');
+ctx.fillStyle=g;
+ctx.fillRect(0,0,canvas.width,canvas.height);
+const sparkles=Math.max(10,Math.floor(canvas.width*canvas.height/400));
+for(let j=0;j<sparkles;j++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*0.4})`;ctx.beginPath();ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*2,0,Math.PI*2);ctx.fill()}
+ctx.fillStyle='rgba(0,0,0,0.12)';
+ctx.font=`bold ${Math.min(14,canvas.height/4)}px "Noto Sans TC"`;
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText('刮',canvas.width/2,canvas.height/2);
+
+let isDown=false,lastP={x:0,y:0},revealed=false;
+const brushSize=Math.min(30,Math.max(15,canvas.width/3));
+const getPos=(e)=>{const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}};
+const onDown=(e)=>{e.preventDefault();if(revealed)return;isDown=true;const p=getPos(e);lastP=p;ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(p.x,p.y,brushSize,0,Math.PI*2);ctx.fill()};
+const onMove=(e)=>{e.preventDefault();if(!isDown||revealed)return;const p=getPos(e);ctx.globalCompositeOperation='destination-out';ctx.lineWidth=brushSize*2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(lastP.x,lastP.y);ctx.lineTo(p.x,p.y);ctx.stroke();lastP=p;checkReveal2()};
+const onUp=()=>isDown=false;
+canvas.addEventListener('mousedown',onDown);canvas.addEventListener('touchstart',onDown,{passive:false});
+canvas.addEventListener('mousemove',onMove);canvas.addEventListener('touchmove',onMove,{passive:false});
+canvas.addEventListener('mouseup',onUp);canvas.addEventListener('touchend',onUp);
+
+function checkReveal2(){
 const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
 let tr=0,total=0;
 for(let k=3;k<data.length;k+=16){if(data[k]===0)tr++;total++}
