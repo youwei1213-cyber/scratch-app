@@ -1278,7 +1278,7 @@ if(cardIdx===5){
 const creatureCount=15;
 const extraGameCount=numZones-creatureCount;
 const od=genGame_ocean(numZones,zoneAmts,c);
-const totalScratchZones=1+creatureCount+extraGameCount;
+const totalScratchZones=1+1+extraGameCount;  // target + creature block + extras
 zonesTotal=totalScratchZones;zonesRevealed=0;updateProgress();
 
 let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div><div class="game-zones">';
@@ -1290,15 +1290,15 @@ html+=`<div class="ocean-header-zone" id="oceanTarget" style="text-align:center"
 </div>`;
 
 // 海底生物區
-html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">🐠 海底生物</div>';
-html+='<div class="creature-grid">';
+html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">🐠 海底生物（重量 ≥ 達標重量即中獎）</div>';
+html+=`<div class="game-zone" id="zone0" style="padding:8px">
+<div class="zone-content"><div class="creature-grid">`;
 for(let i=0;i<creatureCount;i++){
-html+=`<div class="creature-zone" id="zone${i}">
-<div class="zone-content"><div class="creature-cell"><div class="creature-emoji">${od.creatures[i].emoji}</div><div class="creature-weight">${od.creatures[i].weight}<span class="creature-unit">kg</span></div><div class="creature-prize">$${od.creatures[i].prize.toLocaleString()}</div></div></div>
-<canvas class="zone-scratch" id="zcanvas${i}"></canvas>
-</div>`;
+html+=`<div class="creature-cell"><div class="creature-emoji">${od.creatures[i].emoji}</div><div class="creature-weight">${od.creatures[i].weight}<span class="creature-unit">kg</span></div><div class="creature-prize">$${od.creatures[i].prize.toLocaleString()}</div></div>`;
 }
-html+='</div>';
+html+=`</div></div>
+<canvas class="zone-scratch" id="zcanvas0"></canvas>
+</div>`;
 
 // 額外獨立小遊戲區
 const oceanMiniGames=[
@@ -1312,7 +1312,7 @@ const oceanMiniGames=[
 html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(0,0,0,0.7)">🎮 獨立挑戰</div>';
 for(let i=0;i<extraGameCount;i++){
 const mg=oceanMiniGames[i];
-const zoneIdx=creatureCount+i;
+const zoneIdx=1+i;  // zone0 = creatures block, zone1+ = extra games
 const prize=od.extraPrizes[i];
 html+=`<div class="game-zone" id="zone${zoneIdx}">
 <div class="zone-content">
@@ -1328,7 +1328,8 @@ html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div
 wrap.innerHTML=html;
 requestAnimationFrame(()=>{
 setTimeout(()=>{initZoneCanvas2('oceanTarget','otcanvas',totalScratchZones);
-for(let i=0;i<creatureCount+extraGameCount;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}},100)
+initZoneCanvas2('zone0','zcanvas0',totalScratchZones);
+for(let i=0;i<extraGameCount;i++){initZoneCanvas2('zone'+(1+i),'zcanvas'+(1+i),totalScratchZones)}},100)
 });
 return;
 }
