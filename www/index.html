@@ -259,7 +259,7 @@ canvas.onmousedown=canvas.ontouchstart=(e)=>{e.preventDefault();if(revealed)retu
 canvas.onmousemove=canvas.ontouchmove=(e)=>{e.preventDefault();if(!isDown||revealed)return;const p=getPos(e);ctx.globalCompositeOperation='destination-out';ctx.lineWidth=60;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(lastP.x,lastP.y);ctx.lineTo(p.x,p.y);ctx.stroke();lastP=p;
 // Check reveal
 const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let tr=0;for(let k=3;k<data.length;k+=16){if(data[k]===0)tr++}
-if(tr/(data.length/16)>0.40){revealed=true;canvas.classList.add('zone-revealed');zonesRevealed++;updateProgress();if(zonesRevealed>=zonesTotal){setTimeout(()=>{document.getElementById('totalAmount').textContent='$'+currentWinnings.toLocaleString();setTimeout(()=>showResult(currentWinnings),800)},400)}}};
+if(tr/(data.length/16)>0.88){revealed=true;canvas.classList.add('zone-revealed');zonesRevealed++;updateProgress();if(zonesRevealed>=zonesTotal){setTimeout(()=>{document.getElementById('totalAmount').textContent='$'+currentWinnings.toLocaleString();setTimeout(()=>showResult(currentWinnings),800)},400)}}};
 canvas.onmouseup=canvas.ontouchend=()=>isDown=false;
 }
 
