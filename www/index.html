@@ -485,6 +485,7 @@ function renderMyCards(){
 const list=document.getElementById('myCardsList');
 const scratchAllBtn=document.getElementById('scratchAllBtn');
 const unscratched=state.myCards.filter(c=>!c.scratched);
+if(scratchAllBtn){scratchAllBtn.style.display=unscratched.length>0?'block':'none';}
 if(unscratched.length===0){
 list.innerHTML='<p style="text-align:center;color:rgba(0,0,0,0.3);padding:40px">還沒有刮刮卡，去首頁購買吧！</p>';
 return;
@@ -1555,6 +1556,7 @@ save();
 
 function scratchAllCards(){
 const unscratched=state.myCards.filter(c=>!c.scratched);
+if(scratchAllBtn){scratchAllBtn.style.display=unscratched.length>0?'block':'none';}
 if(unscratched.length===0){showToast('沒有未刮的卡片');return;}
 if(!confirm('確定要全部刮開 '+unscratched.length+' 張嗎？將直接顯示所有結果'))return;
 let totalWon=0;
@@ -1589,6 +1591,7 @@ function scratchNext(){
 document.getElementById('resultOverlay').classList.remove('show');
 window.scrollTo(0,0);
 const unscratched=state.myCards.filter(c=>!c.scratched);
+if(scratchAllBtn){scratchAllBtn.style.display=unscratched.length>0?'block':'none';}
 if(unscratched.length===0){
 showToast('沒有更多刮刮卡了！');
 showScreen('homeScreen');
