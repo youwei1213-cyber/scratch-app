@@ -23,7 +23,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .btn-ad{background:linear-gradient(135deg,#00c9ff,#92fe9d);color:#1a0a3e;box-shadow:0 4px 15px rgba(0,201,255,0.3)}
 .btn-history{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2)}
 .main-title{text-align:center;margin-bottom:24px}
-.main-title h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;letter-spacing:2px}
+.main-title h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px}
 .main-title p{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px}
 .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 .card-item{position:relative;border-radius:20px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.3s;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:center;align-items:center}
@@ -37,19 +37,19 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .card-emoji{font-size:48px;margin-bottom:8px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
 .card-name{font-size:18px;font-weight:900;text-shadow:0 2px 4px rgba(0,0,0,0.5);margin-bottom:4px}
 .card-price{font-size:22px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,0.5)}
-.card-info-btn{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.card-info-btn:hover{background:rgba(255,255,255,0.2)}
+.card-info-btn{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .screen{display:none}.screen.active{display:block}
 .scratch-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .back-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .scratch-title{font-size:20px;font-weight:900}
-.scratch-card-container{position:relative;width:100%;max-width:440px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.5);border:2px solid rgba(255,215,0,0.3)}
-.scratch-card-bg{width:100%;padding:20px;min-height:500px;position:relative}
-.game-zones{display:flex;flex-direction:column;gap:16px;padding:10px}
-.game-zone{background:rgba(0,0,0,0.2);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.1)}
+.scratch-card-wrap{max-width:440px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.5);border:2px solid rgba(255,215,0,0.3);padding:16px}
+.game-zones{display:flex;flex-direction:column;gap:16px}
+.game-zone{position:relative;background:rgba(0,0,0,0.2);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.1);overflow:hidden;min-height:80px}
 .game-zone-title{font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.game-zone-title .zone-icon{font-size:16px}
-.scratch-canvas{position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;border-radius:20px;touch-action:none}
+.zone-icon{font-size:16px}
+.zone-scratch{position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;touch-action:none;z-index:2;border-radius:12px}
+.zone-revealed{pointer-events:none;opacity:0;transition:opacity 0.3s}
+.zone-content{position:relative;z-index:1}
 .match-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .match-cell{background:rgba(255,255,255,0.1);border-radius:8px;padding:10px 4px;text-align:center;font-size:14px;font-weight:700}
 .match-cell.winner{background:rgba(255,215,0,0.2);border:1px solid #ffd700}
@@ -63,9 +63,12 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .number-match-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;justify-content:center}
 .number-ball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
 .number-ball.winning{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e}
-.number-ball.player{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.2)}
-.number-ball.player.hit{background:linear-gradient(135deg,#ff4444,#ff6b6b);color:#fff;border:none}
 .number-label{font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;text-align:center}
+.total-bar{text-align:center;padding:16px;margin-top:8px}
+.total-bar .total-label{font-size:14px;color:rgba(255,255,255,0.5)}
+.total-bar .total-amount{font-size:36px;font-weight:900;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.5)}
+.zones-progress{text-align:center;margin-top:12px;font-size:13px;color:rgba(255,255,255,0.4)}
+.zones-progress span{color:#ffd700;font-weight:700}
 .result-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:center;z-index:100;backdrop-filter:blur(8px)}
 .result-overlay.show{display:flex}
 .result-card{text-align:center;padding:40px;animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275)}
@@ -88,7 +91,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .topup-option .coins{font-size:24px;font-weight:900;color:#ffd700}
 .topup-option .price{font-size:13px;color:rgba(255,255,255,0.6);margin-top:4px}
 .history-list{display:flex;flex-direction:column;gap:8px}
-.history-item{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.05)}
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.05);border-radius:12px}
 .history-item .hi-left{display:flex;flex-direction:column;gap:2px}
 .history-item .hi-type{font-size:13px;font-weight:700}
 .history-item .hi-time{font-size:11px;color:rgba(255,255,255,0.4)}
@@ -126,31 +129,16 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div class="card-item card-gold" onclick="buyCard(0)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(0)">ℹ</button><div class="card-emoji">🌟</div><div class="card-name">金運來</div><div class="card-price">50 代幣</div></div>
 <div class="card-item card-ruby" onclick="buyCard(1)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button><div class="card-emoji">💎</div><div class="card-name">紅寶石</div><div class="card-price">100 代幣</div></div>
 <div class="card-item card-emerald" onclick="buyCard(2)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button><div class="card-emoji">🍀</div><div class="card-name">翡翠運</div><div class="card-price">200 代幣</div></div>
-<div class="card-item card-diamond" onclick="buyCard(3)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button><div class="card-emoji">👑</div><div class="card-name">鑽石皇</div><div class="card-price">500 代幣</div></div>
-</div>
-</div>
-<div id="scratchScreen" class="screen">
-<div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title" id="scratchTitle">刮刮樂</div></div>
-<div class="scratch-card-container" id="scratchContainer"><div class="scratch-card-bg" id="scratchBg"></div><canvas class="scratch-canvas" id="scratchCanvas"></canvas></div>
-<p style="text-align:center;margin-top:12px;font-size:13px;color:rgba(255,255,255,0.4)">用手指或滑鼠刮開銀漆</p>
-</div>
-<div id="historyScreen" class="screen">
-<div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">📜 歷史紀錄</div></div>
-<div class="history-list" id="historyList"></div>
-</div>
-</div>
-<div class="result-overlay" id="resultOverlay"><div class="result-card"><div class="result-emoji" id="resultEmoji">🎉</div><div class="result-text" id="resultText">恭喜中獎！</div><div class="result-amount" id="resultAmount">$0</div><button class="result-btn" onclick="closeResult()">收下獎金 💰</button></div></div>
-<div class="modal-overlay" id="prizeModal"><div class="modal"><h2 id="prizeModalTitle">獎項配率</h2><table class="prize-table" id="prizeTable"></table><br><button class="result-btn" style="width:100%" onclick="closePrizeModal()">知道了 👍</button></div></div>
-<div class="modal-overlay" id="topupModal"><div class="modal"><h2>💳 儲值代幣</h2><p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center">1 TWD = 1 代幣</p><div class="topup-grid"><div class="topup-option" onclick="doTopup(100)"><div class="coins">🪙 100</div><div class="price">NT$ 100</div></div><div class="topup-option" onclick="doTopup(500)"><div class="coins">🪙 500</div><div class="price">NT$ 500</div></div><div class="topup-option" onclick="doTopup(1000)"><div class="coins">🪙 1,000</div><div class="price">NT$ 1,000</div></div><div class="topup-option" onclick="doTopup(3000)"><div class="coins">🪙 3,000</div><div class="price">NT$ 3,000</div></div></div><br><button class="result-btn" style="width:100%;background:rgba(255,255,255,0.1);color:#fff" onclick="closeTopup()">取消</button></div></div>
-<div class="ad-overlay" id="adOverlay"><div class="ad-box"><div class="ad-text">📺 廣告播放中...</div><div class="ad-countdown" id="adCountdown">5</div></div><div class="ad-reward">觀看完畢可獲得 🪙 10 代幣</div></div><script>
+<div class="card-item card-dia
+...(truncated)...<script>
 const CARDS=[
-{name:'金運來',emoji:'🌟',price:50,cls:'card-gold',color:'#ffd700',bgGrad:'linear-gradient(135deg,#3d2b00,#6b4c00)',total:100000,
+{name:'金運來',emoji:'🌟',price:50,bgGrad:'linear-gradient(135deg,#3d2b00,#6b4c00)',total:100000,
 prizes:[{amt:10,cnt:50000},{amt:25,cnt:30000},{amt:50,cnt:12000},{amt:100,cnt:5000},{amt:250,cnt:2000},{amt:500,cnt:800},{amt:1000,cnt:150},{amt:5000,cnt:45},{amt:50000,cnt:5}]},
-{name:'紅寶石',emoji:'💎',price:100,cls:'card-ruby',color:'#ff4444',bgGrad:'linear-gradient(135deg,#3d0000,#6b0000)',total:100000,
+{name:'紅寶石',emoji:'💎',price:100,bgGrad:'linear-gradient(135deg,#3d0000,#6b0000)',total:100000,
 prizes:[{amt:20,cnt:50000},{amt:50,cnt:30000},{amt:100,cnt:12000},{amt:200,cnt:5000},{amt:500,cnt:2000},{amt:1000,cnt:800},{amt:2000,cnt:150},{amt:10000,cnt:45},{amt:100000,cnt:5}]},
-{name:'翡翠運',emoji:'🍀',price:200,cls:'card-emerald',color:'#00cc66',bgGrad:'linear-gradient(135deg,#002a00,#004d00)',total:100000,
+{name:'翡翠運',emoji:'🍀',price:200,bgGrad:'linear-gradient(135deg,#002a00,#004d00)',total:100000,
 prizes:[{amt:40,cnt:50000},{amt:100,cnt:30000},{amt:200,cnt:12000},{amt:400,cnt:5000},{amt:1000,cnt:2000},{amt:2000,cnt:800},{amt:4000,cnt:150},{amt:20000,cnt:45},{amt:200000,cnt:5}]},
-{name:'鑽石皇',emoji:'👑',price:500,cls:'card-diamond',color:'#4169e1',bgGrad:'linear-gradient(135deg,#0a0a3d,#1a1a6e)',total:100000,
+{name:'鑽石皇',emoji:'👑',price:500,bgGrad:'linear-gradient(135deg,#0a0a3d,#1a1a6e)',total:100000,
 prizes:[{amt:100,cnt:50000},{amt:250,cnt:30000},{amt:500,cnt:12000},{amt:1000,cnt:5000},{amt:2500,cnt:2000},{amt:5000,cnt:800},{amt:10000,cnt:150},{amt:50000,cnt:45},{amt:500000,cnt:5}]}
 ];
 const GAME_TYPES=[
@@ -162,7 +150,7 @@ const GAME_TYPES=[
 {type:'bonus',name:'紅利區',icon:'💣'}
 ];
 let state=JSON.parse(localStorage.getItem('scratchState')||'null')||{tokens:500,prize:0,history:[]};
-let currentCard=null,currentWinnings=0,scratchRevealed=false;
+let currentCard=null,currentWinnings=0,zonesTotal=0,zonesRevealed=0;
 function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
 function updateUI(){document.getElementById('tokenDisplay').textContent=state.tokens.toLocaleString();document.getElementById('prizeDisplay').textContent=state.prize.toLocaleString()}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='historyScreen')renderHistory();if(id==='homeScreen')updateUI()}
@@ -171,24 +159,83 @@ function closePrizeModal(){document.getElementById('prizeModal').classList.remov
 function showTopup(){document.getElementById('topupModal').classList.add('show')}
 function closeTopup(){document.getElementById('topupModal').classList.remove('show')}
 function doTopup(amt){state.tokens+=amt;save();updateUI();closeTopup();showToast(`成功儲值 ${amt} 代幣！`)}
-function showAd(){const overlay=document.getElementById('adOverlay');overlay.classList.add('show');let t=5;document.getElementById('adCountdown').textContent=t;const iv=setInterval(()=>{t--;document.getElementById('adCountdown').textContent=t;if(t<=0){clearInterval(iv);overlay.classList.remove('show');state.tokens+=10;save();updateUI();showToast('獲得 10 代幣！')}},1000)}
+function showAd(){const ov=document.getElementById('adOverlay');ov.classList.add('show');let t=5;document.getElementById('adCountdown').textContent=t;const iv=setInterval(()=>{t--;document.getElementById('adCountdown').textContent=t;if(t<=0){clearInterval(iv);ov.classList.remove('show');state.tokens+=10;save();updateUI();showToast('獲得 10 代幣！')}},1000)}
 function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
 function rollPrize(cardIdx){const c=CARDS[cardIdx];const r=Math.random()*c.total;let cum=0;for(const p of c.prizes){cum+=p.cnt;if(r<cum)return p.amt}return c.prizes[0].amt}
-function generateGameZones(cardIdx,totalWin){const numZones=4+Math.floor(Math.random()*5);const zones=[];const mainZoneIdx=Math.floor(Math.random()*numZones);for(let i=0;i<numZones;i++){const gt=GAME_TYPES[Math.floor(Math.random()*GAME_TYPES.length)];const zoneWin=(i===mainZoneIdx)?totalWin:0;zones.push(generateZone(gt,zoneWin,CARDS[cardIdx]))}return zones}
-function generateZone(gameType,winAmount,card){const zone={type:gameType.type,name:gameType.name,icon:gameType.icon,win:winAmount,html:''};switch(gameType.type){case 'number_match':zone.html=genNumberMatch(winAmount,card);break;case 'compare':zone.html=genCompare(winAmount);break;case 'triple':zone.html=genTriple(winAmount,card);break;case 'lucky_symbol':zone.html=genLuckySymbol(winAmount);break;case 'multiplier':zone.html=genMultiplier(winAmount,card);break;case 'bonus':zone.html=genBonus(winAmount,card);break;default:zone.html=genTriple(winAmount,card)}return zone}
 function genNumberMatch(win,card){const winNums=new Set();while(winNums.size<3)winNums.add(Math.floor(Math.random()*20)+1);const playerNums=[];const winArr=[...winNums];if(win>0){playerNums.push({num:winArr[Math.floor(Math.random()*winArr.length)],amt:win});for(let i=0;i<5;i++){let n;do{n=Math.floor(Math.random()*20)+1}while(winNums.has(n)||playerNums.some(p=>p.num===n));playerNums.push({num:n,amt:card.prizes[Math.floor(Math.random()*3)].amt})}}else{for(let i=0;i<6;i++){let n;do{n=Math.floor(Math.random()*20)+1}while(winNums.has(n)||playerNums.some(p=>p.num===n));playerNums.push({num:n,amt:card.prizes[Math.floor(Math.random()*3)].amt})}}playerNums.sort(()=>Math.random()-0.5);let html=`<div class="number-label">🎯 中獎號碼</div><div class="number-match-row">`;winArr.forEach(n=>html+=`<div class="number-ball winning">${n}</div>`);html+=`</div><div class="number-label" style="margin-top:10px">🎫 我的號碼</div><div class="match-grid">`;playerNums.forEach(p=>{const hit=winNums.has(p.num);html+=`<div class="match-cell${hit?' winner':''}">${p.num}<br><span style="font-size:11px;color:${hit?'#ffd700':'rgba(255,255,255,0.4)'}">$${p.amt.toLocaleString()}</span></div>`});html+=`</div>`;return html}
-function genCompare(win){let myNum,dealerNum;if(win>0){dealerNum=Math.floor(Math.random()*40)+1;myNum=dealerNum+Math.floor(Math.random()*(99-dealerNum))+1}else{myNum=Math.floor(Math.random()*45)+1;dealerNum=myNum+Math.floor(Math.random()*(99-myNum))+1}const resultText=win>0?`<span style="color:#ffd700">贏！+$${win.toLocaleString()}</span>`:`<span style="color:#ff4444">輸</span>`;return `<div class="compare-row"><div class="compare-card"><div class="label">我的</div><div class="value" style="color:${win>0?'#ffd700':'#fff'}">${myNum}</div></div><div class="compare-vs">VS</div><div class="compare-card"><div class="label">莊家</div><div class="value">${dealerNum}</div></div></div><div style="text-align:center;margin-top:8px;font-weight:700">${resultText}</div>`}function genTriple(win,card){const grid=[];if(win>0){for(let i=0;i<3;i++)grid.push(win);const otherAmts=card.prizes.map(p=>p.amt).filter(a=>a!==win);for(let i=0;i<6;i++)grid.push(otherAmts[Math.floor(Math.random()*otherAmts.length)])}else{const amts=card.prizes.slice(0,4).map(p=>p.amt);for(let i=0;i<9;i++)grid.push(amts[Math.floor(Math.random()*amts.length)]);const counts={};grid.forEach(a=>{counts[a]=(counts[a]||0)+1});for(const[a,c] of Object.entries(counts)){while(counts[a]>=3){const idx=grid.lastIndexOf(parseInt(a));let newAmt;do{newAmt=amts[Math.floor(Math.random()*amts.length)]}while(newAmt===parseInt(a));grid[idx]=newAmt;counts[a]--;counts[newAmt]=(counts[newAmt]||0)+1}}}grid.sort(()=>Math.random()-0.5);let html='<div class="match-grid">';grid.forEach(a=>{const isWin=(win>0&&a===win);html+=`<div class="match-cell${isWin?' winner':''}">$${a.toLocaleString()}</div>`});html+='</div>';if(win>0)html+=`<div style="text-align:center;margin-top:8px;color:#ffd700;font-weight:700">三個 $${win.toLocaleString()} → 中獎！🎉</div>`;return html}
-function genLuckySymbol(win){const symbols=['🍒','🍋','🔔','⭐','💎','🍀','7️⃣','🎰'];const grid=[];if(win>0){for(let i=0;i<8;i++)grid.push(symbols[Math.floor(Math.random()*symbols.length)]);grid[Math.floor(Math.random()*8)]='💎';let html=`<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">`;grid.forEach(s=>{const isLucky=s==='💎';html+=`<div class="match-cell${isLucky?' winner':''}" style="font-size:24px">${s}</div>`});html+=`</div><div style="text-align:center;margin-top:8px;color:#ffd700;font-weight:700">找到 💎 → +$${win.toLocaleString()}！</div>`;return html}else{for(let i=0;i<8;i++)grid.push(symbols[Math.floor(Math.random()*6)]);let html=`<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">`;grid.forEach(s=>html+=`<div class="match-cell" style="font-size:24px">${s}</div>`);html+=`</div><div style="text-align:center;margin-top:8px;color:rgba(255,255,255,0.4);font-size:12px">未找到 💎</div>`;return html}}
-function genMultiplier(win,card){const multipliers=['1x','1x','2x','3x','5x'];const picked=multipliers[Math.floor(Math.random()*multipliers.length)];const baseAmt=win>0?Math.round(win/parseInt(picked)||win):card.prizes[Math.floor(Math.random()*3)].amt;return `<div style="text-align:center"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">基礎金額</div><div style="font-size:28px;font-weight:900;color:#fff">$${baseAmt.toLocaleString()}</div><div style="font-size:14px;color:rgba(255,255,255,0.5);margin:8px 0">倍數</div><div style="font-size:36px;font-weight:900;color:${win>0?'#ffd700':'#ff4444'}">${win>0?picked:'0x'}</div>${win>0?`<div style="margin-top:8px;color:#ffd700;font-weight:700">→ $${win.toLocaleString()}！🎯</div>`:`<div style="margin-top:8px;color:rgba(255,255,255,0.4)">未中獎</div>`}</div>`}
-function genBonus(win,card){if(win>0)return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px">🎊 紅利大獎 🎊</div><div class="bonus-amount">$${win.toLocaleString()}</div><div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.5)">恭喜觸發紅利區！</div></div>`;return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px;color:rgba(255,255,255,0.4)">💣 紅利區</div><div style="font-size:24px;color:rgba(255,255,255,0.3)">未觸發</div></div>`}
-function buyCard(idx){const c=CARDS[idx];if(state.tokens<c.price){showToast('代幣不足！請先儲值 💳');return}state.tokens-=c.price;save();updateUI();currentCard=idx;scratchRevealed=false;currentWinnings=rollPrize(idx);setupScratchCard(idx,currentWinnings);showScreen('scratchScreen');document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name}
-function setupScratchCard(cardIdx,totalWin){const c=CARDS[cardIdx];const bg=document.getElementById('scratchBg');bg.style.background=c.bgGrad;const zones=generateGameZones(cardIdx,totalWin);let html='<div class="game-zones">';zones.forEach(z=>{html+=`<div class="game-zone"><div class="game-zone-title"><span class="zone-icon">${z.icon}</span>${z.name}</div>${z.html}</div>`});html+=`<div style="text-align:center;padding:16px;margin-top:8px"><div style="font-size:14px;color:rgba(255,255,255,0.5)">本張總獎金</div><div style="font-size:36px;font-weight:900;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.5)">$${totalWin.toLocaleString()}</div></div></div>`;bg.innerHTML=html;requestAnimationFrame(()=>{const container=document.getElementById('scratchContainer');const canvas=document.getElementById('scratchCanvas');canvas.width=container.offsetWidth;canvas.height=container.offsetHeight;const ctx=canvas.getContext('2d');const grad=ctx.createLinearGradient(0,0,canvas.width,canvas.height);grad.addColorStop(0,'#c0c0c0');grad.addColorStop(0.3,'#d8d8d8');grad.addColorStop(0.5,'#a8a8a8');grad.addColorStop(0.7,'#d0d0d0');grad.addColorStop(1,'#b0b0b0');ctx.fillStyle=grad;ctx.fillRect(0,0,canvas.width,canvas.height);for(let i=0;i<200;i++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*0.3})`;ctx.beginPath();ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*2,0,Math.PI*2);ctx.fill()}ctx.fillStyle='rgba(0,0,0,0.15)';ctx.font='bold 24px "Noto Sans TC"';ctx.textAlign='center';ctx.fillText('刮開此處',canvas.width/2,canvas.height/2-10);ctx.font='16px "Noto Sans TC"';ctx.fillText(c.emoji+' '+c.name,canvas.width/2,canvas.height/2+20);let isDown=false;let lastP={x:0,y:0};const scratch=(x,y)=>{ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(x,y,50,0,Math.PI*2);ctx.fill();checkScratchPercent(ctx,canvas)};const getPos=(e)=>{const rect=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-rect.left,y:t.clientY-rect.top}};canvas.onmousedown=canvas.ontouchstart=(e)=>{e.preventDefault();isDown=true;const p=getPos(e);lastP=p;scratch(p.x,p.y)};canvas.onmousemove=canvas.ontouchmove=(e)=>{e.preventDefault();if(!isDown)return;const p=getPos(e);ctx.globalCompositeOperation='destination-out';ctx.lineWidth=100;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(lastP.x,lastP.y);ctx.lineTo(p.x,p.y);ctx.stroke();lastP=p;checkScratchPercent(ctx,canvas)};canvas.onmouseup=canvas.ontouchend=()=>isDown=false})}
-function checkScratchPercent(ctx,canvas){if(scratchRevealed)return;const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let transparent=0;for(let i=3;i<data.length;i+=16){if(data[i]===0)transparent++}const pct=transparent/(data.length/16);if(pct>0.30){scratchRevealed=true;ctx.clearRect(0,0,canvas.width,canvas.height);setTimeout(()=>showResult(currentWinnings),500)}}
-function showResult(amount){const overlay=document.getElementById('resultOverlay');document.getElementById('resultAmount').textContent='$'+amount.toLocaleString();if(amount>=500){document.getElementById('resultEmoji').textContent='🎉';document.getElementById('resultText').textContent='大獎！恭喜中獎！';launchConfetti()}else{document.getElementById('resultEmoji').textContent='😊';document.getElementById('resultText').textContent='中獎了！'}overlay.classList.add('show');const c=CARDS[currentCard];state.prize+=amount;state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:amount,time:Date.now()});if(state.history.length>50)state.history.pop();save()}
+function genCompare(win){let myNum,dealerNum;if(win>0){dealerNum=Math.floor(Math.random()*40)+1;myNum=dealerNum+Math.floor(Math.random()*(99-dealerNum))+1}else{myNum=Math.floor(Math.random()*45)+1;dealerNum=myNum+Math.floor(Math.random()*(99-myNum))+1}const rt=win>0?`<span style="color:#ffd700">贏！+$${win.toLocaleString()}</span>`:`<span style="color:#ff4444">輸</span>`;return `<div class="compare-row"><div class="compare-card"><div class="label">我的</div><div class="value" style="color:${win>0?'#ffd700':'#fff'}">${myNum}</div></div><div class="compare-vs">VS</div><div class="compare-card"><div class="label">莊家</div><div class="value">${dealerNum}</div></div></div><div style="text-align:center;margin-top:8px;font-weight:700">${rt}</div>`}
+function genTriple(win,card){const grid=[];if(win>0){for(let i=0;i<3;i++)grid.push(win);const oa=card.prizes.map(p=>p.amt).filter(a=>a!==win);for(let i=0;i<6;i++)grid.push(oa[Math.floor(Math.random()*oa.length)])}else{const amts=card.prizes.slice(0,4).map(p=>p.amt);for(let i=0;i<9;i++)grid.push(amts[Math.floor(Math.random()*amts.length)]);const cnt={};grid.forEach(a=>{cnt[a]=(cnt[a]||0)+1});for(const[a] of Object.entries(cnt)){while(cnt[a]>=3){const idx=grid.lastIndexOf(parseInt(a));let nw;do{nw=amts[Math.floor(Math.random()*amts.length)]}while(nw===parseInt(a));grid[idx]=nw;cnt[a]--;cnt[nw]=(cnt[nw]||0)+1}}}grid.sort(()=>Math.random()-0.5);let html='<div class="match-grid">';grid.forEach(a=>{const w=(win>0&&a===win);html+=`<div class="match-cell${w?' winner':''}">$${a.toLocaleString()}</div>`});html+='</div>';if(win>0)html+=`<div style="text-align:center;margin-top:8px;color:#ffd700;font-weight:700">三個 $${win.toLocaleString()} → 中獎！🎉</div>`;return html}
+function genLuckySymbol(win){const syms=['🍒','🍋','🔔','⭐','💎','🍀','7️⃣','🎰'];const grid=[];if(win>0){for(let i=0;i<8;i++)grid.push(syms[Math.floor(Math.random()*syms.length)]);grid[Math.floor(Math.random()*8)]='💎';let html='<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">';grid.forEach(s=>{html+=`<div class="match-cell${s==='💎'?' winner':''}" style="font-size:24px">${s}</div>`});html+=`</div><div style="text-align:center;margin-top:8px;color:#ffd700;font-weight:700">找到 💎 → +$${win.toLocaleString()}！</div>`;return html}else{for(let i=0;i<8;i++)grid.push(syms[Math.floor(Math.random()*6)]);let html='<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">';grid.forEach(s=>html+=`<div class="match-cell" style="font-size:24px">${s}</div>`);html+='</div><div style="text-align:center;margin-top:8px;color:rgba(255,255,255,0.4);font-size:12px">未找到 💎</div>';return html}}
+function genMultiplier(win,card){const ms=['1x','2x','3x','5x'];const picked=ms[Math.floor(Math.random()*ms.length)];const base=win>0?Math.round(win/parseInt(picked)||win):card.prizes[Math.floor(Math.random()*3)].amt;return `<div style="text-align:center"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">基礎金額</div><div style="font-size:28px;font-weight:900">$${base.toLocaleString()}</div><div style="font-size:14px;color:rgba(255,255,255,0.5);margin:8px 0">倍數</div><div style="font-size:36px;font-weight:900;color:${win>0?'#ffd700':'#ff4444'}">${win>0?picked:'0x'}</div>${win>0?`<div style="margin-top:8px;color:#ffd700;font-weight:700">→ $${win.toLocaleString()}！🎯</div>`:`<div style="margin-top:8px;color:rgba(255,255,255,0.4)">未中獎</div>`}</div>`}
+function genBonus(win){if(win>0)return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px">🎊 紅利大獎 🎊</div><div class="bonus-amount">$${win.toLocaleString()}</div></div>`;return `<div class="bonus-area"><div style="font-size:16px;margin-bottom:8px;color:rgba(255,255,255,0.4)">💣 紅利區</div><div style="font-size:24px;color:rgba(255,255,255,0.3)">未觸發</div></div>`}function buyCard(idx){const c=CARDS[idx];if(state.tokens<c.price){showToast('代幣不足！請先儲值 💳');return}state.tokens-=c.price;save();updateUI();currentCard=idx;currentWinnings=rollPrize(idx);setupScratchCard(idx,currentWinnings);showScreen('scratchScreen');document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name}
+
+function setupScratchCard(cardIdx,totalWin){
+const c=CARDS[cardIdx];
+const wrap=document.getElementById('scratchWrap');
+wrap.style.background=c.bgGrad;
+const numZones=4+Math.floor(Math.random()*5);
+const mainIdx=Math.floor(Math.random()*numZones);
+zonesTotal=numZones;zonesRevealed=0;
+updateProgress();
+let html='<div class="game-zones">';
+for(let i=0;i<numZones;i++){
+const gt=GAME_TYPES[Math.floor(Math.random()*GAME_TYPES.length)];
+const zw=(i===mainIdx)?totalWin:0;
+let content='';
+switch(gt.type){
+case 'number_match':content=genNumberMatch(zw,c);break;
+case 'compare':content=genCompare(zw);break;
+case 'triple':content=genTriple(zw,c);break;
+case 'lucky_symbol':content=genLuckySymbol(zw);break;
+case 'multiplier':content=genMultiplier(zw,c);break;
+case 'bonus':content=genBonus(zw);break;
+default:content=genTriple(zw,c);
+}
+html+=`<div class="game-zone" id="zone${i}">
+<div class="zone-content">
+<div class="game-zone-title"><span class="zone-icon">${gt.icon}</span>${gt.name}</div>
+${content}
+</div>
+<canvas class="zone-scratch" id="zcanvas${i}"></canvas>
+</div>`;
+}
+html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div>`;
+html+='</div>';
+wrap.innerHTML=html;
+requestAnimationFrame(()=>{for(let i=0;i<numZones;i++)initZoneCanvas(i)});
+}
+
+function initZoneCanvas(idx){
+const zone=document.getElementById('zone'+idx);
+const canvas=document.getElementById('zcanvas'+idx);
+canvas.width=zone.offsetWidth;
+canvas.height=zone.offsetHeight;
+const ctx=canvas.getContext('2d');
+const g=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+g.addColorStop(0,'#b8b8b8');g.addColorStop(0.3,'#d0d0d0');g.addColorStop(0.5,'#a0a0a0');g.addColorStop(0.7,'#c8c8c8');g.addColorStop(1,'#b0b0b0');
+ctx.fillStyle=g;
+ctx.fillRect(0,0,canvas.width,canvas.height);
+for(let j=0;j<40;j++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*0.4})`;ctx.beginPath();ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*2,0,Math.PI*2);ctx.fill()}
+ctx.fillStyle='rgba(0,0,0,0.12)';
+ctx.font='bold 16px "Noto Sans TC"';
+ctx.textAlign='center';
+ctx.fillText('刮我',canvas.width/2,canvas.height/2+5);
+let isDown=false,lastP={x:0,y:0},revealed=false;
+const getPos=(e)=>{const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}};
+canvas.onmousedown=canvas.ontouchstart=(e)=>{e.preventDefault();if(revealed)return;isDown=true;const p=getPos(e);lastP=p;ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(p.x,p.y,30,0,Math.PI*2);ctx.fill()};
+canvas.onmousemove=canvas.ontouchmove=(e)=>{e.preventDefault();if(!isDown||revealed)return;const p=getPos(e);ctx.globalCompositeOperation='destination-out';ctx.lineWidth=60;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(lastP.x,lastP.y);ctx.lineTo(p.x,p.y);ctx.stroke();lastP=p;
+const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let tr=0;for(let k=3;k<data.length;k+=16){if(data[k]===0)tr++}
+if(tr/(data.length/16)>0.40){revealed=true;canvas.classList.add('zone-revealed');zonesRevealed++;updateProgress();if(zonesRevealed>=zonesTotal){setTimeout(()=>{document.getElementById('totalAmount').textContent='$'+currentWinnings.toLocaleString();setTimeout(()=>showResult(currentWinnings),800)},400)}}};
+canvas.onmouseup=canvas.ontouchend=()=>isDown=false;
+}
+
+function updateProgress(){document.getElementById('zonesProgress').innerHTML=`已刮開 <span>${zonesRevealed}</span> / <span>${zonesTotal}</span> 區`}
+
+function showResult(amount){const ov=document.getElementById('resultOverlay');document.getElementById('resultAmount').textContent='$'+amount.toLocaleString();if(amount>=500){document.getElementById('resultEmoji').textContent='🎉';document.getElementById('resultText').textContent='大獎！恭喜中獎！';launchConfetti()}else{document.getElementById('resultEmoji').textContent='😊';document.getElementById('resultText').textContent='中獎了！'}ov.classList.add('show');const c=CARDS[currentCard];state.prize+=amount;state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:amount,time:Date.now()});if(state.history.length>50)state.history.pop();save()}
 function closeResult(){document.getElementById('resultOverlay').classList.remove('show');showScreen('homeScreen');updateUI()}
-function renderHistory(){const list=document.getElementById('historyList');if(state.history.length===0){list.innerHTML='<p style="text-align:center;color:rgba(255,255,255,0.3);padding:40px">還沒有紀錄</p>';return}list.innerHTML=state.history.map(h=>{const d=new Date(h.time);const net=h.win-h.cost;return `<div class="history-item"><div class="hi-left"><div class="hi-type">${h.emoji} ${h.card} (-${h.cost}代幣)</div><div class="hi-time">${d.toLocaleString('zh-TW')}</div></div><div class="hi-amount ${net>=0?'win':'loss'}">$${h.win.toLocaleString()}</div></div>`}).join('')}
-function initParticles(){const canvas=document.getElementById('particles');const ctx=canvas.getContext('2d');let w=canvas.width=window.innerWidth;let h=canvas.height=window.innerHeight;window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight});const particles=[];for(let i=0;i<60;i++){particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.5,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.3,a:Math.random()*0.4+0.1,color:['#ffd700','#ff8c00','#4169e1','#00cc66','#ff4444'][Math.floor(Math.random()*5)]})}function draw(){ctx.clearRect(0,0,w,h);particles.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.fillStyle=p.color;ctx.globalAlpha=p.a;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;requestAnimationFrame(draw)}draw()}
-function launchConfetti(){const canvas=document.getElementById('confetti');const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;const pieces=[];const colors=['#ffd700','#ff4444','#00cc66','#4169e1','#ff8c00','#ff69b4'];for(let i=0;i<150;i++){pieces.push({x:canvas.width/2+(Math.random()-0.5)*200,y:canvas.height/2,vx:(Math.random()-0.5)*15,vy:Math.random()*-18-5,r:Math.random()*6+3,color:colors[Math.floor(Math.random()*colors.length)],gravity:0.3,drag:0.98,rot:Math.random()*Math.PI*2,rotV:(Math.random()-0.5)*0.3})}let frame=0;function draw(){if(frame>120){ctx.clearRect(0,0,canvas.width,canvas.height);return}ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{p.vy+=p.gravity;p.vx*=p.drag;p.x+=p.vx;p.y+=p.vy;p.rot+=p.rotV;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.color;ctx.globalAlpha=Math.max(0,1-frame/120);ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6);ctx.restore()});frame++;requestAnimationFrame(draw)}draw()}
+function renderHistory(){const list=document.getElementById('historyList');if(!state.history.length){list.innerHTML='<p style="text-align:center;color:rgba(255,255,255,0.3);padding:40px">還沒有紀錄</p>';return}list.innerHTML=state.history.map(h=>{const d=new Date(h.time);const net=h.win-h.cost;return `<div class="history-item"><div class="hi-left"><div class="hi-type">${h.emoji} ${h.card} (-${h.cost}代幣)</div><div class="hi-time">${d.toLocaleString('zh-TW')}</div></div><div class="hi-amount ${net>=0?'win':'loss'}">$${h.win.toLocaleString()}</div></div>`}).join('')}
+function initParticles(){const cv=document.getElementById('particles');const ctx=cv.getContext('2d');let w=cv.width=innerWidth,h=cv.height=innerHeight;addEventListener('resize',()=>{w=cv.width=innerWidth;h=cv.height=innerHeight});const ps=[];for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,dx:(Math.random()-.5)*.5,dy:(Math.random()-.5)*.3,a:Math.random()*.4+.1,c:['#ffd700','#ff8c00','#4169e1','#00cc66','#ff4444'][Math.floor(Math.random()*5)]});(function draw(){ctx.clearRect(0,0,w,h);ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;requestAnimationFrame(draw)})()}
+function launchConfetti(){const cv=document.getElementById('confetti');const ctx=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;const pcs=[];const cols=['#ffd700','#ff4444','#00cc66','#4169e1','#ff8c00','#ff69b4'];for(let i=0;i<150;i++)pcs.push({x:cv.width/2+(Math.random()-.5)*200,y:cv.height/2,vx:(Math.random()-.5)*15,vy:Math.random()*-18-5,r:Math.random()*6+3,c:cols[Math.floor(Math.random()*cols.length)],g:.3,d:.98,rot:Math.random()*Math.PI*2,rv:(Math.random()-.5)*.3});let f=0;(function draw(){if(f>120){ctx.clearRect(0,0,cv.width,cv.height);return}ctx.clearRect(0,0,cv.width,cv.height);pcs.forEach(p=>{p.vy+=p.g;p.vx*=p.d;p.x+=p.vx;p.y+=p.vy;p.rot+=p.rv;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.globalAlpha=Math.max(0,1-f/120);ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);ctx.restore()});f++;requestAnimationFrame(draw)})()}
 updateUI();initParticles();
 </script>
 </body>
