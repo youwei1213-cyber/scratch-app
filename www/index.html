@@ -16,7 +16,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .balance-row .icon{font-size:18px}
 .balance-row .amount{font-weight:900;color:#ffd700;font-size:18px;text-shadow:0 0 10px rgba(255,215,0,0.5)}
 .prize-row .amount{color:#ff6b6b}
-.header-right{display:flex;gap:8px}
+.header-right{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .btn-sm{padding:8px 14px;border:none;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.3s;font-family:inherit}
 .btn-topup{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;box-shadow:0 4px 15px rgba(255,215,0,0.4)}
 .btn-topup:active{transform:scale(0.95)}
@@ -123,7 +123,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div id="homeScreen" class="screen active">
 <div class="header">
 <div class="header-left">
-<div class="balance-row"><span class="icon">🪙</span><span>代幣</span><span class="amount" id="tokenDisplay">500</span></div>
+<div class="balance-row"><span class="icon">🔸</span><span>代幣</span><span class="amount" id="tokenDisplay">500</span></div>
 <div class="balance-row prize-row"><span class="icon">💰</span><span>獎金</span><span class="amount" id="prizeDisplay">0</span></div>
 </div>
 <div class="header-right">
@@ -154,9 +154,9 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 </div>
 <div class="result-overlay" id="resultOverlay"><div class="result-card"><div class="result-emoji" id="resultEmoji">🎉</div><div class="result-text" id="resultText">恭喜中獎！</div><div class="result-amount" id="resultAmount">$0</div><button class="result-btn" onclick="closeResult()">收下獎金 💰</button></div></div>
 <div class="modal-overlay" id="prizeModal"><div class="modal"><h2 id="prizeModalTitle">獎項配率</h2><table class="prize-table" id="prizeTable"></table><br><button class="result-btn" style="width:100%" onclick="closePrizeModal()">知道了 👍</button></div></div>
-<div class="modal-overlay" id="topupModal"><div class="modal"><h2>💳 儲值代幣</h2><p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center">1 TWD = 1 代幣</p><div class="topup-grid"><div class="topup-option" onclick="doTopup(100)"><div class="coins">🪙 100</div><div class="price">NT$ 100</div></div><div class="topup-option" onclick="doTopup(500)"><div class="coins">🪙 500</div><div class="price">NT$ 500</div></div><div class="topup-option" onclick="doTopup(1000)"><div class="coins">🪙 1,000</div><div class="price">NT$ 1,000</div></div><div class="topup-option" onclick="doTopup(3000)"><div class="coins">🪙 3,000</div><div class="price">NT$ 3,000</div></div></div><br><button class="result-btn" style="width:100%;background:rgba(255,255,255,0.1);color:#fff" onclick="closeTopup()">取消</button></div></div>
-<div class="modal-overlay" id="exchangeModal"><div class="modal"><h2>🔄 獎金兌換代幣</h2><div class="exchange-info">將您的獎金兌換成代幣繼續遊戲！</div><div class="exchange-info">匯率：$1 獎金 = 1 代幣</div><div style="text-align:center;margin:12px 0"><span style="color:rgba(255,255,255,0.5)">目前獎金：</span><span style="color:#ff6b6b;font-weight:900;font-size:18px" id="exchangePrize">$0</span></div><div class="exchange-input-row"><input type="number" class="exchange-input" id="exchangeAmount" placeholder="輸入兌換金額" min="1" oninput="updateExchangePreview()"></div><div class="exchange-preview"><div class="ep-label">可獲得代幣</div><div class="ep-value" id="exchangePreview">🪙 0</div></div><div style="display:flex;gap:10px"><button class="result-btn" style="flex:1" onclick="doExchange()">確認兌換</button><button class="result-btn" style="flex:1;background:rgba(255,255,255,0.1);color:#fff" onclick="closeExchange()">取消</button></div><div style="margin-top:12px"><button class="result-btn" style="width:100%;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;font-size:14px;padding:10px" onclick="doExchangeAll()">全部兌換 💱</button></div></div></div>
-<div class="ad-overlay" id="adOverlay"><div class="ad-box"><div class="ad-text">📺 廣告播放中...</div><div class="ad-countdown" id="adCountdown">5</div></div><div class="ad-reward">觀看完畢可獲得 🪙 10 代幣</div></div>
+<div class="modal-overlay" id="topupModal"><div class="modal"><h2>💳 儲值代幣</h2><p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;text-align:center">1 TWD = 1 代幣</p><div class="topup-grid"><div class="topup-option" onclick="doTopup(100)"><div class="coins">🔸 100</div><div class="price">NT$ 100</div></div><div class="topup-option" onclick="doTopup(500)"><div class="coins">🔸 500</div><div class="price">NT$ 500</div></div><div class="topup-option" onclick="doTopup(1000)"><div class="coins">🔸 1,000</div><div class="price">NT$ 1,000</div></div><div class="topup-option" onclick="doTopup(3000)"><div class="coins">🔸 3,000</div><div class="price">NT$ 3,000</div></div></div><br><button class="result-btn" style="width:100%;background:rgba(255,255,255,0.1);color:#fff" onclick="closeTopup()">取消</button></div></div>
+<div class="modal-overlay" id="exchangeModal"><div class="modal"><h2>🔄 獎金兌換代幣</h2><div class="exchange-info">將您的獎金兌換成代幣繼續遊戲！</div><div class="exchange-info">匯率：$1 獎金 = 1 代幣</div><div style="text-align:center;margin:12px 0"><span style="color:rgba(255,255,255,0.5)">目前獎金：</span><span style="color:#ff6b6b;font-weight:900;font-size:18px" id="exchangePrize">$0</span></div><div class="exchange-input-row"><input type="number" class="exchange-input" id="exchangeAmount" placeholder="輸入兌換金額" min="1" oninput="updateExchangePreview()"></div><div class="exchange-preview"><div class="ep-label">可獲得代幣</div><div class="ep-value" id="exchangePreview">🔸 0</div></div><div style="display:flex;gap:10px"><button class="result-btn" style="flex:1" onclick="doExchange()">確認兌換</button><button class="result-btn" style="flex:1;background:rgba(255,255,255,0.1);color:#fff" onclick="closeExchange()">取消</button></div><div style="margin-top:12px"><button class="result-btn" style="width:100%;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;font-size:14px;padding:10px" onclick="doExchangeAll()">全部兌換 💱</button></div></div></div>
+<div class="ad-overlay" id="adOverlay"><div class="ad-box"><div class="ad-text">📺 廣告播放中...</div><div class="ad-countdown" id="adCountdown">5</div></div><div class="ad-reward">觀看完畢可獲得 🔸 10 代幣</div></div>
 <script>
 const CARDS=[
 {name:'金運來',emoji:'🌟',price:50,bgGrad:'linear-gradient(135deg,#3d2b00,#6b4c00)',total:100000,
@@ -282,6 +282,18 @@ function renderHistory(){const list=document.getElementById('historyList');if(!s
 function initParticles(){const cv=document.getElementById('particles');const ctx=cv.getContext('2d');let w=cv.width=innerWidth,h=cv.height=innerHeight;addEventListener('resize',()=>{w=cv.width=innerWidth;h=cv.height=innerHeight});const ps=[];for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,dx:(Math.random()-.5)*.5,dy:(Math.random()-.5)*.3,a:Math.random()*.4+.1,c:['#ffd700','#ff8c00','#4169e1','#00cc66','#ff4444'][Math.floor(Math.random()*5)]});(function draw(){ctx.clearRect(0,0,w,h);ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;requestAnimationFrame(draw)})()}
 
 function launchConfetti(){const cv=document.getElementById('confetti');const ctx=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;const pcs=[];const cols=['#ffd700','#ff4444','#00cc66','#4169e1','#ff8c00','#ff69b4'];for(let i=0;i<150;i++)pcs.push({x:cv.width/2+(Math.random()-.5)*200,y:cv.height/2,vx:(Math.random()-.5)*15,vy:Math.random()*-18-5,r:Math.random()*6+3,c:cols[Math.floor(Math.random()*cols.length)],g:.3,d:.98,rot:Math.random()*Math.PI*2,rv:(Math.random()-.5)*.3});let f=0;(function draw(){if(f>120){ctx.clearRect(0,0,cv.width,cv.height);return}ctx.clearRect(0,0,cv.width,cv.height);pcs.forEach(p=>{p.vy+=p.g;p.vx*=p.d;p.x+=p.vx;p.y+=p.vy;p.rot+=p.rv;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.globalAlpha=Math.max(0,1-f/120);ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);ctx.restore()});f++;requestAnimationFrame(draw)})()}
+
+
+function showExchange(){
+document.getElementById('exchangeAmount').value='';
+document.getElementById('exchangePreview').textContent='🔸 0';
+document.getElementById('exchangePrize').textContent='$'+state.prize.toLocaleString();
+document.getElementById('exchangeModal').classList.add('show');
+}
+function closeExchange(){document.getElementById('exchangeModal').classList.remove('show')}
+function updateExchangePreview(){var v=parseInt(document.getElementById('exchangeAmount').value)||0;document.getElementById('exchangePreview').textContent='🔸 '+v.toLocaleString()}
+function doExchange(){var v=parseInt(document.getElementById('exchangeAmount').value)||0;if(v<=0){showToast('請輸入兌換金額');return}if(v>state.prize){showToast('獎金不足！');return}state.prize-=v;state.tokens+=v;save();updateUI();closeExchange();showToast('成功兌換 '+v+' 代幣！')}
+function doExchangeAll(){if(state.prize<=0){showToast('沒有獎金可兌換');return}var v=state.prize;state.tokens+=v;state.prize=0;save();updateUI();closeExchange();showToast('全部兌換 '+v+' 代幣！')}
 
 updateUI();initParticles();
 </script>
