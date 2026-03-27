@@ -7,15 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a0015 0%,#1a0a3e 30%,#0d1b4a 60%,#0a0015 100%);color:#fff;min-height:100vh;overflow-x:hidden;position:relative}
+body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5f0e8 0%,#e8e0d4 30%,#f0ebe3 60%,#f5f0e8 100%);color:#2d2d2d;min-height:100vh;overflow-x:hidden;position:relative}
 #particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .app{position:relative;z-index:1;max-width:480px;margin:0 auto;min-height:100vh;padding:16px}
-.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,165,0,0.08));border:1px solid rgba(255,215,0,0.3);border-radius:16px;margin-bottom:20px;backdrop-filter:blur(10px)}
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.85);border:1px solid rgba(0,0,0,0.08);border-radius:16px;margin-bottom:20px;backdrop-filter:blur(10px);box-shadow:0 2px 12px rgba(0,0,0,0.06)}
 .header-left{display:flex;flex-direction:column;gap:4px}
-.balance-row{display:flex;align-items:center;gap:8px;font-size:14px}
+.balance-row{display:flex;align-items:center;gap:8px;font-size:14px;color:#555}
 .balance-row .icon{font-size:18px}
-.balance-row .amount{font-weight:900;color:#ffd700;font-size:18px;text-shadow:0 0 10px rgba(255,215,0,0.5)}
-.prize-row .amount{color:#ff6b6b}
+.balance-row .amount{font-weight:900;color:#d4a017;font-size:18px}
+.prize-row .amount{color:#e74c3c}
 .header-right{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .btn-sm{padding:8px 14px;border:none;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.3s;font-family:inherit}
 .btn-topup{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;box-shadow:0 4px 15px rgba(255,215,0,0.4)}
@@ -32,7 +32,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .exchange-preview .ep-value{font-size:24px;font-weight:900;color:#ffd700}
 .main-title{text-align:center;margin-bottom:24px}
 .main-title h1{font-size:28px;font-weight:900;background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px}
-.main-title p{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px}
+.main-title p{font-size:13px;color:rgba(0,0,0,0.45);margin-top:4px}
 .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 @media(min-width:420px){.card-grid{grid-template-columns:repeat(3,1fr)}}
 .card-item{position:relative;border-radius:20px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.3s;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:center;align-items:center}
@@ -165,7 +165,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .banner-text div:last-child{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px}
 /* ===== NEW: Lottery Grid (2-col) ===== */
 .lottery-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-bottom:80px}
-.lottery-card{border-radius:16px;overflow:hidden;background:#1a1a2e;border:2px solid rgba(255,215,0,0.2);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
+.lottery-card{border-radius:16px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08);background:#1a1a2e;border:1px solid rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
 .lottery-card:active{transform:scale(0.97)}
 .ticket-art{position:relative;height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center;overflow:hidden}
 .ticket-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.6);color:#ffd700;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;backdrop-filter:blur(4px);z-index:3}
@@ -174,12 +174,12 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .ticket-title-overlay{position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(transparent,rgba(0,0,0,0.7));font-size:16px;font-weight:900;text-shadow:0 2px 4px rgba(0,0,0,0.5);z-index:2}
 .ticket-info-btn{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;backdrop-filter:blur(4px)}
 .ticket-info{padding:12px}
-.ticket-name{font-size:15px;font-weight:700;margin-bottom:4px}
-.ticket-meta{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.ticket-name{font-size:15px;font-weight:700;margin-bottom:4px;color:#2d2d2d}
+.ticket-meta{display:flex;justify-content:space-between;font-size:11px;color:rgba(0,0,0,0.45);margin-bottom:8px}
 .ticket-stock{margin-bottom:8px}
-.stock-bar{width:100%;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden}
+.stock-bar{width:100%;height:4px;background:rgba(0,0,0,0.08);border-radius:2px;overflow:hidden}
 .stock-fill{height:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);border-radius:2px;transition:width 0.5s}
-.stock-text{font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px}
+.stock-text{font-size:10px;color:rgba(0,0,0,0.4);margin-top:4px}
 .ticket-go-btn{width:100%;padding:10px;border:none;border-radius:10px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;font-size:14px;font-weight:900;cursor:pointer;font-family:inherit;letter-spacing:2px}
 .lottery-card.sold-out{opacity:0.5;pointer-events:none}
 .lottery-card.sold-out .ticket-go-btn{background:#666;color:#999}
@@ -201,11 +201,11 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .ticket-art .shine-layer{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,0.1) 50%,transparent 60%);animation:ticketShine 3s infinite;z-index:2;pointer-events:none}
 @keyframes ticketShine{0%{transform:translateX(-100%) rotate(45deg)}100%{transform:translateX(100%) rotate(45deg)}}
 /* ===== NEW: Bottom Navigation ===== */
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:flex;justify-content:space-around;background:rgba(10,0,21,0.95);border-top:1px solid rgba(255,215,0,0.15);padding:8px 0 env(safe-area-inset-bottom,8px);backdrop-filter:blur(10px);z-index:50}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;display:flex;justify-content:space-around;background:rgba(255,255,255,0.95);border-top:1px solid rgba(0,0,0,0.08);box-shadow:0 -2px 12px rgba(0,0,0,0.06);padding:8px 0 env(safe-area-inset-bottom,8px);backdrop-filter:blur(10px);z-index:50}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 16px;position:relative}
 .nav-icon{font-size:22px}
-.nav-label{font-size:10px;color:rgba(255,255,255,0.5)}
-.nav-item.active .nav-label{color:#ffd700}
+.nav-label{font-size:10px;color:rgba(0,0,0,0.45)}
+.nav-item.active .nav-label{color:#d4a017}
 .nav-item.active .nav-icon{filter:drop-shadow(0 0 6px rgba(255,215,0,0.5))}
 .nav-badge{position:absolute;top:0;right:8px;background:#ff4444;color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:2px}
@@ -230,7 +230,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div class="banner">
 <div class="banner-text">
 <div>🎰 幸運刮刮樂</div>
-<div>線上一番賞 · 限量發行 · 刮出好運</div>
+<div>限量發行 · 刮出好運</div>
 </div>
 </div>
 <div class="lottery-grid" id="lotteryGrid">
