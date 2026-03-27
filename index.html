@@ -470,6 +470,7 @@ const btn=document.getElementById('qtyBtn'+q);
 if(btn)btn.classList.add('selected');
 }
 function confirmBuy(){
+try{
 const idx=currentBuyIdx;
 const qty=currentBuyQty;
 const c=CARDS[idx];
@@ -477,21 +478,16 @@ const total=c.price*qty;
 const inv=state.inventory[idx];
 if(state.tokens<total){showToast('代幣不足！');return;}
 if(inv.remaining<qty){showToast('庫存不足！');return;}
-showToast('購買中...');
-setTimeout(()=>{
 state.tokens-=total;
 const now=Date.now();
-const batch=[];
 for(let i=0;i<qty;i++){
-batch.push({id:now+'_'+i,cardIdx:idx,prize:drawFromPool(idx),purchasedAt:now,scratched:false});
+state.myCards.push({id:now+'_'+i,cardIdx:idx,prize:drawFromPool(idx),purchasedAt:now,scratched:false});
 inv.remaining--;
 }
-state.myCards=state.myCards.concat(batch);
 save();updateUI();closeBuyModal();
 showToast('成功購買 '+qty+' 張 '+c.emoji+' '+c.name+'！');
-},50);
+}catch(e){console.error('Buy error:',e);showToast('購買失敗: '+e.message);}
 }
-
 /* ===== MY CARDS ===== */
 function renderMyCards(){
 const list=document.getElementById('myCardsList');
@@ -1571,14 +1567,14 @@ save();
 
 
 function scratchAllCards(){
+try{
 const unscratched=state.myCards.filter(c=>!c.scratched);
 if(unscratched.length===0){showToast('沒有未刮的卡片');return;}
-if(!confirm('確定要全部刮開 '+unscratched.length+' 張嗎？將直接顯示所有結果'))return;
-showToast('刮開中...');
-setTimeout(()=>{
+if(!confirm('確定要全部刮開 '+unscratched.length+' 張嗎？'))return;
 let totalWon=0;
 const summary={};
-unscratched.forEach(card=>{
+for(let j=0;j<unscratched.length;j++){
+const card=unscratched[j];
 card.scratched=true;
 const c=CARDS[card.cardIdx];
 totalWon+=card.prize;
@@ -1586,25 +1582,25 @@ if(!summary[card.cardIdx])summary[card.cardIdx]={emoji:c.emoji,name:c.name,count
 summary[card.cardIdx].count++;
 summary[card.cardIdx].totalPrize+=card.prize;
 state.prize+=card.prize;
-});
-// Add batch history (one entry per card type, not per card)
-Object.values(summary).forEach(s=>{
+}
+Object.values(summary).forEach(function(s){
 state.history.unshift({card:s.name,emoji:s.emoji,cost:s.cost*s.count,win:s.totalPrize,time:Date.now(),batch:s.count});
 });
 if(state.history.length>500)state.history.splice(500);
 save();updateUI();renderMyCards();
-const resultHtml=Object.values(summary).map(s=>{
-return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06)"><span>'+s.emoji+' '+s.name+' × '+s.count+'</span><span style="font-weight:700;color:#b8860b">$'+s.totalPrize.toLocaleString()+'</span></div>';
-}).join('');
-const overlay=document.getElementById('resultOverlay');
+var resultHtml='';
+Object.values(summary).forEach(function(s){
+resultHtml+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06)"><span>'+s.emoji+' '+s.name+' x '+s.count+'</span><span style="font-weight:700;color:#b8860b">$'+s.totalPrize.toLocaleString()+'</span></div>';
+});
+var overlay=document.getElementById('resultOverlay');
 document.getElementById('resultEmoji').textContent=totalWon>0?'🎉':'😔';
 document.getElementById('resultText').innerHTML='全部 '+unscratched.length+' 張結果<div style="max-height:200px;overflow-y:auto;margin:12px 0;text-align:left;font-size:14px">'+resultHtml+'</div>';
 document.getElementById('resultAmount').textContent='總獎金 $'+totalWon.toLocaleString();
 document.getElementById('resultBtn').textContent='收下全部獎金 💰';
-document.getElementById('resultBtn').onclick=function(){overlay.classList.remove('show');showScreen('myCardsScreen');updateUI()};
+document.getElementById('resultBtn').onclick=function(){overlay.classList.remove('show');showScreen('myCardsScreen');updateUI();};
 overlay.classList.add('show');
 if(totalWon>=500)launchConfetti();
-},50);
+}catch(e){console.error('ScratchAll error:',e);showToast('刮開失敗: '+e.message);}
 }
 
 function scratchNext(){
