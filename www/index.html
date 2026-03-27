@@ -38,10 +38,10 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .card-item:active{transform:scale(0.96)}
 .card-item::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 60%);animation:shimmer 3s infinite;pointer-events:none}
 @keyframes shimmer{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-.card-gold{background:linear-gradient(135deg,#b8860b,#ffd700,#daa520);box-shadow:0 8px 32px rgba(255,215,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
-.card-ruby{background:linear-gradient(135deg,#8b0000,#ff4444,#cc0000);box-shadow:0 8px 32px rgba(255,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
-.card-emerald{background:linear-gradient(135deg,#006400,#00cc66,#228b22);box-shadow:0 8px 32px rgba(0,200,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
-.card-diamond{background:linear-gradient(135deg,#1a1a6e,#4169e1,#6a5acd);box-shadow:0 8px 32px rgba(65,105,225,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-fire{background:linear-gradient(135deg,#8b2500,#ff4500,#ff6a00);box-shadow:0 8px 32px rgba(255,69,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-horse{background:linear-gradient(135deg,#1a5c00,#2d8b00,#3daa00);box-shadow:0 8px 32px rgba(0,180,0,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-tomb{background:linear-gradient(135deg,#5c3d00,#8b6914,#b8860b);box-shadow:0 8px 32px rgba(184,134,11,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
+.card-dragon{background:linear-gradient(135deg,#2a1a6e,#4b0082,#6a3fad);box-shadow:0 8px 32px rgba(106,90,205,0.3),inset 0 1px 0 rgba(255,255,255,0.3)}
 .card-emoji{font-size:48px;margin-bottom:8px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
 .card-name{font-size:18px;font-weight:900;text-shadow:0 2px 4px rgba(0,0,0,0.5);margin-bottom:4px}
 .card-price{font-size:22px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,0.5)}
@@ -51,6 +51,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .back-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .scratch-title{font-size:20px;font-weight:900}
 .scratch-card-wrap{max-width:440px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.5);border:2px solid rgba(255,215,0,0.3);padding:16px}
+.game-desc{text-align:center;font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:14px;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:10px}
 .game-zones{display:flex;flex-direction:column;gap:16px}
 .game-zone{position:relative;background:rgba(0,0,0,0.2);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.1);overflow:hidden;min-height:80px}
 .game-zone-title{font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:10px;display:flex;align-items:center;gap:6px}
@@ -58,20 +59,13 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .zone-scratch{position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;touch-action:none;z-index:2;border-radius:12px}
 .zone-revealed{pointer-events:none;opacity:0;transition:opacity 0.3s}
 .zone-content{position:relative;z-index:1}
-.match-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.match-cell{background:rgba(255,255,255,0.1);border-radius:8px;padding:10px 4px;text-align:center;font-size:14px;font-weight:700}
-
 .compare-row{display:flex;justify-content:center;align-items:center;gap:16px}
 .compare-card{background:rgba(255,255,255,0.1);border-radius:10px;padding:12px 20px;text-align:center;min-width:80px}
 .compare-card .label{font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:4px}
 .compare-card .value{font-size:24px;font-weight:900}
 .compare-vs{font-size:20px;font-weight:900;color:#ffd700}
-.bonus-area{text-align:center;padding:16px}
-.bonus-amount{font-size:32px;font-weight:900;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.5)}
-.number-match-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;justify-content:center}
-.number-ball{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
-.number-ball.winning{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e}
-.number-label{font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;text-align:center}
+.zone-prize{text-align:center;margin-top:8px;font-size:13px;color:rgba(255,255,255,0.5)}
+.zone-prize .amt{font-size:18px;font-weight:900;color:#ffd700}
 .total-bar{text-align:center;padding:16px;margin-top:8px}
 .total-bar .total-label{font-size:14px;color:rgba(255,255,255,0.5)}
 .total-bar .total-amount{font-size:36px;font-weight:900;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,0.5)}
@@ -113,6 +107,16 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 .ad-countdown{font-size:48px;font-weight:900;color:#00c9ff}
 .ad-reward{font-size:14px;color:#92fe9d}
 #confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99}
+.horse-track{display:flex;align-items:center;gap:4px;justify-content:center;flex-wrap:wrap}
+.horse-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2)}
+.chest-pair{display:flex;justify-content:center;align-items:center;gap:12px}
+.chest-side{text-align:center}
+.chest-side .emoji{font-size:28px}
+.chest-side .color-dot{width:20px;height:20px;border-radius:50%;margin:4px auto;border:2px solid rgba(255,255,255,0.3)}
+.chest-side .clabel{font-size:11px;color:rgba(255,255,255,0.5)}
+.dragon-mini-label{font-size:11px;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:6px;padding:4px 8px;background:rgba(255,255,255,0.05);border-radius:6px;display:inline-block}
+.gem-row{display:flex;justify-content:center;gap:8px}
+.gem{font-size:28px}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:2px}
 </style>
 </head>
@@ -135,17 +139,16 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 </div>
 <div class="main-title"><h1>🎰 幸運刮刮樂</h1><p>選擇面額，刮出好運！</p></div>
 <div class="card-grid">
-<div class="card-item card-gold" onclick="buyCard(0)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(0)">ℹ</button><div class="card-emoji">🌟</div><div class="card-name">金運來</div><div class="card-price">50 代幣</div></div>
-<div class="card-item card-ruby" onclick="buyCard(1)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button><div class="card-emoji">💎</div><div class="card-name">紅寶石</div><div class="card-price">100 代幣</div></div>
-<div class="card-item card-emerald" onclick="buyCard(2)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button><div class="card-emoji">🍀</div><div class="card-name">翡翠運</div><div class="card-price">200 代幣</div></div>
-<div class="card-item card-diamond" onclick="buyCard(3)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button><div class="card-emoji">👑</div><div class="card-name">鑽石皇</div><div class="card-price">500 代幣</div></div>
+<div class="card-item card-fire" onclick="buyCard(0)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(0)">ℹ</button><div class="card-emoji">🔥</div><div class="card-name">火焰骰子</div><div class="card-price">50 代幣</div></div>
+<div class="card-item card-horse" onclick="buyCard(1)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(1)">ℹ</button><div class="card-emoji">🏇</div><div class="card-name">極速賽馬</div><div class="card-price">100 代幣</div></div>
+<div class="card-item card-tomb" onclick="buyCard(2)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(2)">ℹ</button><div class="card-emoji">🗝️</div><div class="card-name">古墓探險</div><div class="card-price">200 代幣</div></div>
+<div class="card-item card-dragon" onclick="buyCard(3)"><button class="card-info-btn" onclick="event.stopPropagation();showPrizeInfo(3)">ℹ</button><div class="card-emoji">🐉</div><div class="card-name">神龍奪寶</div><div class="card-price">500 代幣</div></div>
 </div>
 </div>
 <div id="scratchScreen" class="screen">
 <div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title" id="scratchTitle">刮刮樂</div></div>
 <div class="scratch-card-wrap" id="scratchWrap"></div>
 <div class="zones-progress" id="zonesProgress"></div>
-<p style="text-align:center;margin-top:8px;font-size:13px;color:rgba(255,255,255,0.4)">一區一區刮開，揭曉每個遊戲！</p>
 </div>
 <div id="historyScreen" class="screen">
 <div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">📜 歷史紀錄</div></div>
@@ -159,131 +162,313 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#0a
 <div class="ad-overlay" id="adOverlay"><div class="ad-box"><div class="ad-text">📺 廣告播放中...</div><div class="ad-countdown" id="adCountdown">5</div></div><div class="ad-reward">觀看完畢可獲得 🔸 10 代幣</div></div>
 <script>
 const CARDS=[
-{name:'金運來',emoji:'🌟',price:50,bgGrad:'linear-gradient(135deg,#3d2b00,#6b4c00)',total:100000,
+{name:'火焰骰子',emoji:'🔥',price:50,bgGrad:'linear-gradient(135deg,#3d1500,#8b2500)',total:100000,zones:5,
 prizes:[{amt:25000,cnt:2},{amt:5000,cnt:15},{amt:1000,cnt:100},{amt:500,cnt:500},{amt:200,cnt:3000},{amt:100,cnt:8000},{amt:50,cnt:18000},{amt:25,cnt:5000}]},
-{name:'紅寶石',emoji:'💎',price:100,bgGrad:'linear-gradient(135deg,#3d0000,#6b0000)',total:100000,
+{name:'極速賽馬',emoji:'🏇',price:100,bgGrad:'linear-gradient(135deg,#1a3d00,#2d6b00)',total:100000,zones:5,
 prizes:[{amt:100000,cnt:2},{amt:10000,cnt:8},{amt:5000,cnt:30},{amt:2000,cnt:200},{amt:1000,cnt:800},{amt:500,cnt:3000},{amt:200,cnt:8000},{amt:100,cnt:15000},{amt:50,cnt:8000}]},
-{name:'翡翠運',emoji:'🍀',price:200,bgGrad:'linear-gradient(135deg,#002a00,#004d00)',total:100000,
+{name:'古墓探險',emoji:'🗝️',price:200,bgGrad:'linear-gradient(135deg,#2a1a00,#5c3d00)',total:100000,zones:7,
 prizes:[{amt:200000,cnt:2},{amt:20000,cnt:8},{amt:10000,cnt:25},{amt:5000,cnt:100},{amt:2000,cnt:600},{amt:1000,cnt:3000},{amt:500,cnt:6000},{amt:200,cnt:15000},{amt:100,cnt:10000}]},
-{name:'鑽石皇',emoji:'👑',price:500,bgGrad:'linear-gradient(135deg,#0a0a3d,#1a1a6e)',total:100000,
+{name:'神龍奪寶',emoji:'🐉',price:500,bgGrad:'linear-gradient(135deg,#1a0a3d,#3d1a6e)',total:100000,zones:10,
 prizes:[{amt:500000,cnt:2},{amt:50000,cnt:8},{amt:20000,cnt:40},{amt:10000,cnt:150},{amt:5000,cnt:600},{amt:2000,cnt:3000},{amt:1000,cnt:6000},{amt:500,cnt:15000},{amt:200,cnt:10000}]}
 ];
-const GAME_TYPES=[
-{type:'number_match',name:'號碼對對碰',icon:'🔢',desc:'刮開中獎號碼與我的號碼，號碼相同即可獲得對應獎金！'},
-{type:'compare',name:'比大小',icon:'⬆️',desc:'我的數字比莊家大就能贏得獎金！'},
-{type:'triple',name:'三同金額',icon:'💰',desc:'每一橫排3格為一組，同一排3個金額相同即中獎！共3排機會！'},
-{type:'lucky_symbol',name:'幸運符號',icon:'🎰',desc:'8格中找到隱藏的 💎 鑽石符號，即可獲得下方獎金！'},
-{type:'multiplier',name:'翻倍樂',icon:'🎯',desc:'獎金 = 基礎金額 × 倍數，倍數越大獎越多！'},
-{type:'bonus',name:'紅利區',icon:'💣',desc:'刮開看看有沒有隱藏的額外紅利獎金！'}
+
+const CARD_DESCS=[
+'每場擲出骰子，你的點數大於莊家即可贏得該場獎金！共 5 場機會',
+'每場賽馬你的馬是 #3 號 🐴，冠軍就是你的！共 5 場',
+'刮開寶箱和鑰匙，顏色配對即可獲得寶箱內的獎金！共 7 個寶箱',
+'10 次奪寶機會，每次都是不同挑戰！'
 ];
+
+const DRAGON_TYPES=['dice','card','arrow','gem'];
+const DRAGON_LABELS={dice:'🎲 骰子比大小',card:'🃏 翻牌比大小',arrow:'🎯 射箭命中',gem:'💎 寶石配對'};
+const KEY_COLORS=['🔴','🔵','🟢','🟡'];
+const KEY_HEX={'🔴':'#e74c3c','🔵':'#3498db','🟢':'#2ecc71','🟡':'#f1c40f'};
+
 let state=JSON.parse(localStorage.getItem('scratchState')||'null')||{tokens:500,prize:0,history:[]};
 let currentCard=null,currentWinnings=0,zonesTotal=0,zonesRevealed=0;
+
 function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
 function updateUI(){document.getElementById('tokenDisplay').textContent=state.tokens.toLocaleString();document.getElementById('prizeDisplay').textContent=state.prize.toLocaleString()}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='historyScreen')renderHistory();if(id==='homeScreen')updateUI()}
-function showPrizeInfo(idx){const c=CARDS[idx];document.getElementById('prizeModalTitle').textContent=c.name+' - 獎項配率';let html='<tr><th>獎金</th><th>張數</th><th>機率</th></tr>';c.prizes.forEach(p=>{const pct=(p.cnt/c.total*100).toFixed(p.cnt<100?3:1);html+=`<tr><td class="amount-col">$${p.amt.toLocaleString()}</td><td>${p.cnt.toLocaleString()}</td><td>${pct}%</td></tr>`});html+=`<tr><td colspan="3" style="color:rgba(255,255,255,0.3);font-size:12px;padding-top:12px">總張數: ${c.total.toLocaleString()}</td></tr>`;document.getElementById('prizeTable').innerHTML=html;document.getElementById('prizeModal').classList.add('show')}
+function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
+
+function showPrizeInfo(idx){const c=CARDS[idx];document.getElementById('prizeModalTitle').textContent=c.emoji+' '+c.name+' - 獎項配率';let html='<tr><th>獎金</th><th>張數</th><th>機率</th></tr>';c.prizes.forEach(p=>{const pct=(p.cnt/c.total*100).toFixed(p.cnt<100?3:1);html+=`<tr><td class="amount-col">$${p.amt.toLocaleString()}</td><td>${p.cnt.toLocaleString()}</td><td>${pct}%</td></tr>`});const noWin=c.total-c.prizes.reduce((s,p)=>s+p.cnt,0);if(noWin>0){html+=`<tr><td style="color:rgba(255,255,255,0.4)">未中獎</td><td>${noWin.toLocaleString()}</td><td>${(noWin/c.total*100).toFixed(1)}%</td></tr>`}html+=`<tr><td colspan="3" style="color:rgba(255,255,255,0.3);font-size:12px;padding-top:12px">總張數: ${c.total.toLocaleString()}</td></tr>`;document.getElementById('prizeTable').innerHTML=html;document.getElementById('prizeModal').classList.add('show')}
 function closePrizeModal(){document.getElementById('prizeModal').classList.remove('show')}
 function showTopup(){document.getElementById('topupModal').classList.add('show')}
 function closeTopup(){document.getElementById('topupModal').classList.remove('show')}
 function doTopup(amt){state.tokens+=amt;save();updateUI();closeTopup();showToast(`成功儲值 ${amt} 代幣！`)}
 function showAd(){const ov=document.getElementById('adOverlay');ov.classList.add('show');let t=5;document.getElementById('adCountdown').textContent=t;const iv=setInterval(()=>{t--;document.getElementById('adCountdown').textContent=t;if(t<=0){clearInterval(iv);ov.classList.remove('show');state.tokens+=10;save();updateUI();showToast('獲得 10 代幣！')}},1000)}
-function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
-function rollPrize(cardIdx){const c=CARDS[cardIdx];const r=Math.random()*c.total;let cum=0;for(const p of c.prizes){cum+=p.cnt;if(r<cum)return p.amt}return c.prizes[0].amt}
 
-function genNumberMatch(win,card){const winNums=new Set();while(winNums.size<3)winNums.add(Math.floor(Math.random()*20)+1);const playerNums=[];const winArr=[...winNums];if(win>0){playerNums.push({num:winArr[Math.floor(Math.random()*winArr.length)],amt:win});for(let i=0;i<5;i++){let n;do{n=Math.floor(Math.random()*20)+1}while(winNums.has(n)||playerNums.some(p=>p.num===n));playerNums.push({num:n,amt:card.prizes[Math.floor(Math.random()*3)].amt})}}else{for(let i=0;i<6;i++){let n;do{n=Math.floor(Math.random()*20)+1}while(winNums.has(n)||playerNums.some(p=>p.num===n));playerNums.push({num:n,amt:card.prizes[Math.floor(Math.random()*3)].amt})}}playerNums.sort(()=>Math.random()-0.5);let html=`<div class="number-label">🎯 中獎號碼</div><div class="number-match-row">`;winArr.forEach(n=>html+=`<div class="number-ball winning">${n}</div>`);html+=`</div><div class="number-label" style="margin-top:10px">🎫 我的號碼（對中號碼即獲得對應金額）</div><div class="match-grid">`;playerNums.forEach(p=>{html+=`<div class="match-cell">${p.num}<br><span style="font-size:11px;color:rgba(255,255,255,0.4)">$${p.amt.toLocaleString()}</span></div>`});html+=`</div>`;return html}
+function rollPrize(cardIdx){const c=CARDS[cardIdx];const totalPrizeCards=c.prizes.reduce((s,p)=>s+p.cnt,0);const r=Math.random()*c.total;let cum=0;for(const p of c.prizes){cum+=p.cnt;if(r<cum)return p.amt}return 0}
 
-function genCompare(win,card){let myNum,dealerNum;if(win>0){dealerNum=Math.floor(Math.random()*40)+1;myNum=dealerNum+Math.floor(Math.random()*(99-dealerNum))+1}else{myNum=Math.floor(Math.random()*45)+1;dealerNum=myNum+Math.floor(Math.random()*(99-myNum))+1}const amt=win>0?win:card.prizes[Math.floor(Math.random()*3)].amt;return `<div style="text-align:center;margin-bottom:12px;padding:10px;background:rgba(255,255,255,0.05);border-radius:10px"><div style="font-size:12px;color:rgba(255,255,255,0.5)">本區獎金</div><div style="font-size:28px;font-weight:900;color:#ffd700">$${amt.toLocaleString()}</div><div style="font-size:11px;color:rgba(255,255,255,0.3)">我的數字 > 莊家數字 即可獲得</div></div><div class="compare-row"><div class="compare-card"><div class="label">我的</div><div class="value" style="color:#fff">${myNum}</div></div><div class="compare-vs">VS</div><div class="compare-card"><div class="label">莊家</div><div class="value">${dealerNum}</div></div></div>`}
+function distributeWinnings(totalWin,numZones){
+const zoneAmts=new Array(numZones).fill(0);
+if(totalWin<=0)return zoneAmts;
+const winCount=Math.min(numZones,1+Math.floor(Math.random()*3));
+const winIdxs=[];
+while(winIdxs.length<winCount){const idx=Math.floor(Math.random()*numZones);if(!winIdxs.includes(idx))winIdxs.push(idx)}
+if(winCount===1){zoneAmts[winIdxs[0]]=totalWin}
+else{let remaining=totalWin;for(let i=0;i<winCount-1;i++){const share=Math.max(1,Math.floor(Math.random()*remaining*0.6));zoneAmts[winIdxs[i]]=share;remaining-=share}zoneAmts[winIdxs[winCount-1]]=remaining}
+return zoneAmts;
+}
 
-function genTriple(win,card){const rows=[];const amts=card.prizes.slice(0,5).map(p=>p.amt);const winRowIdx=win>0?Math.floor(Math.random()*3):-1;for(let r=0;r<3;r++){const row=[];if(r===winRowIdx){for(let i=0;i<3;i++)row.push(win)}else{const a1=amts[Math.floor(Math.random()*amts.length)];let a2;do{a2=amts[Math.floor(Math.random()*amts.length)]}while(a2===a1);let a3;do{a3=amts[Math.floor(Math.random()*amts.length)]}while(a3===a1&&a3===a2);row.push(a1,a2,a3)}rows.push(row)}let html='';rows.forEach((row,i)=>{html+=`<div style="display:flex;gap:8px;align-items:center;padding:6px 0;${i<2?'border-bottom:1px dashed rgba(255,255,255,0.15);margin-bottom:6px':''}"><div style="font-size:11px;color:rgba(255,255,255,0.3);min-width:28px">第${i+1}排</div>`;row.forEach(a=>{html+=`<div class="match-cell" style="flex:1">$${a.toLocaleString()}</div>`});html+='</div>'});return html}
+/* ===== GAME ZONE GENERATORS ===== */
 
-function genLuckySymbol(win,card){const noGem=['🍒','🍋','🔔','⭐','🍀','7️⃣'];const grid=[];if(win>0){for(let i=0;i<8;i++)grid.push(noGem[Math.floor(Math.random()*noGem.length)]);grid[Math.floor(Math.random()*8)]='💎';let html=`<div style="text-align:center;margin-bottom:10px;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px"><span style="font-size:12px;color:rgba(255,255,255,0.5)">找到 💎 可獲得 </span><span style="font-size:20px;font-weight:900;color:#ffd700">$${win.toLocaleString()}</span></div>`;html+='<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">';grid.forEach(s=>html+=`<div class="match-cell" style="font-size:24px">${s}</div>`);html+='</div>';return html}else{for(let i=0;i<8;i++)grid.push(noGem[Math.floor(Math.random()*noGem.length)]);let html=`<div style="text-align:center;margin-bottom:10px;padding:8px;background:rgba(255,255,255,0.05);border-radius:8px"><span style="font-size:12px;color:rgba(255,255,255,0.5)">找到 💎 可獲得獎金</span></div>`;html+='<div class="match-grid" style="grid-template-columns:repeat(4,1fr)">';grid.forEach(s=>html+=`<div class="match-cell" style="font-size:24px">${s}</div>`);html+='</div>';return html}}
+function genFireDice(win){
+let myDice,dealerDice;
+if(win>0){
+dealerDice=Math.floor(Math.random()*5)+1;
+myDice=dealerDice+1+Math.floor(Math.random()*(6-dealerDice));
+}else{
+dealerDice=Math.floor(Math.random()*6)+1;
+myDice=Math.floor(Math.random()*dealerDice)+1;
+}
+const diceEmojis=['⚀','⚁','⚂','⚃','⚄','⚅'];
+return `<div class="compare-row">
+<div class="compare-card"><div class="label">你的骰子 🎲</div><div class="value" style="font-size:36px">${diceEmojis[myDice-1]}</div><div style="font-size:12px;color:rgba(255,255,255,0.4)">${myDice} 點</div></div>
+<div class="compare-vs">VS</div>
+<div class="compare-card"><div class="label">莊家骰子 🎲</div><div class="value" style="font-size:36px">${diceEmojis[dealerDice-1]}</div><div style="font-size:12px;color:rgba(255,255,255,0.4)">${dealerDice} 點</div></div>
+</div>
+<div class="zone-prize">獎金 <span class="amt">$${win.toLocaleString()}</span></div>`;
+}
 
-function genMultiplier(win,card){if(win>0){const possible=[[1,win],[2,win/2],[3,win/3],[5,win/5]].filter(p=>p[1]===Math.floor(p[1])&&p[1]>0);const pick=possible.length>0?possible[Math.floor(Math.random()*possible.length)]:[1,win];return `<div style="text-align:center"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">基礎金額</div><div style="font-size:28px;font-weight:900">$${pick[1].toLocaleString()}</div><div style="font-size:14px;color:rgba(255,255,255,0.5);margin:8px 0">倍數</div><div style="font-size:36px;font-weight:900;color:#ffd700">${pick[0]}x</div><div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.3)">本區獎金 = $${pick[1].toLocaleString()} × ${pick[0]} = $${win.toLocaleString()}</div></div>`}else{return `<div style="text-align:center"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">基礎金額</div><div style="font-size:28px;font-weight:900">$0</div><div style="font-size:14px;color:rgba(255,255,255,0.5);margin:8px 0">倍數</div><div style="font-size:36px;font-weight:900;color:rgba(255,255,255,0.3)">--</div><div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.3)">本區未中獎</div></div>`}}
+function genHorseRace(win){
+let winner;
+if(win>0){winner=3}
+else{do{winner=Math.floor(Math.random()*6)+1}while(winner===3)}
+const horses=['🐴','🏇','🐎','🦄','🐴','🏇'];
+let html='<div class="horse-track">';
+for(let i=1;i<=6;i++){
+const isWin=i===winner;
+const isPlayer=i===3;
+html+=`<div class="horse-num" style="${isPlayer?'border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,0.15)':''}">#${i}</div>`;
+}
+html+=`</div>
+<div style="text-align:center;margin-top:10px;font-size:16px;font-weight:900">🏆 冠軍: <span style="color:#ffd700">#${winner}</span></div>
+<div class="zone-prize">獎金 <span class="amt">$${win.toLocaleString()}</span></div>`;
+return html;
+}
 
-function genBonus(win,card){return `<div class="bonus-area"><div style="text-align:center;padding:12px;background:rgba(255,255,255,0.05);border-radius:10px"><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">紅利獎金</div><div style="font-size:36px;font-weight:900;color:#ffd700">$${win.toLocaleString()}</div></div></div>`}
-function buyCard(idx){const c=CARDS[idx];if(state.tokens<c.price){showToast('代幣不足！請先儲值 💳');return}state.tokens-=c.price;save();updateUI();currentCard=idx;currentWinnings=rollPrize(idx);setupScratchCard(idx,currentWinnings);showScreen('scratchScreen');document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name}
+function genTombChest(win){
+const chestColor=KEY_COLORS[Math.floor(Math.random()*4)];
+let keyColor;
+if(win>0){keyColor=chestColor}
+else{do{keyColor=KEY_COLORS[Math.floor(Math.random()*4)]}while(keyColor===chestColor)}
+return `<div class="chest-pair">
+<div class="chest-side"><div class="emoji">📦</div><div class="clabel">寶箱需要</div><div class="color-dot" style="background:${KEY_HEX[chestColor]}"></div><div style="font-size:16px">${chestColor}</div></div>
+<div style="font-size:20px;margin:0 8px">⟷</div>
+<div class="chest-side"><div class="emoji">🔑</div><div class="clabel">你的鑰匙</div><div class="color-dot" style="background:${KEY_HEX[keyColor]}"></div><div style="font-size:16px">${keyColor}</div></div>
+</div>
+<div class="zone-prize">獎金 <span class="amt">$${win.toLocaleString()}</span></div>`;
+}
+
+function genDragonDice(win){
+let myDice,dealerDice;
+if(win>0){
+dealerDice=Math.floor(Math.random()*5)+1;
+myDice=dealerDice+1+Math.floor(Math.random()*(6-dealerDice));
+}else{
+dealerDice=Math.floor(Math.random()*6)+1;
+myDice=Math.floor(Math.random()*dealerDice)+1;
+}
+const diceEmojis=['⚀','⚁','⚂','⚃','⚄','⚅'];
+return `<div class="compare-row">
+<div class="compare-card"><div class="label">你 🎲</div><div class="value" style="font-size:30px">${diceEmojis[myDice-1]}</div><div style="font-size:11px;color:rgba(255,255,255,0.4)">${myDice}點</div></div>
+<div class="compare-vs">VS</div>
+<div class="compare-card"><div class="label">莊家 🎲</div><div class="value" style="font-size:30px">${diceEmojis[dealerDice-1]}</div><div style="font-size:11px;color:rgba(255,255,255,0.4)">${dealerDice}點</div></div>
+</div>
+<div class="zone-prize">獎金 <span class="amt">$${win.toLocaleString()}</span></div>`;
+}
+
+function genDragonCard(win){
+let myCard,dealerCard;
+if(win>0){
+dealerCard=Math.floor(Math.random()*12)+1;
+myCard=dealerCard+1+Math.floor(Math.random()*(13-dealerCard));
+}else{
+dealerCard=Math.floor(Math.random()*13)+1;
+myCard=Math.floor(Math.random()*dealerCard)+1;
+}
+const cardNames=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+const suits=['♠','♥','♣','♦'];
+const mySuit=suits[Math.floor(Math.random()*4)];
+const dSuit=suits[Math.floor(Math.random()*4)];
+return `<div class="compare-row">
+<div class="compare-card"><div class="label">你的牌 🃏</div><div class="value" style="font-size:22px">${mySuit}${cardNames[myCard-1]}</div></div>
+<div class="compare-vs">VS</div>
+<div class="compare-card"><div class="label">莊家牌 🃏</div><div class="value" style="font-size:22px">${dSuit}${cardNames[dealerCard-1]}</div></div>
+</div>
+<div class="zone-prize">獎金 <span class="amt">$${win.toLocaleString()}</span></div>`;
+}
+
+function genDragonArrow(win){
+const hit=win>0;
+return `<div style="text-align:center">
+<div style="font-size:48px;margin:8px 0">${hit?'🎯':'❌'}</div>
+<div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">${hit?'命中靶心！':'射偏了...'}</div>
+</div>
+<div class="zone-prize">獎金 <span class="amt">$${win.toLocaleString()}</span></div>`;
+}
+
+function genDragonGem(win){
+const gems=['💎','🔮','💠','🟣','🔵','🟢','🔴','🟡'];
+let g1,g2,g3;
+if(win>0){g1=gems[Math.floor(Math.random()*gems.length)];g2=g1;g3=g1}
+else{g1=gems[Math.floor(Math.random()*gems.length)];do{g2=gems[Math.floor(Math.random()*gems.length)]}while(false);do{g3=gems[Math.floor(Math.random()*gems.length)]}while(g1===g2&&g2===g3);if(g1===g2&&g2===g3){g3=gems[(gems.indexOf(g1)+1)%gems.length]}}
+return `<div class="gem-row">
+<div class="gem">${g1}</div><div class="gem">${g2}</div><div class="gem">${g3}</div>
+</div>
+<div style="text-align:center;font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px">三顆一樣即中獎</div>
+<div class="zone-prize">獎金 <span class="amt">$${win.toLocaleString()}</span></div>`;
+}
+
+/* ===== SETUP SCRATCH CARD ===== */
+
+function buyCard(idx){
+const c=CARDS[idx];
+if(state.tokens<c.price){showToast('代幣不足！請先儲值 💳');return}
+state.tokens-=c.price;save();updateUI();
+currentCard=idx;
+currentWinnings=rollPrize(idx);
+setupScratchCard(idx,currentWinnings);
+showScreen('scratchScreen');
+document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name;
+}
 
 function setupScratchCard(cardIdx,totalWin){
 const c=CARDS[cardIdx];
 const wrap=document.getElementById('scratchWrap');
 wrap.style.background=c.bgGrad;
-const numZones=4+Math.floor(Math.random()*5);
-const mainIdx=Math.floor(Math.random()*numZones);
+const numZones=c.zones;
 zonesTotal=numZones;zonesRevealed=0;
 updateProgress();
-let html='<div class="game-zones">';
+
+const zoneAmts=distributeWinnings(totalWin,numZones);
+
+let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div>';
+html+='<div class="game-zones">';
+
 for(let i=0;i<numZones;i++){
-const gt=GAME_TYPES[Math.floor(Math.random()*GAME_TYPES.length)];
-const zw=(i===mainIdx)?totalWin:0;
+const zw=zoneAmts[i];
 let content='';
-switch(gt.type){
-case 'number_match':content=genNumberMatch(zw,c);break;
-case 'compare':content=genCompare(zw,c);break;
-case 'triple':content=genTriple(zw,c);break;
-case 'lucky_symbol':content=genLuckySymbol(zw,c);break;
-case 'multiplier':content=genMultiplier(zw,c);break;
-case 'bonus':content=genBonus(zw,c);break;
-default:content=genTriple(zw,c);
+let title='';
+
+if(cardIdx===0){
+title=`<span class="zone-icon">🎲</span>第 ${i+1} 場`;
+content=genFireDice(zw);
+}else if(cardIdx===1){
+title=`<span class="zone-icon">🏇</span>第 ${i+1} 場`;
+content=genHorseRace(zw);
+}else if(cardIdx===2){
+title=`<span class="zone-icon">📦</span>寶箱 ${i+1}`;
+content=genTombChest(zw);
+}else if(cardIdx===3){
+const dtype=DRAGON_TYPES[Math.floor(Math.random()*DRAGON_TYPES.length)];
+title=`<span class="zone-icon">🐉</span>第 ${i+1} 次`;
+let miniLabel=`<div class="dragon-mini-label">${DRAGON_LABELS[dtype]}</div>`;
+switch(dtype){
+case 'dice':content=miniLabel+genDragonDice(zw);break;
+case 'card':content=miniLabel+genDragonCard(zw);break;
+case 'arrow':content=miniLabel+genDragonArrow(zw);break;
+case 'gem':content=miniLabel+genDragonGem(zw);break;
 }
+}
+
 html+=`<div class="game-zone" id="zone${i}">
 <div class="zone-content">
-<div class="game-zone-title"><span class="zone-icon">${gt.icon}</span>${gt.name}</div>
-<div style="font-size:11px;color:rgba(255,255,255,0.35);margin:-6px 0 10px 0">${gt.desc}</div>
+<div class="game-zone-title">${title}</div>
 ${content}
 </div>
 <canvas class="zone-scratch" id="zcanvas${i}"></canvas>
 </div>`;
 }
+
 html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div>`;
 html+='</div>';
 wrap.innerHTML=html;
 
-requestAnimationFrame(()=>{
-for(let i=0;i<numZones;i++){
-initZoneCanvas(i);
-}
-});
+requestAnimationFrame(()=>{for(let i=0;i<numZones;i++){initZoneCanvas(i)}});
 }
 
 function initZoneCanvas(idx){
 const zone=document.getElementById('zone'+idx);
 const canvas=document.getElementById('zcanvas'+idx);
+if(!zone||!canvas)return;
 canvas.width=zone.offsetWidth;
 canvas.height=zone.offsetHeight;
 const ctx=canvas.getContext('2d');
-// Silver scratch layer
 const g=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
 g.addColorStop(0,'#b8b8b8');g.addColorStop(0.3,'#d0d0d0');g.addColorStop(0.5,'#a0a0a0');g.addColorStop(0.7,'#c8c8c8');g.addColorStop(1,'#b0b0b0');
 ctx.fillStyle=g;
 ctx.fillRect(0,0,canvas.width,canvas.height);
-// Shimmer dots
 for(let j=0;j<40;j++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*0.4})`;ctx.beginPath();ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*2,0,Math.PI*2);ctx.fill()}
-// Text hint
 ctx.fillStyle='rgba(0,0,0,0.12)';
 ctx.font='bold 16px "Noto Sans TC"';
 ctx.textAlign='center';
 ctx.fillText('刮我',canvas.width/2,canvas.height/2+5);
-// Scratch logic
+
 let isDown=false,lastP={x:0,y:0},revealed=false;
 const getPos=(e)=>{const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top}};
-canvas.onmousedown=canvas.ontouchstart=(e)=>{e.preventDefault();if(revealed)return;isDown=true;const p=getPos(e);lastP=p;ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(p.x,p.y,30,0,Math.PI*2);ctx.fill()};
-canvas.onmousemove=canvas.ontouchmove=(e)=>{e.preventDefault();if(!isDown||revealed)return;const p=getPos(e);ctx.globalCompositeOperation='destination-out';ctx.lineWidth=60;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(lastP.x,lastP.y);ctx.lineTo(p.x,p.y);ctx.stroke();lastP=p;
-// Check reveal
-const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;let tr=0;for(let k=3;k<data.length;k+=16){if(data[k]===0)tr++}
-if(tr/(data.length/16)>0.88){revealed=true;canvas.classList.add('zone-revealed');zonesRevealed++;updateProgress();if(zonesRevealed>=zonesTotal){setTimeout(()=>{document.getElementById('totalAmount').textContent='$'+currentWinnings.toLocaleString();setTimeout(()=>showResult(currentWinnings),800)},400)}}};
-canvas.onmouseup=canvas.ontouchend=()=>isDown=false;
+const onDown=(e)=>{e.preventDefault();if(revealed)return;isDown=true;const p=getPos(e);lastP=p;ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(p.x,p.y,30,0,Math.PI*2);ctx.fill()};
+const onMove=(e)=>{e.preventDefault();if(!isDown||revealed)return;const p=getPos(e);ctx.globalCompositeOperation='destination-out';ctx.lineWidth=60;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(lastP.x,lastP.y);ctx.lineTo(p.x,p.y);ctx.stroke();lastP=p;checkReveal(ctx,canvas,idx)};
+const onUp=()=>isDown=false;
+canvas.addEventListener('mousedown',onDown);canvas.addEventListener('touchstart',onDown,{passive:false});
+canvas.addEventListener('mousemove',onMove);canvas.addEventListener('touchmove',onMove,{passive:false});
+canvas.addEventListener('mouseup',onUp);canvas.addEventListener('touchend',onUp);
+
+function checkReveal(ctx,canvas,idx){
+const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+let tr=0,total=0;
+for(let k=3;k<data.length;k+=16){if(data[k]===0)tr++;total++}
+if(tr/total>0.88){
+revealed=true;
+canvas.classList.add('zone-revealed');
+zonesRevealed++;
+updateProgress();
+if(zonesRevealed>=zonesTotal){
+setTimeout(()=>{
+document.getElementById('totalAmount').textContent='$'+currentWinnings.toLocaleString();
+setTimeout(()=>showResult(currentWinnings),800);
+},400);
+}
+}
+}
 }
 
 function updateProgress(){document.getElementById('zonesProgress').innerHTML=`已刮開 <span>${zonesRevealed}</span> / <span>${zonesTotal}</span> 區`}
 
-function showResult(amount){const ov=document.getElementById('resultOverlay');document.getElementById('resultAmount').textContent='$'+amount.toLocaleString();if(amount>=500){document.getElementById('resultEmoji').textContent='🎉';document.getElementById('resultText').textContent='大獎！恭喜中獎！';launchConfetti()}else{document.getElementById('resultEmoji').textContent='😊';document.getElementById('resultText').textContent='中獎了！'}ov.classList.add('show');const c=CARDS[currentCard];state.prize+=amount;state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:amount,time:Date.now()});if(state.history.length>50)state.history.pop();save()}
+function showResult(amount){
+const ov=document.getElementById('resultOverlay');
+document.getElementById('resultAmount').textContent='$'+amount.toLocaleString();
+if(amount>=500){
+document.getElementById('resultEmoji').textContent='🎉';
+document.getElementById('resultText').textContent='大獎！恭喜中獎！';
+launchConfetti();
+}else if(amount>0){
+document.getElementById('resultEmoji').textContent='😊';
+document.getElementById('resultText').textContent='中獎了！';
+}else{
+document.getElementById('resultEmoji').textContent='😔';
+document.getElementById('resultText').textContent='未中獎，再試試！';
+}
+ov.classList.add('show');
+const c=CARDS[currentCard];
+state.prize+=amount;
+state.history.unshift({card:c.name,emoji:c.emoji,cost:c.price,win:amount,time:Date.now()});
+if(state.history.length>50)state.history.pop();
+save();
+}
 function closeResult(){document.getElementById('resultOverlay').classList.remove('show');showScreen('homeScreen');updateUI()}
-function renderHistory(){const list=document.getElementById('historyList');if(!state.history.length){list.innerHTML='<p style="text-align:center;color:rgba(255,255,255,0.3);padding:40px">還沒有紀錄</p>';return}list.innerHTML=state.history.map(h=>{const d=new Date(h.time);const net=h.win-h.cost;return `<div class="history-item"><div class="hi-left"><div class="hi-type">${h.emoji} ${h.card} (-${h.cost}代幣)</div><div class="hi-time">${d.toLocaleString('zh-TW')}</div></div><div class="hi-amount ${net>=0?'win':'loss'}">$${h.win.toLocaleString()}</div></div>`}).join('')}
 
-function initParticles(){const cv=document.getElementById('particles');const ctx=cv.getContext('2d');let w=cv.width=innerWidth,h=cv.height=innerHeight;addEventListener('resize',()=>{w=cv.width=innerWidth;h=cv.height=innerHeight});const ps=[];for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,dx:(Math.random()-.5)*.5,dy:(Math.random()-.5)*.3,a:Math.random()*.4+.1,c:['#ffd700','#ff8c00','#4169e1','#00cc66','#ff4444'][Math.floor(Math.random()*5)]});(function draw(){ctx.clearRect(0,0,w,h);ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;requestAnimationFrame(draw)})()}
-
-function launchConfetti(){const cv=document.getElementById('confetti');const ctx=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;const pcs=[];const cols=['#ffd700','#ff4444','#00cc66','#4169e1','#ff8c00','#ff69b4'];for(let i=0;i<150;i++)pcs.push({x:cv.width/2+(Math.random()-.5)*200,y:cv.height/2,vx:(Math.random()-.5)*15,vy:Math.random()*-18-5,r:Math.random()*6+3,c:cols[Math.floor(Math.random()*cols.length)],g:.3,d:.98,rot:Math.random()*Math.PI*2,rv:(Math.random()-.5)*.3});let f=0;(function draw(){if(f>120){ctx.clearRect(0,0,cv.width,cv.height);return}ctx.clearRect(0,0,cv.width,cv.height);pcs.forEach(p=>{p.vy+=p.g;p.vx*=p.d;p.x+=p.vx;p.y+=p.vy;p.rot+=p.rv;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.globalAlpha=Math.max(0,1-f/120);ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);ctx.restore()});f++;requestAnimationFrame(draw)})()}
-
+function renderHistory(){
+const list=document.getElementById('historyList');
+if(!state.history.length){list.innerHTML='<p style="text-align:center;color:rgba(255,255,255,0.3);padding:40px">還沒有紀錄</p>';return}
+list.innerHTML=state.history.map(h=>{
+const d=new Date(h.time);
+const net=h.win-h.cost;
+return `<div class="history-item"><div class="hi-left"><div class="hi-type">${h.emoji} ${h.card} (-${h.cost}代幣)</div><div class="hi-time">${d.toLocaleString('zh-TW')}</div></div><div class="hi-amount ${net>=0?'win':'loss'}">$${h.win.toLocaleString()}</div></div>`;
+}).join('');
+}
 
 function showExchange(){
 document.getElementById('exchangeAmount').value='';
@@ -295,6 +480,25 @@ function closeExchange(){document.getElementById('exchangeModal').classList.remo
 function updateExchangePreview(){var v=parseInt(document.getElementById('exchangeAmount').value)||0;document.getElementById('exchangePreview').textContent='🔸 '+v.toLocaleString()}
 function doExchange(){var v=parseInt(document.getElementById('exchangeAmount').value)||0;if(v<=0){showToast('請輸入兌換金額');return}if(v>state.prize){showToast('獎金不足！');return}state.prize-=v;state.tokens+=v;save();updateUI();closeExchange();showToast('成功兌換 '+v+' 代幣！')}
 function doExchangeAll(){if(state.prize<=0){showToast('沒有獎金可兌換');return}var v=state.prize;state.tokens+=v;state.prize=0;save();updateUI();closeExchange();showToast('全部兌換 '+v+' 代幣！')}
+
+/* ===== PARTICLES ===== */
+function initParticles(){
+const cv=document.getElementById('particles');const ctx=cv.getContext('2d');
+let w=cv.width=innerWidth,h=cv.height=innerHeight;
+addEventListener('resize',()=>{w=cv.width=innerWidth;h=cv.height=innerHeight});
+const ps=[];for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,dx:(Math.random()-.5)*.5,dy:(Math.random()-.5)*.3,a:Math.random()*.4+.1,c:['#ffd700','#ff8c00','#4169e1','#00cc66','#ff4444'][Math.floor(Math.random()*5)]});
+(function draw(){ctx.clearRect(0,0,w,h);ps.forEach(p=>{p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;requestAnimationFrame(draw)})();
+}
+
+/* ===== CONFETTI ===== */
+function launchConfetti(){
+const cv=document.getElementById('confetti');const ctx=cv.getContext('2d');
+cv.width=innerWidth;cv.height=innerHeight;
+const pcs=[];const cols=['#ffd700','#ff4444','#00cc66','#4169e1','#ff8c00','#ff69b4'];
+for(let i=0;i<150;i++)pcs.push({x:cv.width/2+(Math.random()-.5)*200,y:cv.height/2,vx:(Math.random()-.5)*15,vy:Math.random()*-18-5,r:Math.random()*6+3,c:cols[Math.floor(Math.random()*cols.length)],g:.3,d:.98,rot:Math.random()*Math.PI*2,rv:(Math.random()-.5)*.3});
+let f=0;
+(function draw(){if(f>120){ctx.clearRect(0,0,cv.width,cv.height);return}ctx.clearRect(0,0,cv.width,cv.height);pcs.forEach(p=>{p.vy+=p.g;p.vx*=p.d;p.x+=p.vx;p.y+=p.vy;p.rot+=p.rv;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillStyle=p.c;ctx.globalAlpha=Math.max(0,1-f/120);ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);ctx.restore()});f++;requestAnimationFrame(draw)})();
+}
 
 updateUI();initParticles();
 </script>
