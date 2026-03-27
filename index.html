@@ -198,9 +198,9 @@ prizes:[{amt:100000,cnt:2},{amt:10000,cnt:8},{amt:5000,cnt:30},{amt:2000,cnt:200
 prizes:[{amt:200000,cnt:2},{amt:20000,cnt:8},{amt:10000,cnt:25},{amt:5000,cnt:100},{amt:2000,cnt:600},{amt:1000,cnt:3000},{amt:500,cnt:6000},{amt:200,cnt:15000},{amt:100,cnt:10000}]},
 {name:'神龍奪寶',emoji:'🐉',price:500,bgGrad:'linear-gradient(135deg,#1a0a3d,#3d1a6e)',total:100000,zones:10,
 prizes:[{amt:500000,cnt:2},{amt:50000,cnt:8},{amt:20000,cnt:40},{amt:10000,cnt:150},{amt:5000,cnt:600},{amt:2000,cnt:3000},{amt:1000,cnt:6000},{amt:500,cnt:15000},{amt:200,cnt:10000}]},
-{name:'皇家金庫',emoji:'💰',price:1000,bgGrad:'linear-gradient(135deg,#3d2b00,#7a5c00)',total:100000,zones:12,
+{name:'皇家金庫',emoji:'💰',price:1000,bgGrad:'linear-gradient(135deg,#3d2b00,#7a5c00)',total:100000,zones:16,
 prizes:[{amt:1000000,cnt:2},{amt:100000,cnt:10},{amt:50000,cnt:25},{amt:20000,cnt:150},{amt:10000,cnt:600},{amt:5000,cnt:2500},{amt:2000,cnt:7000},{amt:1000,cnt:16000},{amt:500,cnt:10000}]},
-{name:'深海霸主',emoji:'🌊',price:2000,bgGrad:'linear-gradient(135deg,#001a3d,#003366)',total:100000,zones:15,
+{name:'深海霸主',emoji:'🌊',price:2000,bgGrad:'linear-gradient(135deg,#001a3d,#003366)',total:100000,zones:21,
 prizes:[{amt:2000000,cnt:2},{amt:200000,cnt:10},{amt:100000,cnt:25},{amt:50000,cnt:100},{amt:20000,cnt:500},{amt:10000,cnt:2000},{amt:5000,cnt:5000},{amt:2000,cnt:15000},{amt:1000,cnt:15000}]}
 ];
 
@@ -209,8 +209,8 @@ const CARD_DESCS=[
 '每場賽馬你的馬是 #3 號 🐴，冠軍就是你的！共 5 場',
 '刮開寶箱和鑰匙，顏色配對即可獲得寶箱內的獎金！共 7 個寶箱',
 '10 次奪寶機會，每次都是不同挑戰！',
-'刮開上方4個金庫密碼，再刮開12個保險箱。保險箱號碼對中任一密碼即可獲得獎金！',
-'刮開達標重量，再刮開15個海底生物。生物重量 ≥ 達標重量即可獲得獎金！'
+'刮開上方4個金庫密碼，再刮開12個保險箱。保險箱號碼對中任一密碼即可獲得獎金！另有4個獨立小遊戲等你挑戰！',
+'刮開達標重量，再刮開15個海底生物。生物重量 ≥ 達標重量即可獲得獎金！另有6個獨立小遊戲等你挑戰！'
 ];
 
 const DRAGON_TYPES=['dice','card','arrow','gem'];
@@ -358,11 +358,12 @@ return `<div class="gem-row">
 
 /* ===== VAULT GAME (皇家金庫) ===== */
 function genGame_vault(zones, zonePrizes, card){
+const safeboxCount=12;
 const codes=[];
 while(codes.length<4){const n=Math.floor(Math.random()*30)+1;if(!codes.includes(n))codes.push(n)}
 const usedNonCodes=[];
 const boxes=[];
-for(let i=0;i<zones;i++){
+for(let i=0;i<safeboxCount;i++){
 let num;
 if(zonePrizes[i]>0){
 num=codes[Math.floor(Math.random()*codes.length)];
@@ -372,15 +373,95 @@ usedNonCodes.push(num);
 }
 boxes.push({num:num,prize:zonePrizes[i]});
 }
-return {codes,boxes};
+// Extra mini-games prizes (index 12-15)
+const extraPrizes=[];
+for(let i=safeboxCount;i<zones;i++){extraPrizes.push(zonePrizes[i])}
+return {codes,boxes,extraPrizes};
+}
+
+/* ===== VAULT EXTRA MINI-GAMES ===== */
+function genVaultMiniGame_spin(win){
+const areas=['💛 金','🤍 銀','🧡 銅','❌ 空','💛 金','🤍 銀','🧡 銅','❌ 空'];
+let result;
+if(win>0){result=Math.random()<0.5?0:4;}
+else{const nonGold=[1,2,3,5,6,7];result=nonGold[Math.floor(Math.random()*nonGold.length)];}
+const display=areas[result];
+const wheel=areas.map((a,i)=>{
+const sel=i===result;
+return `<span style="display:inline-block;padding:2px 5px;margin:1px;border-radius:4px;font-size:11px;${sel?'background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3)':'color:rgba(255,255,255,0.25)'}">${a}</span>`;
+}).join('');
+return `<div style="text-align:center;margin-bottom:6px"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:6px">轉盤區域</div><div style="line-height:1.8">${wheel}</div></div>
+<div style="text-align:center;font-size:15px;font-weight:700;margin:8px 0">🎯 指針 → ${display}</div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
+}
+
+function genVaultMiniGame_champion(win){
+const teams=['🦁獅隊','🐯虎隊','🦅鷹隊','🐺狼隊'];
+let champion;
+if(win>0){champion=0;}
+else{champion=1+Math.floor(Math.random()*3);}
+const teamList=teams.map((t,i)=>{
+const sel=i===champion;
+return `<span style="display:inline-block;padding:3px 8px;margin:2px;border-radius:6px;font-size:12px;${sel?'background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3)':'color:rgba(255,255,255,0.3)'}">${t}</span>`;
+}).join('');
+return `<div style="text-align:center;margin-bottom:6px"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:6px">你押的: 🦁獅隊</div><div>${teamList}</div></div>
+<div style="text-align:center;font-size:15px;font-weight:700;margin:8px 0">🏆 冠軍: ${teams[champion]}</div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
+}
+
+function genVaultMiniGame_ring(win){
+let throwDist,targetDist;
+if(win>0){
+targetDist=Math.floor(Math.random()*8)+1;
+throwDist=targetDist+Math.floor(Math.random()*(11-targetDist));
+}else{
+targetDist=Math.floor(Math.random()*8)+3;
+throwDist=Math.floor(Math.random()*targetDist);
+if(throwDist<1)throwDist=1;
+}
+const hit=throwDist>=targetDist;
+return `<div style="text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">投擲距離 vs 目標距離</div>
+<div style="display:flex;justify-content:center;align-items:center;gap:12px">
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">投擲</div><div style="font-size:22px;font-weight:900">${throwDist}</div></div>
+<div style="font-size:16px;font-weight:900;color:rgba(255,255,255,0.5)">vs</div>
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">目標</div><div style="font-size:22px;font-weight:900">${targetDist}</div></div>
+</div>
+<div style="font-size:14px;font-weight:700;margin:8px 0">${hit?'⭕ 套中了！':'❌ 沒套中...'}</div></div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
+}
+
+function genVaultMiniGame_bomb(win){
+const wires=['🔴紅','🔵藍','🟢綠'];
+const correctIdx=Math.floor(Math.random()*3);
+let cutIdx;
+if(win>0){cutIdx=correctIdx;}
+else{do{cutIdx=Math.floor(Math.random()*3)}while(cutIdx===correctIdx);}
+const wireDisplay=wires.map((w,i)=>{
+const isCut=i===cutIdx;
+return `<span style="display:inline-block;padding:4px 10px;margin:2px;border-radius:6px;font-size:13px;${isCut?'background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3)':'color:rgba(255,255,255,0.3)'}">${w}</span>`;
+}).join('');
+return `<div style="text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">選一條線剪斷</div>
+<div style="margin-bottom:8px">${wireDisplay}</div>
+<div style="font-size:13px;color:rgba(255,255,255,0.5)">你剪: ${wires[cutIdx]} | 正確: ${wires[correctIdx]}</div>
+<div style="font-size:14px;font-weight:700;margin:6px 0">${cutIdx===correctIdx?'✅ 拆彈成功！':'💥 拆彈失敗...'}</div></div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
 }
 
 /* ===== OCEAN GAME (深海霸主) ===== */
 function genGame_ocean(zones, zonePrizes, card){
+const creatureCount=15;
 const target=Math.floor(Math.random()*31)+30;
 const seaEmojis=['🐙','🦑','🐠','🐡','🦈','🐋','🐟','🦐','🦀','🐚'];
 const creatures=[];
-for(let i=0;i<zones;i++){
+for(let i=0;i<creatureCount;i++){
 let weight;
 if(zonePrizes[i]>0){
 weight=target+Math.floor(Math.random()*(100-target));
@@ -390,7 +471,143 @@ if(weight<1)weight=1;
 }
 creatures.push({emoji:seaEmojis[Math.floor(Math.random()*seaEmojis.length)],weight:weight,prize:zonePrizes[i]});
 }
-return {target,creatures};
+// Extra mini-games prizes (index 15-20)
+const extraPrizes=[];
+for(let i=creatureCount;i<zones;i++){extraPrizes.push(zonePrizes[i])}
+return {target,creatures,extraPrizes};
+}
+
+/* ===== OCEAN EXTRA MINI-GAMES ===== */
+function genOceanMiniGame_blackjack(win){
+let myPts,dealerPts;
+if(win>0){
+dealerPts=Math.floor(Math.random()*8)+12;
+myPts=dealerPts+1+Math.floor(Math.random()*(21-dealerPts));
+if(myPts>21)myPts=21;
+}else{
+dealerPts=Math.floor(Math.random()*7)+15;
+myPts=Math.floor(Math.random()*(dealerPts))+1;
+if(myPts<12)myPts=12;
+}
+return `<div style="text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">比誰更接近21點</div>
+<div style="display:flex;justify-content:center;align-items:center;gap:12px">
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">你的牌</div><div style="font-size:22px;font-weight:900">${myPts}</div></div>
+<div style="font-size:16px;font-weight:900;color:rgba(255,255,255,0.5)">vs</div>
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">莊家牌</div><div style="font-size:22px;font-weight:900">${dealerPts}</div></div>
+</div>
+<div style="font-size:14px;font-weight:700;margin:8px 0">${(myPts<=21&&myPts>dealerPts)?'🃏 你贏了！':'😔 莊家贏...'}</div></div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
+}
+
+function genOceanMiniGame_reflex(win){
+let myTime,opTime;
+if(win>0){
+opTime=Math.floor(Math.random()*300)+200;
+myTime=Math.floor(Math.random()*(opTime-100))+50;
+if(myTime<50)myTime=50;
+}else{
+myTime=Math.floor(Math.random()*300)+200;
+opTime=Math.floor(Math.random()*(myTime-50))+50;
+if(opTime<50)opTime=50;
+}
+return `<div style="text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">反應時間越短越好</div>
+<div style="display:flex;justify-content:center;align-items:center;gap:12px">
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">你</div><div style="font-size:22px;font-weight:900">${myTime}<span style="font-size:11px;color:rgba(255,255,255,0.4)">ms</span></div></div>
+<div style="font-size:16px;font-weight:900;color:rgba(255,255,255,0.5)">vs</div>
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">對手</div><div style="font-size:22px;font-weight:900">${opTime}<span style="font-size:11px;color:rgba(255,255,255,0.4)">ms</span></div></div>
+</div>
+<div style="font-size:14px;font-weight:700;margin:8px 0">${myTime<opTime?'⚡ 你更快！':'😔 對手更快...'}</div></div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
+}
+
+function genOceanMiniGame_bowling(win){
+let knocked,target;
+if(win>0){
+target=Math.floor(Math.random()*6)+3;
+knocked=target+Math.floor(Math.random()*(11-target));
+}else{
+target=Math.floor(Math.random()*6)+5;
+knocked=Math.floor(Math.random()*target);
+}
+return `<div style="text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">擊倒瓶數 ≥ 目標即獲獎</div>
+<div style="display:flex;justify-content:center;align-items:center;gap:12px">
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">擊倒</div><div style="font-size:22px;font-weight:900">${knocked}</div></div>
+<div style="font-size:16px;font-weight:900;color:rgba(255,255,255,0.5)">vs</div>
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">目標</div><div style="font-size:22px;font-weight:900">${target}</div></div>
+</div>
+<div style="font-size:14px;font-weight:700;margin:8px 0">${knocked>=target?'🎳 全倒！':'😔 差一點...'}</div></div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
+}
+
+function genOceanMiniGame_dart(win){
+let hit,target;
+if(win>0){
+target=Math.floor(Math.random()*6)+3;
+hit=target+Math.floor(Math.random()*(11-target));
+}else{
+target=Math.floor(Math.random()*6)+5;
+hit=Math.floor(Math.random()*target);
+if(hit<1)hit=1;
+}
+return `<div style="text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">命中環數 ≥ 目標即獲獎</div>
+<div style="display:flex;justify-content:center;align-items:center;gap:12px">
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">命中</div><div style="font-size:22px;font-weight:900">${hit}環</div></div>
+<div style="font-size:16px;font-weight:900;color:rgba(255,255,255,0.5)">vs</div>
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">目標</div><div style="font-size:22px;font-weight:900">${target}環</div></div>
+</div>
+<div style="font-size:14px;font-weight:700;margin:8px 0">${hit>=target?'🏹 正中靶心！':'😔 射偏了...'}</div></div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
+}
+
+function genOceanMiniGame_dice(win){
+let d1,d2,target;
+if(win>0){
+target=Math.floor(Math.random()*5)+4;
+do{d1=Math.floor(Math.random()*6)+1;d2=Math.floor(Math.random()*6)+1;}while(d1+d2<target);
+}else{
+target=Math.floor(Math.random()*5)+6;
+do{d1=Math.floor(Math.random()*6)+1;d2=Math.floor(Math.random()*6)+1;}while(d1+d2>=target);
+}
+const diceEmojis=['⚀','⚁','⚂','⚃','⚄','⚅'];
+return `<div style="text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">骰子總和 ≥ 目標即獲獎</div>
+<div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:6px">
+<span style="font-size:28px">${diceEmojis[d1-1]}</span><span style="font-size:14px;color:rgba(255,255,255,0.4)">+</span><span style="font-size:28px">${diceEmojis[d2-1]}</span>
+<span style="font-size:14px;color:rgba(255,255,255,0.4)">=</span><span style="font-size:22px;font-weight:900">${d1+d2}</span>
+</div>
+<div style="font-size:13px;color:rgba(255,255,255,0.5)">目標總和: ${target}</div>
+<div style="font-size:14px;font-weight:700;margin:6px 0">${d1+d2>=target?'🎲 達標！':'😔 不夠...'}</div></div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
+}
+
+function genOceanMiniGame_crystal(win){
+let myNum,prophecy;
+if(win>0){
+prophecy=Math.floor(Math.random()*9)+1;
+myNum=prophecy;
+}else{
+prophecy=Math.floor(Math.random()*9)+1;
+do{myNum=Math.floor(Math.random()*9)+1;}while(myNum===prophecy);
+}
+return `<div style="text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">你的數字 = 預言數字即獲獎</div>
+<div style="display:flex;justify-content:center;align-items:center;gap:12px">
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">你的數字</div><div style="font-size:22px;font-weight:900">${myNum}</div></div>
+<div style="font-size:16px;font-weight:900;color:rgba(255,255,255,0.5)">vs</div>
+<div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:11px;color:rgba(255,255,255,0.5)">預言</div><div style="font-size:22px;font-weight:900">${prophecy}</div></div>
+</div>
+<div style="font-size:14px;font-weight:700;margin:8px 0">${myNum===prophecy?'🔮 預言成真！':'😔 預言落空...'}</div></div>
+<div style="text-align:center;margin-top:8px;padding:6px;background:rgba(255,255,255,0.05);border-radius:6px">
+<span style="font-size:12px;color:rgba(255,255,255,0.4)">本區獎金 </span>
+<span style="font-size:16px;font-weight:700;color:#fff">$${win.toLocaleString()}</span></div>`;
 }
 
 /* ===== SETUP SCRATCH CARD ===== */
@@ -415,8 +632,10 @@ const zoneAmts=distributeWinnings(totalWin,numZones);
 
 /* ----- 皇家金庫 (cardIdx=4) ----- */
 if(cardIdx===4){
+const safeboxCount=12;
+const extraGameCount=numZones-safeboxCount;
 const vd=genGame_vault(numZones,zoneAmts,c);
-const totalScratchZones=4+numZones;
+const totalScratchZones=4+safeboxCount+extraGameCount;
 zonesTotal=totalScratchZones;zonesRevealed=0;updateProgress();
 
 let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div><div class="game-zones">';
@@ -434,26 +653,51 @@ html+='</div>';
 // 保險箱區
 html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">🔒 保險箱</div>';
 html+='<div class="safebox-grid">';
-for(let i=0;i<numZones;i++){
+for(let i=0;i<safeboxCount;i++){
 html+=`<div class="safebox-zone" id="zone${i}">
 <div class="zone-content"><div class="safebox-cell"><div class="safebox-num">${String(vd.boxes[i].num).padStart(2,'0')}</div><div class="safebox-prize">$${vd.boxes[i].prize.toLocaleString()}</div></div></div>
 <canvas class="zone-scratch" id="zcanvas${i}"></canvas>
 </div>`;
 }
 html+='</div>';
+
+// 額外獨立小遊戲區
+const vaultMiniGames=[
+{icon:'🎰',name:'轉盤奪金',desc:'轉盤停在金色區即可獲得獎金',gen:genVaultMiniGame_spin},
+{icon:'🏆',name:'猜冠軍',desc:'猜中冠軍隊伍即可獲得獎金',gen:genVaultMiniGame_champion},
+{icon:'🎪',name:'套圈圈',desc:'投擲距離 ≥ 目標距離即可獲得獎金',gen:genVaultMiniGame_ring},
+{icon:'💣',name:'拆彈專家',desc:'剪對正確的線即可獲得獎金',gen:genVaultMiniGame_bomb}
+];
+html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">🎮 獨立挑戰</div>';
+for(let i=0;i<extraGameCount;i++){
+const mg=vaultMiniGames[i];
+const zoneIdx=safeboxCount+i;
+const prize=vd.extraPrizes[i];
+html+=`<div class="game-zone" id="zone${zoneIdx}">
+<div class="zone-content">
+<div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
+<div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">${mg.desc}</div>
+${mg.gen(prize)}
+</div>
+<canvas class="zone-scratch" id="zcanvas${zoneIdx}"></canvas>
+</div>`;
+}
+
 html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div></div>`;
 wrap.innerHTML=html;
 requestAnimationFrame(()=>{
 for(let i=0;i<4;i++){initZoneCanvas2('vaultCode'+i,'vccanvas'+i,totalScratchZones)}
-for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}
+for(let i=0;i<safeboxCount+extraGameCount;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}
 });
 return;
 }
 
 /* ----- 深海霸主 (cardIdx=5) ----- */
 if(cardIdx===5){
+const creatureCount=15;
+const extraGameCount=numZones-creatureCount;
 const od=genGame_ocean(numZones,zoneAmts,c);
-const totalScratchZones=1+numZones;
+const totalScratchZones=1+creatureCount+extraGameCount;
 zonesTotal=totalScratchZones;zonesRevealed=0;updateProgress();
 
 let html='<div class="game-desc">'+CARD_DESCS[cardIdx]+'</div><div class="game-zones">';
@@ -467,18 +711,43 @@ html+=`<div class="ocean-header-zone" id="oceanTarget" style="text-align:center"
 // 海底生物區
 html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">🐠 海底生物</div>';
 html+='<div class="creature-grid">';
-for(let i=0;i<numZones;i++){
+for(let i=0;i<creatureCount;i++){
 html+=`<div class="creature-zone" id="zone${i}">
 <div class="zone-content"><div class="creature-cell"><div class="creature-emoji">${od.creatures[i].emoji}</div><div class="creature-weight">${od.creatures[i].weight}<span class="creature-unit">kg</span></div><div class="creature-prize">$${od.creatures[i].prize.toLocaleString()}</div></div></div>
 <canvas class="zone-scratch" id="zcanvas${i}"></canvas>
 </div>`;
 }
 html+='</div>';
+
+// 額外獨立小遊戲區
+const oceanMiniGames=[
+{icon:'🃏',name:'21點',desc:'點數大於莊家且不爆牌即可獲得獎金',gen:genOceanMiniGame_blackjack},
+{icon:'⚡',name:'閃電快手',desc:'反應時間比對手快即可獲得獎金',gen:genOceanMiniGame_reflex},
+{icon:'🎳',name:'保齡球',desc:'擊倒瓶數 ≥ 目標即可獲得獎金',gen:genOceanMiniGame_bowling},
+{icon:'🏹',name:'飛鏢王',desc:'命中環數 ≥ 目標即可獲得獎金',gen:genOceanMiniGame_dart},
+{icon:'🎲',name:'雙骰總和',desc:'骰子總和 ≥ 目標即可獲得獎金',gen:genOceanMiniGame_dice},
+{icon:'🔮',name:'水晶球',desc:'你的數字 = 預言數字即可獲得獎金',gen:genOceanMiniGame_crystal}
+];
+html+='<div style="margin:16px 0 8px;text-align:center;font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">🎮 獨立挑戰</div>';
+for(let i=0;i<extraGameCount;i++){
+const mg=oceanMiniGames[i];
+const zoneIdx=creatureCount+i;
+const prize=od.extraPrizes[i];
+html+=`<div class="game-zone" id="zone${zoneIdx}">
+<div class="zone-content">
+<div class="game-zone-title"><span class="zone-icon">${mg.icon}</span>${mg.name}</div>
+<div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:8px">${mg.desc}</div>
+${mg.gen(prize)}
+</div>
+<canvas class="zone-scratch" id="zcanvas${zoneIdx}"></canvas>
+</div>`;
+}
+
 html+=`<div class="total-bar"><div class="total-label">本張總獎金</div><div class="total-amount" id="totalAmount">???</div></div></div>`;
 wrap.innerHTML=html;
 requestAnimationFrame(()=>{
 initZoneCanvas2('oceanTarget','otcanvas',totalScratchZones);
-for(let i=0;i<numZones;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}
+for(let i=0;i<creatureCount+extraGameCount;i++){initZoneCanvas2('zone'+i,'zcanvas'+i,totalScratchZones)}
 });
 return;
 }
