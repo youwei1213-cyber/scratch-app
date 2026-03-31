@@ -1537,10 +1537,58 @@ setTimeout(()=>showResult(currentWinnings),800);
 }
 }
 }
+const sounds = {
+  win: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'),
+  bigwin: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-bonus-alert-767.mp3'),
+  lose: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-player-losing-or-failing-2042.mp3')
+};
+function showEffect(amount){
+    let msg = "";
 
+    if(amount >= 100000){
+        msg = "💥 超級大獎！！！";
+    }else if(amount >= 10000){
+        msg = "🌟 大獎！運氣爆發！";
+    }else if(amount > 0){
+        msg = "✨ 中獎！不錯喔！";
+    }else{
+        msg = "😢 可惜沒中";
+    }
+
+    document.getElementById('resultText').textContent = msg;
+  if(msg){
+    const el = document.createElement("div");
+    el.innerText = msg;
+
+    el.style.position = "fixed";
+    el.style.top = "40%";
+    el.style.left = "50%";
+    el.style.transform = "translate(-50%, -50%)";
+    el.style.fontSize = "32px";
+    el.style.color = "gold";
+    el.style.fontWeight = "bold";
+    el.style.zIndex = 9999;
+    el.style.textShadow = "0 0 20px rgba(255,215,0,0.8)";
+
+    document.body.appendChild(el);
+
+    setTimeout(()=>{
+      el.remove();
+    },1500);
+  }
+}
 function updateProgress(){document.getElementById('zonesProgress').innerHTML=`已刮開 <span>${zonesRevealed}</span> / <span>${zonesTotal}</span> 區`}
 
 function showResult(amount){
+  if(amount >= 10000){
+  sounds.bigwin.play();
+}else if(amount > 0){
+  sounds.win.play();
+}else{
+  sounds.lose.play();
+}
+  showEffect(amount); 
+
 const ov=document.getElementById('resultOverlay');
 document.getElementById('resultAmount').textContent='$'+amount.toLocaleString();
 if(amount>=500){
