@@ -410,7 +410,7 @@ function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
 
 /* ===== INVENTORY SYSTEM ===== */
 function initInventory(){
-const POOL_VERSION='v19';
+const POOL_VERSION='v20';
 if(!state.inventory||state.poolVersion!==POOL_VERSION){
 // Only reset if no inventory exists or version changed (admin updated prizes)
 state.inventory={};
