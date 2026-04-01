@@ -388,7 +388,7 @@ const CARDS=[
 {name:'極速賽馬',emoji:'🏇',price:100,bgGrad:'linear-gradient(135deg,#1a3d00,#2d6b00)',total:200000,zones:5,prizes:[{amt:100000,cnt:5},{amt:10000,cnt:18},{amt:5000,cnt:70},{amt:1000,cnt:1300},{amt:500,cnt:6500},{amt:200,cnt:18000},{amt:100,cnt:36000},{amt:50,cnt:22000},{amt:20,cnt:14000}]},
 {name:'古墓探險',emoji:'🗝️',price:200,bgGrad:'linear-gradient(135deg,#2a1a00,#5c3d00)',total:500000,zones:7,prizes:[{amt:200000,cnt:8},{amt:20000,cnt:45},{amt:10000,cnt:160},{amt:2000,cnt:3500},{amt:1000,cnt:15000},{amt:500,cnt:40000},{amt:200,cnt:85000},{amt:100,cnt:68000},{amt:50,cnt:36000}]},
 {name:'神龍奪寶',emoji:'🐉',price:500,bgGrad:'linear-gradient(135deg,#1a0a3d,#3d1a6e)',total:1000000,zones:9,prizes:[{amt:500000,cnt:8},{amt:50000,cnt:100},{amt:20000,cnt:550},{amt:5000,cnt:5500},{amt:2000,cnt:42000},{amt:1000,cnt:105000},{amt:500,cnt:200000},{amt:200,cnt:100000},{amt:100,cnt:60000}]},
-{name:'皇家金庫',emoji:'💰',price:1000,bgGrad:'linear-gradient(135deg,#3d2b00,#7a5c00)',total:1000000,zones:16,prizes:[{amt:1000000,cnt:8},{amt:100000,cnt:150},{amt:50000,cnt:800},{amt:10000,cnt:5000},{amt:5000,cnt:45000},{amt:2000,cnt:215000},{amt:1000,cnt:240000},{amt:500,cnt:270000},]},
+{name:'皇家金庫',emoji:'💰',price:1000,bgGrad:'linear-gradient(135deg,#3d2b00,#7a5c00)',total:1000000,zones:16,prizes:[{amt:1000000,cnt:8},{amt:100000,cnt:150},{amt:50000,cnt:800},{amt:10000,cnt:5000},{amt:5000,cnt:36000},{amt:2000,cnt:210000},{amt:1000,cnt:240000},{amt:500,cnt:270000},]},
 {name:'深海霸主',emoji:'🌊',price:2000,bgGrad:'linear-gradient(135deg,#001a3d,#003366)',total:2000000,zones:21,prizes:[{amt:2000000,cnt:8},{amt:800000,cnt:25},{amt:100000,cnt:1300},{amt:20000,cnt:7000},{amt:10000,cnt:40000},{amt:5000,cnt:260000},{amt:2000,cnt:450000},{amt:1000,cnt:700000}]}
 ];
 
@@ -410,7 +410,7 @@ function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
 
 /* ===== INVENTORY SYSTEM ===== */
 function initInventory(){
-const POOL_VERSION='v22';
+const POOL_VERSION='v23';
 if(!state.inventory||state.poolVersion!==POOL_VERSION){
 // Only reset if no inventory exists or version changed (admin updated prizes)
 state.inventory={};
