@@ -255,7 +255,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🔥 火焰骰子</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate0">50%</span></span><span>最高 <span id="maxPrize0">$25,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate0">67%</span></span><span>最高 <span id="maxPrize0">$25,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar0" style="width:100%"></div></div><div class="stock-text" id="stockText0">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(0)">GO</button>
 </div>
@@ -271,7 +271,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🏇 極速賽馬</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate1">50%</span></span><span>最高 <span id="maxPrize1">$100,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate1">65%</span></span><span>最高 <span id="maxPrize1">$100,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar1" style="width:100%"></div></div><div class="stock-text" id="stockText1">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(1)">GO</button>
 </div>
@@ -287,7 +287,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🗝️ 古墓探險</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate2">45%</span></span><span>最高 <span id="maxPrize2">$200,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate2">67%</span></span><span>最高 <span id="maxPrize2">$200,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar2" style="width:100%"></div></div><div class="stock-text" id="stockText2">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(2)">GO</button>
 </div>
@@ -303,7 +303,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🐉 神龍奪寶</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate3">44%</span></span><span>最高 <span id="maxPrize3">$500,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate3">67%</span></span><span>最高 <span id="maxPrize3">$500,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar3" style="width:100%"></div></div><div class="stock-text" id="stockText3">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(3)">GO</button>
 </div>
@@ -319,7 +319,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">💰 皇家金庫</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate4">46%</span></span><span>最高 <span id="maxPrize4">$1,000,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate4">66%</span></span><span>最高 <span id="maxPrize4">$1,000,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar4" style="width:100%"></div></div><div class="stock-text" id="stockText4">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(4)">GO</button>
 </div>
@@ -335,7 +335,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🌊 深海霸主</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate5">47%</span></span><span>最高 <span id="maxPrize5">$2,000,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate5">67%</span></span><span>最高 <span id="maxPrize5">$2,000,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar5" style="width:100%"></div></div><div class="stock-text" id="stockText5">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(5)">GO</button>
 </div>
@@ -384,13 +384,15 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 <div class="ad-overlay" id="adOverlay"><div class="ad-box"><div class="ad-text">📺 廣告播放中...</div><div class="ad-countdown" id="adCountdown">5</div></div><div class="ad-reward">觀看完畢可獲得 🔸 100 代幣</div></div>
 <script>
 const CARDS=[
-{name:'火焰骰子',emoji:'🔥',price:50,bgGrad:'linear-gradient(135deg,#3d1500,#8b2500)',total:100000,zones:5,prizes:[{amt:25000,cnt:3},{amt:5000,cnt:25},{amt:1000,cnt:200},{amt:500,cnt:800},{amt:200,cnt:3200},{amt:100,cnt:8000},{amt:50,cnt:17000},{amt:25,cnt:13000},{amt:10,cnt:8000}]},
-{name:'極速賽馬',emoji:'🏇',price:100,bgGrad:'linear-gradient(135deg,#1a3d00,#2d6b00)',total:200000,zones:5,prizes:[{amt:100000,cnt:5},{amt:10000,cnt:18},{amt:5000,cnt:70},{amt:1000,cnt:1300},{amt:500,cnt:6500},{amt:200,cnt:18000},{amt:100,cnt:36000},{amt:50,cnt:22000},{amt:20,cnt:14000}]},
-{name:'古墓探險',emoji:'🗝️',price:200,bgGrad:'linear-gradient(135deg,#2a1a00,#5c3d00)',total:500000,zones:7,prizes:[{amt:200000,cnt:8},{amt:20000,cnt:45},{amt:10000,cnt:160},{amt:2000,cnt:3500},{amt:1000,cnt:15000},{amt:500,cnt:40000},{amt:200,cnt:85000},{amt:100,cnt:68000},{amt:50,cnt:36000}]},
-{name:'神龍奪寶',emoji:'🐉',price:500,bgGrad:'linear-gradient(135deg,#1a0a3d,#3d1a6e)',total:1000000,zones:9,prizes:[{amt:500000,cnt:8},{amt:50000,cnt:100},{amt:20000,cnt:550},{amt:5000,cnt:5500},{amt:2000,cnt:42000},{amt:1000,cnt:105000},{amt:500,cnt:200000},{amt:200,cnt:100000},{amt:100,cnt:60000}]},
-{name:'皇家金庫',emoji:'💰',price:1000,bgGrad:'linear-gradient(135deg,#3d2b00,#7a5c00)',total:1000000,zones:16,prizes:[{amt:1000000,cnt:8},{amt:100000,cnt:150},{amt:50000,cnt:800},{amt:10000,cnt:4000},{amt:5000,cnt:30000},{amt:2000,cnt:150000},{amt:1000,cnt:240000},{amt:500,cnt:300000},]},
-{name:'深海霸主',emoji:'🌊',price:2000,bgGrad:'linear-gradient(135deg,#001a3d,#003366)',total:2000000,zones:21,prizes:[{amt:2000000,cnt:8},{amt:800000,cnt:25},{amt:100000,cnt:1300},{amt:20000,cnt:7000},{amt:10000,cnt:40000},{amt:5000,cnt:260000},{amt:2000,cnt:450000},{amt:1000,cnt:700000}]}
+{name:'火焰骰子',emoji:'🔥',price:50,bgGrad:'linear-gradient(135deg,#3d1500,#8b2500)',total:100000,zones:5,jackpotUnlockCost:3000,prizes:[{amt:25000,cnt:1},{amt:5000,cnt:10},{amt:1000,cnt:200},{amt:500,cnt:600},{amt:200,cnt:3500},{amt:100,cnt:10000},{amt:50,cnt:16000},{amt:25,cnt:18000},{amt:10,cnt:19000}]},
+{name:'極速賽馬',emoji:'🏇',price:100,bgGrad:'linear-gradient(135deg,#1a3d00,#2d6b00)',total:200000,zones:5,jackpotUnlockCost:8000,prizes:[{amt:100000,cnt:2},{amt:10000,cnt:12},{amt:5000,cnt:60},{amt:1000,cnt:1200},{amt:500,cnt:5000},{amt:200,cnt:18000},{amt:100,cnt:34000},{amt:50,cnt:36000},{amt:20,cnt:36000}]},
+{name:'古墓探險',emoji:'🗝️',price:200,bgGrad:'linear-gradient(135deg,#2a1a00,#5c3d00)',total:500000,zones:7,jackpotUnlockCost:20000,prizes:[{amt:200000,cnt:4},{amt:20000,cnt:25},{amt:10000,cnt:120},{amt:2000,cnt:2500},{amt:1000,cnt:12000},{amt:500,cnt:38000},{amt:200,cnt:90000},{amt:100,cnt:95000},{amt:50,cnt:95000}]},
+{name:'神龍奪寶',emoji:'🐉',price:500,bgGrad:'linear-gradient(135deg,#1a0a3d,#3d1a6e)',total:1000000,zones:9,jackpotUnlockCost:60000,prizes:[{amt:500000,cnt:4},{amt:50000,cnt:50},{amt:20000,cnt:300},{amt:5000,cnt:4000},{amt:2000,cnt:30000},{amt:1000,cnt:90000},{amt:500,cnt:200000},{amt:200,cnt:190000},{amt:100,cnt:160000}]},
+{name:'皇家金庫',emoji:'💰',price:1000,bgGrad:'linear-gradient(135deg,#3d2b00,#7a5c00)',total:1000000,zones:16,jackpotUnlockCost:150000,prizes:[{amt:1000000,cnt:4},{amt:100000,cnt:70},{amt:50000,cnt:250},{amt:10000,cnt:3000},{amt:5000,cnt:20000},{amt:2000,cnt:100000},{amt:1000,cnt:230000},{amt:500,cnt:160000},{amt:200,cnt:150000}]},
+{name:'深海霸主',emoji:'🌊',price:2000,bgGrad:'linear-gradient(135deg,#001a3d,#003366)',total:2000000,zones:21,jackpotUnlockCost:300000,prizes:[{amt:2000000,cnt:5},{amt:800000,cnt:15},{amt:100000,cnt:700},{amt:20000,cnt:3000},{amt:10000,cnt:20000},{amt:5000,cnt:190000},{amt:2000,cnt:560000},{amt:1000,cnt:330000},{amt:500,cnt:230000}]}
 ];
+
+const JACKPOT_TIERS=2;
 
 const CARD_DESCS=[
 '每場擲出骰子，你的點數大於莊家即可贏得該場獎金！平手不算中獎。共 5 場機會',
@@ -410,7 +412,7 @@ function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
 
 /* ===== INVENTORY SYSTEM ===== */
 function initInventory(){
-const POOL_VERSION='v26';
+const POOL_VERSION='v27';
 if(!state.inventory||state.poolVersion!==POOL_VERSION){
 // Only reset if no inventory exists or version changed (admin updated prizes)
 state.inventory={};
@@ -418,7 +420,7 @@ CARDS.forEach((c,idx)=>{
 const prizesLeft=c.prizes.map(p=>({amt:p.amt,cnt:p.cnt}));
 const totalPrizeCards=c.prizes.reduce((s,p)=>s+p.cnt,0);
 const zerosLeft=c.total-totalPrizeCards;
-state.inventory[idx]={remaining:c.total,prizesLeft:prizesLeft,zerosLeft:zerosLeft};
+state.inventory[idx]={remaining:c.total,prizesLeft:prizesLeft,zerosLeft:zerosLeft,purchasedCost:0};
 });
 state.myCards=[];
 state.poolVersion=POOL_VERSION;
@@ -427,14 +429,25 @@ save();
 if(!state.myCards){state.myCards=[];save();}
 }
 
+function getAvailablePrizePool(idx){
+const c=CARDS[idx];
+const inv=state.inventory[idx];
+const jackpotUnlocked=(inv.purchasedCost||0)>=((c.jackpotUnlockCost)||0);
+return inv.prizesLeft.filter(function(p,prizeIdx){
+if(jackpotUnlocked)return p.cnt>0;
+return prizeIdx>=JACKPOT_TIERS&&p.cnt>0;
+});
+}
+
 function drawFromPool(idx){
 const inv=state.inventory[idx];
-const totalPrizes=inv.prizesLeft.reduce((s,p)=>s+p.cnt,0);
+const availablePrizes=getAvailablePrizePool(idx);
+const totalPrizes=availablePrizes.reduce((s,p)=>s+p.cnt,0);
 const totalItems=totalPrizes+inv.zerosLeft;
 if(totalItems<=0)return 0;
 const r=Math.floor(Math.random()*totalItems);
 let cum=0;
-for(const p of inv.prizesLeft){
+for(const p of availablePrizes){
 cum+=p.cnt;
 if(r<cum){p.cnt--;return p.amt;}
 }
@@ -486,6 +499,7 @@ if(inv.remaining<qty){showToast('庫存不足！');return;}
 state.tokens-=total;
 const now=Date.now();
 for(let i=0;i<qty;i++){
+inv.purchasedCost=(inv.purchasedCost||0)+c.price;
 state.myCards.push({id:now+'_'+i,cardIdx:idx,prize:drawFromPool(idx),purchasedAt:now,scratched:false});
 inv.remaining--;
 }
@@ -593,7 +607,7 @@ bottomNav.style.display=(id==='scratchScreen')?'none':'flex';
 }
 function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
 
-function showPrizeInfo(idx){const c=CARDS[idx];const inv=state.inventory?state.inventory[idx]:null;document.getElementById('prizeModalTitle').textContent=c.emoji+' '+c.name+' - 獎項配率';let html='<tr><th>獎金</th><th>總張數</th><th>剩餘</th><th>機率</th></tr>';c.prizes.forEach(p=>{const rawPct=p.cnt/c.total*100;const decimals=rawPct<0.001?4:rawPct<0.01?3:rawPct<0.1?2:rawPct<1?1:1;const pct=rawPct.toFixed(decimals);let left=p.cnt;if(inv&&inv.prizesLeft){const found=inv.prizesLeft.find(function(x){return x.amt===p.amt});if(found)left=found.cnt;}html+=`<tr><td class="amount-col">$${p.amt.toLocaleString()}</td><td>${p.cnt.toLocaleString()}</td><td style="color:#e74c3c;font-weight:700">${left.toLocaleString()}</td><td>${pct}%</td></tr>`});const noWin=c.total-c.prizes.reduce((s,p)=>s+p.cnt,0);const noWinLeft=inv?inv.zerosLeft:noWin;if(noWin>0){html+=`<tr><td style="color:rgba(0,0,0,0.4)">未中獎</td><td>${noWin.toLocaleString()}</td><td style="color:rgba(0,0,0,0.4)">${noWinLeft.toLocaleString()}</td><td>${(noWin/c.total*100).toFixed(1)}%</td></tr>`}const remainTotal=inv?inv.remaining:c.total;html+=`<tr><td colspan="4" style="color:rgba(0,0,0,0.3);font-size:12px;padding-top:12px">總張數: ${c.total.toLocaleString()} / 剩餘: ${remainTotal.toLocaleString()}</td></tr>`;document.getElementById('prizeTable').innerHTML=html;document.getElementById('prizeModal').classList.add('show')}
+function showPrizeInfo(idx){const c=CARDS[idx];const inv=state.inventory?state.inventory[idx]:null;const jackpotUnlocked=inv?((inv.purchasedCost||0)>=((c.jackpotUnlockCost)||0)):false;document.getElementById('prizeModalTitle').textContent=c.emoji+' '+c.name+' - 獎項配率';let html='<tr><th>獎金</th><th>總張數</th><th>剩餘</th><th>機率</th></tr>';c.prizes.forEach(function(p,prizeIdx){const rawPct=p.cnt/c.total*100;const decimals=rawPct<0.001?4:rawPct<0.01?3:rawPct<0.1?2:rawPct<1?1:1;const pct=rawPct.toFixed(decimals);let left=p.cnt;if(inv&&inv.prizesLeft){const found=inv.prizesLeft.find(function(x){return x.amt===p.amt});if(found)left=found.cnt;}const locked=prizeIdx<JACKPOT_TIERS&&!jackpotUnlocked;html+=`<tr><td class="amount-col">$${p.amt.toLocaleString()}${locked?' 🔒':''}</td><td>${p.cnt.toLocaleString()}</td><td style="color:${locked?'rgba(0,0,0,0.35)':'#e74c3c'};font-weight:700">${locked?'門檻後解鎖':left.toLocaleString()}</td><td>${pct}%</td></tr>`});const noWin=c.total-c.prizes.reduce((s,p)=>s+p.cnt,0);const noWinLeft=inv?inv.zerosLeft:noWin;if(noWin>0){html+=`<tr><td style="color:rgba(0,0,0,0.4)">未中獎</td><td>${noWin.toLocaleString()}</td><td style="color:rgba(0,0,0,0.4)">${noWinLeft.toLocaleString()}</td><td>${(noWin/c.total*100).toFixed(1)}%</td></tr>`}const remainTotal=inv?inv.remaining:c.total;const purchasedCost=inv?(inv.purchasedCost||0):0;html+=`<tr><td colspan="4" style="color:rgba(0,0,0,0.3);font-size:12px;padding-top:12px">總張數: ${c.total.toLocaleString()} / 剩餘: ${remainTotal.toLocaleString()}</td></tr>`;html+=`<tr><td colspan="4" style="color:rgba(0,0,0,0.45);font-size:12px;padding-top:8px">大獎解鎖門檻: 已累積購買 ${purchasedCost.toLocaleString()} / ${c.jackpotUnlockCost.toLocaleString()} 代幣${jackpotUnlocked?'（已解鎖）':'（未解鎖）'}</td></tr>`;document.getElementById('prizeTable').innerHTML=html;document.getElementById('prizeModal').classList.add('show')}
 function closePrizeModal(){document.getElementById('prizeModal').classList.remove('show')}
 function showTopup(){document.getElementById('topupModal').classList.add('show')}
 function closeTopup(){document.getElementById('topupModal').classList.remove('show')}
