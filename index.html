@@ -103,6 +103,21 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 .history-item .hi-amount{font-weight:900;font-size:16px}
 .history-item .hi-amount.win{color:#d4a017}
 .history-item .hi-amount.loss{color:#ff4444}
+.redeem-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-bottom:80px}
+.redeem-card{background:#fff;border-radius:18px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+.redeem-thumb{height:132px;background:linear-gradient(135deg,#f1efe9,#e3ddd2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.redeem-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.redeem-thumb .fallback{font-size:42px}
+.redeem-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.72);color:#fff;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:700;z-index:1}
+.redeem-info{padding:12px}
+.redeem-name{font-size:14px;font-weight:800;color:#1a1a1a;line-height:1.35;min-height:38px}
+.redeem-meta{font-size:11px;color:rgba(0,0,0,0.45);margin-top:4px}
+.redeem-price{margin-top:10px}
+.redeem-price .label{font-size:11px;color:rgba(0,0,0,0.45)}
+.redeem-price .value{font-size:20px;font-weight:900;color:#e74c3c}
+.redeem-btn{width:100%;margin-top:10px;padding:10px 12px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit}
+.redeem-btn:disabled{background:#bbb;color:#eee;cursor:not-allowed}
+.redeem-note{font-size:12px;color:rgba(0,0,0,0.48);text-align:center;margin:10px 0 14px}
 .ad-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;justify-content:center;align-items:center;z-index:95;flex-direction:column;gap:20px}
 .ad-overlay.show{display:flex}
 .ad-box{width:300px;height:250px;background:linear-gradient(135deg,#333,#555);border-radius:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px}
@@ -359,6 +374,11 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 <button id="scratchAllBtn" onclick="scratchAllCards()" style="display:none;margin:0 0 16px 0;padding:14px 28px;border:none;border-radius:12px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;width:100%;box-shadow:0 4px 12px rgba(255,215,0,0.3)">⚡ 全部刮開</button>
 <div id="myCardsList"></div>
 </div>
+<div id="redeemScreen" class="screen">
+<div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">🎁 兌獎區</div></div>
+<div class="redeem-note">僅可使用獎金兌換，價格依 MOMO 參考價換算為 1:11</div>
+<div class="redeem-grid" id="redeemGrid"></div>
+</div>
 <div class="bottom-nav" id="bottomNav">
 <div class="nav-item active" id="navHome" onclick="showScreen('homeScreen')">
 <div class="nav-icon">🏠</div>
@@ -373,6 +393,10 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 <div class="nav-icon">📜</div>
 <div class="nav-label">紀錄</div>
 </div>
+<div class="nav-item" id="navRedeem" onclick="showScreen('redeemScreen')">
+<div class="nav-icon">🎁</div>
+<div class="nav-label">兌獎</div>
+</div>
 </div>
 </div>
 <div class="result-overlay" id="resultOverlay"><div class="result-card"><div class="result-emoji" id="resultEmoji">🎉</div><div class="result-text" id="resultText">恭喜中獎！</div><div class="result-amount" id="resultAmount">$0</div><button class="result-btn" onclick="scratchNext()" id="resultBtn" style="width:100%">收下獎金 💰 下一張 ▶</button><button class="result-btn" onclick="verifyCard()" id="verifyBtn" style="margin-top:10px;background:linear-gradient(135deg,#9b59b6,#8e44ad);color:#fff;width:100%">🔍 我要驗牌</button><button class="result-btn" onclick="closeResult()" style="margin-top:10px;background:#f0f0f0;color:#333;border:1px solid #ddd;width:100%">🏠 返回首頁</button></div></div>
@@ -381,6 +405,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 <div class="modal-overlay" id="exchangeModal"><div class="modal"><h2>🔄 獎金兌換代幣</h2><div class="exchange-info">將您的獎金兌換成代幣繼續遊戲！</div><div class="exchange-info">匯率：$1 獎金 = 1 代幣</div><div style="text-align:center;margin:12px 0"><span style="color:rgba(0,0,0,0.5)">目前獎金：</span><span style="color:#ff6b6b;font-weight:900;font-size:18px" id="exchangePrize">$0</span></div><div class="exchange-input-row"><input type="number" class="exchange-input" id="exchangeAmount" placeholder="輸入兌換金額" min="1" oninput="updateExchangePreview()"></div><div class="exchange-preview"><div class="ep-label">可獲得代幣</div><div class="ep-value" id="exchangePreview">🔸 0</div></div><div style="display:flex;gap:10px"><button class="result-btn" style="flex:1" onclick="doExchange()">確認兌換</button><button class="result-btn" style="flex:1;background:#f0f0f0;color:#333;border:1px solid #ddd" onclick="closeExchange()">取消</button></div><div style="margin-top:12px"><button class="result-btn" style="width:100%;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#333;font-size:14px;padding:10px" onclick="doExchangeAll()">全部兌換 💱</button></div></div></div>
 <div class="modal-overlay" id="buyModal"><div class="modal"><h2 id="buyModalTitle">購買刮刮卡</h2><div id="buyModalInfo"></div><div style="text-align:center;margin:12px 0"><div style="font-size:13px;color:rgba(0,0,0,0.5)">剩餘張數</div><div style="font-size:24px;font-weight:900;color:#ffd700" id="buyRemaining">0 / 100,000</div><div style="width:100%;height:8px;background:rgba(0,0,0,0.08);border-radius:4px;margin-top:8px"><div id="buyProgressBar" style="height:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);border-radius:4px;transition:width 0.3s"></div></div></div><div style="display:flex;gap:8px;margin:16px 0;justify-content:center;flex-wrap:wrap"><button class="qty-btn" id="qtyBtn1" onclick="setBuyQty(1)">1 張</button><button class="qty-btn" id="qtyBtn5" onclick="setBuyQty(5)">5 張</button><button class="qty-btn" id="qtyBtn10" onclick="setBuyQty(10)">10 張</button><button class="qty-btn" id="qtyBtn15" onclick="setBuyQty(15)">15 張</button><button class="qty-btn" id="qtyBtn20" onclick="setBuyQty(20)">20 張</button><button class="qty-btn" id="qtyBtn30" onclick="setBuyQty(30)">30 張</button><button class="qty-btn" id="qtyBtn50" onclick="setBuyQty(50)">50 張</button><button class="qty-btn" id="qtyBtn75" onclick="setBuyQty(75)">75 張</button><button class="qty-btn" id="qtyBtn100" onclick="setBuyQty(100)">100 張</button></div><div style="text-align:center;margin:12px 0"><span style="color:rgba(0,0,0,0.5)">總價：</span><span style="font-size:24px;font-weight:900;color:#ffd700" id="buyTotalPrice">0</span><span style="color:rgba(0,0,0,0.5)"> 代幣</span></div><button class="result-btn" style="width:100%" id="buyConfirmBtn" onclick="confirmBuy()">確認購買</button><button class="result-btn" style="width:100%;background:#f0f0f0;color:#333;border:1px solid #ddd;margin-top:8px" onclick="closeBuyModal()">取消</button></div></div>
 <div class="modal-overlay" id="adConfirmModal"><div class="modal"><h2>📺 觀看廣告</h2><div style="text-align:center;padding:16px 0"><div style="font-size:48px;margin-bottom:12px">🎬</div><div style="font-size:16px;color:#333;margin-bottom:8px">觀看 <b>30 秒</b> 廣告</div><div style="font-size:24px;font-weight:900;color:#b8860b;margin:12px 0">可獲得 🔸 100 代幣</div><div style="font-size:13px;color:#888">廣告播放期間請勿離開頁面</div></div><button class="result-btn" style="width:100%" onclick="startAd()">📺 觀看廣告</button><button class="result-btn" style="width:100%;background:#f0f0f0;color:#333;border:1px solid #ddd;margin-top:8px" onclick="closeAdConfirm()">取消</button></div></div>
+<div class="modal-overlay" id="redeemConfirmModal"><div class="modal"><h2>🎁 確定兌換嗎？</h2><div style="text-align:center;padding:6px 0 18px 0"><div style="font-size:16px;font-weight:800;color:#1a1a1a" id="redeemConfirmName"></div><div style="font-size:13px;color:rgba(0,0,0,0.5);margin-top:8px">將扣除獎金 <span style="color:#e74c3c;font-weight:900" id="redeemConfirmPrice">$0</span></div></div><div style="display:flex;gap:10px"><button class="result-btn" style="flex:1" onclick="confirmRedeem()">確認</button><button class="result-btn" style="flex:1;background:#f0f0f0;color:#333;border:1px solid #ddd" onclick="closeRedeemConfirm()">取消</button></div></div></div>
 <div class="ad-overlay" id="adOverlay"><div class="ad-box"><div class="ad-text">📺 廣告播放中...</div><div class="ad-countdown" id="adCountdown">5</div></div><div class="ad-reward">觀看完畢可獲得 🔸 100 代幣</div></div>
 <script>
 const CARDS=[
@@ -403,7 +428,21 @@ const CARD_DESCS=[
 '刮開達標重量，再刮開15個海底生物。生物重量 ≥ 達標重量即可獲得獎金！另有6個獨立小遊戲等你挑戰！'
 ];
 
+const REDEEM_ITEMS=[
+{id:'iphone15pm',name:'iPhone 15 Pro Max 256GB',category:'Apple',emoji:'📱',momoPrice:44900,image:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=900&q=80'},
+{id:'iphone16pro',name:'iPhone 16 Pro 256GB',category:'Apple',emoji:'📱',momoPrice:40900,image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80'},
+{id:'iphone17pm',name:'iPhone 17 Pro Max 256GB',category:'Apple',emoji:'📱',momoPrice:46900,image:'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=900&q=80'},
+{id:'ipadair',name:'iPad Air M2 11 吋',category:'iPad',emoji:'📱',momoPrice:21900,image:'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=900&q=80'},
+{id:'ipadpro',name:'iPad Pro M4 13 吋',category:'iPad',emoji:'📱',momoPrice:42900,image:'https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=900&q=80'},
+{id:'switcholed',name:'Nintendo Switch OLED',category:'Nintendo',emoji:'🎮',momoPrice:10480,image:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=900&q=80'},
+{id:'switch2',name:'Nintendo Switch 2',category:'Nintendo',emoji:'🎮',momoPrice:15980,image:'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=900&q=80'},
+{id:'ps5',name:'PlayStation 5 Slim',category:'Sony',emoji:'🎮',momoPrice:17580,image:'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?auto=format&fit=crop&w=900&q=80'},
+{id:'quest3',name:'Meta Quest 3 VR',category:'VR',emoji:'🥽',momoPrice:18990,image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&w=900&q=80'},
+{id:'gogoro',name:'Gogoro Pulse 最新款',category:'Gogoro',emoji:'🛵',momoPrice:136980,image:'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80'}
+].map(function(item){return Object.assign({},item,{redeemPrice:item.momoPrice*11})});
+
 let state=JSON.parse(localStorage.getItem('scratchState')||'null')||{tokens:500,prize:0,history:[]};
+let currentRedeemItem=null;
 let currentCard=null,currentWinnings=0,zonesTotal=0,zonesRevealed=0;
 let currentBuyIdx=0,currentBuyQty=1;
 let currentScratchCardId=null; // track which myCard is being scratched
@@ -597,7 +636,7 @@ if(id==='homeScreen')updateUI();
 // Update bottom nav active state
 const bottomNav=document.getElementById('bottomNav');
 if(bottomNav){
-const navMap={'homeScreen':'navHome','myCardsScreen':'navMyCards','historyScreen':'navHistory'};
+const navMap={'homeScreen':'navHome','myCardsScreen':'navMyCards','historyScreen':'navHistory','redeemScreen':'navRedeem'};
 document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
 const activeNav=document.getElementById(navMap[id]);
 if(activeNav)activeNav.classList.add('active');
@@ -606,6 +645,46 @@ bottomNav.style.display=(id==='scratchScreen')?'none':'flex';
 }
 }
 function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
+
+function renderRedeemItems(){
+const grid=document.getElementById('redeemGrid');
+if(!grid)return;
+grid.innerHTML=REDEEM_ITEMS.map(function(item){
+const disabled=state.prize<item.redeemPrice;
+return '<div class="redeem-card">'+
+'<div class="redeem-thumb">'+
+'<span class="redeem-badge">'+item.category+'</span>'+
+'<img src="'+item.image+'" alt="'+item.name.replace(/"/g,'&quot;')+'" onerror="this.remove();this.parentNode.innerHTML+=\'<div class=&quot;fallback&quot;>'+item.emoji+'</div>\'">'+
+'</div>'+
+'<div class="redeem-info">'+
+'<div class="redeem-name">'+item.name+'</div>'+
+'<div class="redeem-meta">MOMO 參考價 NT$ '+item.momoPrice.toLocaleString()+'</div>'+
+'<div class="redeem-price"><div class="label">兌換所需獎金</div><div class="value">$'+item.redeemPrice.toLocaleString()+'</div></div>'+
+'<button class="redeem-btn" '+(disabled?'disabled':'')+' onclick="openRedeemConfirm(\''+item.id+'\')">'+(disabled?'獎金不足':'立即兌換')+'</button>'+
+'</div></div>';
+}).join('');
+}
+
+function openRedeemConfirm(id){
+const item=REDEEM_ITEMS.find(function(x){return x.id===id});
+if(!item)return;
+if(state.prize<item.redeemPrice){showToast('獎金不足，無法兌換');return;}
+currentRedeemItem=item;
+document.getElementById('redeemConfirmName').textContent=item.name;
+document.getElementById('redeemConfirmPrice').textContent='$'+item.redeemPrice.toLocaleString();
+document.getElementById('redeemConfirmModal').classList.add('show');
+}
+
+function closeRedeemConfirm(){document.getElementById('redeemConfirmModal').classList.remove('show');currentRedeemItem=null;}
+
+function confirmRedeem(){
+if(!currentRedeemItem)return;
+if(state.prize<currentRedeemItem.redeemPrice){showToast('獎金不足，無法兌換');closeRedeemConfirm();return;}
+state.prize-=currentRedeemItem.redeemPrice;
+state.history.unshift({card:'兌獎區',emoji:'🎁',cost:0,win:-currentRedeemItem.redeemPrice,time:Date.now(),redeem:currentRedeemItem.name});
+if(state.history.length>50)state.history.pop();
+save();updateUI();renderRedeemItems();showScreen('redeemScreen');showToast('已送出兌換：'+currentRedeemItem.name);closeRedeemConfirm();
+}
 
 function showPrizeInfo(idx){const c=CARDS[idx];const inv=state.inventory?state.inventory[idx]:null;document.getElementById('prizeModalTitle').textContent=c.emoji+' '+c.name+' - 獎項配率';let html='<tr><th>獎金</th><th>總張數</th><th>剩餘</th><th>機率</th></tr>';c.prizes.forEach(function(p){const rawPct=p.cnt/c.total*100;const decimals=rawPct<0.001?4:rawPct<0.01?3:rawPct<0.1?2:rawPct<1?1:1;const pct=rawPct.toFixed(decimals);let left=p.cnt;if(inv&&inv.prizesLeft){const found=inv.prizesLeft.find(function(x){return x.amt===p.amt});if(found)left=found.cnt;}html+=`<tr><td class="amount-col">$${p.amt.toLocaleString()}</td><td>${p.cnt.toLocaleString()}</td><td style="color:#e74c3c;font-weight:700">${left.toLocaleString()}</td><td>${pct}%</td></tr>`});const noWin=c.total-c.prizes.reduce((s,p)=>s+p.cnt,0);const noWinLeft=inv?inv.zerosLeft:noWin;if(noWin>0){html+=`<tr><td style="color:rgba(0,0,0,0.4)">未中獎</td><td>${noWin.toLocaleString()}</td><td style="color:rgba(0,0,0,0.4)">${noWinLeft.toLocaleString()}</td><td>${(noWin/c.total*100).toFixed(1)}%</td></tr>`}const remainTotal=inv?inv.remaining:c.total;html+=`<tr><td colspan="4" style="color:rgba(0,0,0,0.3);font-size:12px;padding-top:12px">總張數: ${c.total.toLocaleString()} / 剩餘: ${remainTotal.toLocaleString()}</td></tr>`;document.getElementById('prizeTable').innerHTML=html;document.getElementById('prizeModal').classList.add('show')}
 function closePrizeModal(){document.getElementById('prizeModal').classList.remove('show')}
@@ -1710,8 +1789,9 @@ const list=document.getElementById('historyList');
 if(!state.history.length){list.innerHTML='<p style="text-align:center;color:rgba(0,0,0,0.3);padding:40px">還沒有紀錄</p>';return}
 list.innerHTML=state.history.map(h=>{
 const d=new Date(h.time);
+const isRedeem=!!h.redeem;
 const net=h.win-h.cost;
-return `<div class="history-item"><div class="hi-left"><div class="hi-type">${h.emoji} ${h.card} (-${h.cost}代幣)</div><div class="hi-time">${d.toLocaleString('zh-TW')}</div></div><div class="hi-amount ${net>=0?'win':'loss'}">$${h.win.toLocaleString()}</div></div>`;
+return `<div class="history-item"><div class="hi-left"><div class="hi-type">${h.emoji} ${isRedeem?h.redeem:h.card} ${isRedeem?'(獎金兌換)':`(-${h.cost}代幣)`}</div><div class="hi-time">${d.toLocaleString('zh-TW')}</div></div><div class="hi-amount ${(isRedeem||net<0)?'loss':'win'}">$${Math.abs(h.win).toLocaleString()}</div></div>`;
 }).join('');
 }
 
@@ -1763,7 +1843,7 @@ setTimeout(()=>showResult(currentWinnings),800);
 },400);
 }
 
-updateUI();initParticles();
+updateUI();renderRedeemItems();initParticles();
 </script>
 </body>
 </html>
