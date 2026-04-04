@@ -749,7 +749,7 @@ if(state.prize<currentRedeemItem.baseRedeemPrice){showToast('獎金不足，無�
 const storageSelect=document.getElementById('variantStorage');
 const colorSelect=document.getElementById('variantColor');
 document.getElementById('variantItemName').textContent=currentRedeemItem.name;
-storageSelect.innerHTML=(currentRedeemItem.storages||['標準']).map(function(x){return '<option value="'+x+'">'+x+'</option>';}).join('');
+storageSelect.innerHTML=(currentRedeemItem.storages||['標準']).map(function(x){const extra=(currentRedeemItem.storageUpcharges&&currentRedeemItem.storageUpcharges[x])||0;return '<option value="'+x+'">'+x+' (+'+extra.toLocaleString()+')</option>';}).join('');
 colorSelect.innerHTML=(currentRedeemItem.colors||['標準']).map(function(x){return '<option value="'+x+'">'+x+'</option>';}).join('');
 storageSelect.onchange=updateVariantPrice;
 updateVariantPrice();
