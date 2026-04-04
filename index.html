@@ -393,18 +393,27 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 <div class="redeem-tabs" id="redeemTabs"></div>
 <div class="redeem-grid" id="redeemGrid"></div>
 </div>
+<div id="variantScreen" class="screen">
+<div class="scratch-header"><button class="back-btn" onclick="showScreen('redeemScreen')">←</button><div class="scratch-title">⚙️ 選擇規格</div></div>
+<div class="ship-form">
+<div class="ship-summary"><div class="title" id="variantItemName">商品</div><div class="price" id="variantItemPrice">$0</div></div>
+<div class="ship-field"><label for="variantStorage">容量</label><select id="variantStorage" class="exchange-input" style="text-align:left;color:#333;font-size:16px;font-weight:700"></select></div>
+<div class="ship-field"><label for="variantColor">顏色</label><select id="variantColor" class="exchange-input" style="text-align:left;color:#333;font-size:16px;font-weight:700"></select></div>
+<button class="result-btn" style="width:100%" onclick="goShippingForm()">下一步</button>
+<button class="result-btn" style="width:100%;background:#f0f0f0;color:#333;border:1px solid #ddd" onclick="showScreen('redeemScreen')">取消</button>
+</div>
+</div>
 <div id="shippingScreen" class="screen">
-<div class="scratch-header"><button class="back-btn" onclick="showScreen('redeemScreen')">←</button><div class="scratch-title">📝 填寫寄件資料</div></div>
+<div class="scratch-header"><button class="back-btn" onclick="showScreen('variantScreen')">←</button><div class="scratch-title">📝 填寫寄件資料</div></div>
 <div class="ship-form">
 <div class="ship-summary"><div class="title" id="shippingItemName">商品</div><div style="font-size:12px;color:rgba(0,0,0,0.45);margin-top:6px">送出兌換後將扣除您的獎金</div><div class="price" id="shippingItemPrice">$0</div></div>
 <div class="ship-field"><label for="shippingName">姓名</label><input id="shippingName" type="text" placeholder="請輸入收件人姓名"></div>
 <div class="ship-field"><label for="shippingPhone">電話</label><input id="shippingPhone" type="tel" placeholder="請輸入聯絡電話"></div>
 <div class="ship-field"><label for="shippingAddress">地址</label><textarea id="shippingAddress" placeholder="請輸入完整寄送地址"></textarea></div>
 <button class="result-btn" style="width:100%" onclick="submitRedeemOrder()">確認送出兌換</button>
-<button class="result-btn" style="width:100%;background:#f0f0f0;color:#333;border:1px solid #ddd" onclick="showScreen('redeemScreen')">取消</button>
+<button class="result-btn" style="width:100%;background:#f0f0f0;color:#333;border:1px solid #ddd" onclick="showScreen('variantScreen')">取消</button>
 </div>
-</div>
-<div class="bottom-nav" id="bottomNav">
+</div><div class="bottom-nav" id="bottomNav">
 <div class="nav-item active" id="navHome" onclick="showScreen('homeScreen')">
 <div class="nav-icon">🏠</div>
 <div class="nav-label">首頁</div>
@@ -454,18 +463,18 @@ const CARD_DESCS=[
 ];
 
 const REDEEM_ITEMS=[
-{id:'iphone15',name:'iPhone 15 128GB',category:'iPhone',emoji:'📱',momoPrice:29900,image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone15pro',name:'iPhone 15 Pro 256GB',category:'iPhone',emoji:'📱',momoPrice:39900,image:'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone15plus',name:'iPhone 15 Plus 128GB',category:'iPhone',emoji:'📱',momoPrice:33900,image:'https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone15pm',name:'iPhone 15 Pro Max 256GB',category:'iPhone',emoji:'📱',momoPrice:44900,image:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone16',name:'iPhone 16 128GB',category:'iPhone',emoji:'📱',momoPrice:32900,image:'https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone16plus',name:'iPhone 16 Plus 128GB',category:'iPhone',emoji:'📱',momoPrice:36900,image:'https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone16pro',name:'iPhone 16 Pro 256GB',category:'iPhone',emoji:'📱',momoPrice:40900,image:'https://images.unsplash.com/photo-1495435229349-e86db7bfa013?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone16pm',name:'iPhone 16 Pro Max 256GB',category:'iPhone',emoji:'📱',momoPrice:45900,image:'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone17',name:'iPhone 17 128GB',category:'iPhone',emoji:'📱',momoPrice:34900,image:'https://images.unsplash.com/photo-1583573636246-18cb2246697f?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone17air',name:'iPhone 17 Air 256GB',category:'iPhone',emoji:'📱',momoPrice:38900,image:'https://images.unsplash.com/photo-1603899122634-f086ca5f5ddd?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone17pro',name:'iPhone 17 Pro 256GB',category:'iPhone',emoji:'📱',momoPrice:43900,image:'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone17pm',name:'iPhone 17 Pro Max 256GB',category:'iPhone',emoji:'📱',momoPrice:46900,image:'https://images.unsplash.com/photo-1567581935884-3349723552ca?auto=format&fit=crop&w=900&q=80'},
+{id:'iphone15',name:'iPhone 15',category:'iPhone',emoji:'📱',momoPrice:29900,image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80',storages:['128GB','256GB','512GB'],colors:['黑色','藍色','綠色','黃色','粉紅色']},
+{id:'iphone15plus',name:'iPhone 15 Plus',category:'iPhone',emoji:'📱',momoPrice:33900,image:'https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=900&q=80',storages:['128GB','256GB','512GB'],colors:['黑色','藍色','綠色','黃色','粉紅色']},
+{id:'iphone15pro',name:'iPhone 15 Pro',category:'iPhone',emoji:'📱',momoPrice:39900,image:'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=900&q=80',storages:['128GB','256GB','512GB','1TB'],colors:['黑色鈦金屬','白色鈦金屬','藍色鈦金屬','原色鈦金屬']},
+{id:'iphone15pm',name:'iPhone 15 Pro Max',category:'iPhone',emoji:'📱',momoPrice:44900,image:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=900&q=80',storages:['256GB','512GB','1TB'],colors:['黑色鈦金屬','白色鈦金屬','藍色鈦金屬','原色鈦金屬']},
+{id:'iphone16',name:'iPhone 16',category:'iPhone',emoji:'📱',momoPrice:32900,image:'https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=900&q=80',storages:['128GB','256GB','512GB'],colors:['黑色','白色','粉紅色','湖水綠','湛海藍']},
+{id:'iphone16plus',name:'iPhone 16 Plus',category:'iPhone',emoji:'📱',momoPrice:36900,image:'https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=900&q=80',storages:['128GB','256GB','512GB'],colors:['黑色','白色','粉紅色','湖水綠','湛海藍']},
+{id:'iphone16pro',name:'iPhone 16 Pro',category:'iPhone',emoji:'📱',momoPrice:40900,image:'https://images.unsplash.com/photo-1495435229349-e86db7bfa013?auto=format&fit=crop&w=900&q=80',storages:['128GB','256GB','512GB','1TB'],colors:['黑色鈦金屬','白色鈦金屬','沙漠鈦金屬','原色鈦金屬']},
+{id:'iphone16pm',name:'iPhone 16 Pro Max',category:'iPhone',emoji:'📱',momoPrice:45900,image:'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=900&q=80',storages:['256GB','512GB','1TB'],colors:['黑色鈦金屬','白色鈦金屬','沙漠鈦金屬','原色鈦金屬']},
+{id:'iphone17',name:'iPhone 17',category:'iPhone',emoji:'📱',momoPrice:34900,image:'https://images.unsplash.com/photo-1583573636246-18cb2246697f?auto=format&fit=crop&w=900&q=80',storages:['128GB','256GB','512GB'],colors:['黑色','白色','藍色','粉色']},
+{id:'iphone17air',name:'iPhone 17 Air',category:'iPhone',emoji:'📱',momoPrice:38900,image:'https://images.unsplash.com/photo-1603899122634-f086ca5f5ddd?auto=format&fit=crop&w=900&q=80',storages:['256GB','512GB'],colors:['黑色','銀色','天藍色','淡金色']},
+{id:'iphone17pro',name:'iPhone 17 Pro',category:'iPhone',emoji:'📱',momoPrice:43900,image:'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?auto=format&fit=crop&w=900&q=80',storages:['256GB','512GB','1TB'],colors:['黑色鈦金屬','白色鈦金屬','深藍色鈦金屬','原色鈦金屬']},
+{id:'iphone17pm',name:'iPhone 17 Pro Max',category:'iPhone',emoji:'📱',momoPrice:46900,image:'https://images.unsplash.com/photo-1567581935884-3349723552ca?auto=format&fit=crop&w=900&q=80',storages:['256GB','512GB','1TB'],colors:['黑色鈦金屬','白色鈦金屬','深藍色鈦金屬','原色鈦金屬']},
 {id:'ipadair',name:'iPad Air M2 11 吋',category:'iPad',emoji:'📱',momoPrice:21900,image:'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=900&q=80'},
 {id:'ipadpro',name:'iPad Pro M4 13 吋',category:'iPad',emoji:'📱',momoPrice:42900,image:'https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=900&q=80'},
 {id:'switcholed',name:'Nintendo Switch OLED',category:'Nintendo',emoji:'🎮',momoPrice:10480,image:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=900&q=80'},
@@ -674,7 +683,7 @@ if(id==='homeScreen')updateUI();
 // Update bottom nav active state
 const bottomNav=document.getElementById('bottomNav');
 if(bottomNav){
-const navMap={'homeScreen':'navHome','myCardsScreen':'navMyCards','historyScreen':'navHistory','redeemScreen':'navRedeem','shippingScreen':'navRedeem'};
+const navMap={'homeScreen':'navHome','myCardsScreen':'navMyCards','historyScreen':'navHistory','redeemScreen':'navRedeem','variantScreen':'navRedeem','shippingScreen':'navRedeem'};
 document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
 const activeNav=document.getElementById(navMap[id]);
 if(activeNav)activeNav.classList.add('active');
@@ -732,12 +741,25 @@ function closeRedeemConfirm(){document.getElementById('redeemConfirmModal').clas
 function confirmRedeem(){
 if(!currentRedeemItem)return;
 if(state.prize<currentRedeemItem.redeemPrice){showToast('獎金不足，無法兌換');closeRedeemConfirm();return;}
-document.getElementById('shippingItemName').textContent=currentRedeemItem.name;
+const storageSelect=document.getElementById('variantStorage');
+const colorSelect=document.getElementById('variantColor');
+document.getElementById('variantItemName').textContent=currentRedeemItem.name;
+document.getElementById('variantItemPrice').textContent='$'+currentRedeemItem.redeemPrice.toLocaleString();
+storageSelect.innerHTML=(currentRedeemItem.storages||['標準']).map(function(x){return '<option value="'+x+'">'+x+'</option>';}).join('');
+colorSelect.innerHTML=(currentRedeemItem.colors||['標準']).map(function(x){return '<option value="'+x+'">'+x+'</option>';}).join('');
+closeRedeemConfirm();
+showScreen('variantScreen');
+}
+
+function goShippingForm(){
+if(!currentRedeemItem)return;
+const storage=document.getElementById('variantStorage').value;
+const color=document.getElementById('variantColor').value;
+document.getElementById('shippingItemName').textContent=currentRedeemItem.name+' / '+storage+' / '+color;
 document.getElementById('shippingItemPrice').textContent='$'+currentRedeemItem.redeemPrice.toLocaleString();
 document.getElementById('shippingName').value='';
 document.getElementById('shippingPhone').value='';
 document.getElementById('shippingAddress').value='';
-closeRedeemConfirm();
 showScreen('shippingScreen');
 }
 
@@ -746,10 +768,12 @@ if(!currentRedeemItem)return;
 const name=document.getElementById('shippingName').value.trim();
 const phone=document.getElementById('shippingPhone').value.trim();
 const address=document.getElementById('shippingAddress').value.trim();
+const storage=document.getElementById('variantStorage').value;
+const color=document.getElementById('variantColor').value;
 if(!name||!phone||!address){showToast('請完整填寫姓名、電話與地址');return;}
 if(state.prize<currentRedeemItem.redeemPrice){showToast('獎金不足，無法兌換');showScreen('redeemScreen');return;}
 state.prize-=currentRedeemItem.redeemPrice;
-state.history.unshift({card:'兌獎區',emoji:'🎁',cost:0,win:-currentRedeemItem.redeemPrice,time:Date.now(),redeem:currentRedeemItem.name,shipping:{name:name,phone:phone,address:address}});
+state.history.unshift({card:'兌獎區',emoji:'🎁',cost:0,win:-currentRedeemItem.redeemPrice,time:Date.now(),redeem:currentRedeemItem.name+' / '+storage+' / '+color,shipping:{name:name,phone:phone,address:address}});
 if(state.history.length>50)state.history.pop();
 save();updateUI();renderRedeemItems();showScreen('redeemScreen');showToast('已送出兌換申請：'+currentRedeemItem.name);currentRedeemItem=null;
 }
