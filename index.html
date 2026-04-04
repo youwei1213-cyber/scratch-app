@@ -103,9 +103,12 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 .history-item .hi-amount{font-weight:900;font-size:16px}
 .history-item .hi-amount.win{color:#d4a017}
 .history-item .hi-amount.loss{color:#ff4444}
-.redeem-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px}
+.redeem-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:10px}
+.redeem-subtabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px}
 .redeem-tab{flex:0 0 auto;padding:9px 14px;border:none;border-radius:999px;background:rgba(0,0,0,0.05);color:#555;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
 .redeem-tab.active{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e}
+.redeem-subtab{flex:0 0 auto;padding:8px 12px;border:none;border-radius:999px;background:#fff;color:#666;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;border:1px solid rgba(0,0,0,0.08)}
+.redeem-subtab.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
 .redeem-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-bottom:80px}
 .redeem-card{background:#fff;border-radius:18px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 6px 18px rgba(0,0,0,0.08)}
 .redeem-thumb{height:132px;background:linear-gradient(135deg,#f1efe9,#e3ddd2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
@@ -391,6 +394,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 <div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">🎁 兌獎區</div></div>
 <div class="redeem-balance"><div class="label">目前可用獎金</div><div class="value" id="redeemBalanceDisplay">$0</div></div>
 <div class="redeem-tabs" id="redeemTabs"></div>
+<div class="redeem-subtabs" id="redeemSubtabs"></div>
 <div class="redeem-grid" id="redeemGrid"></div>
 </div>
 <div id="variantScreen" class="screen">
@@ -514,10 +518,23 @@ const storageUpcharges={};
 defaultStorages.forEach(function(storage,idx){storageUpcharges[storage]=idx*22000;});
 return Object.assign({},item,{baseRedeemPrice:item.momoPrice*11,storageUpcharges:storageUpcharges});
 });
-const REDEEM_CATEGORIES=['全部','iPhone','iPad','Apple Watch','MacBook','Nintendo','PlayStation','VR','Gogoro','Samsung 手機','Samsung 平板','Samsung 手錶','Samsung 筆電','小米手機','小米平板','小米手錶','OPPO 手機','OPPO 平板','OPPO 手錶','ASUS 手機','ASUS 筆電','ASUS 平板'];
+const REDEEM_BRANDS=['全部','Apple','Samsung','小米','OPPO','ASUS','Nintendo','PlayStation','VR','Gogoro'];
+const REDEEM_CATEGORY_MAP={
+'全部':['全部'],
+'Apple':['全部','iPhone','iPad','Apple Watch','MacBook'],
+'Samsung':['全部','Samsung 手機','Samsung 平板','Samsung 手錶','Samsung 筆電'],
+'小米':['全部','小米手機','小米平板','小米手錶'],
+'OPPO':['全部','OPPO 手機','OPPO 平板','OPPO 手錶'],
+'ASUS':['全部','ASUS 手機','ASUS 筆電','ASUS 平板'],
+'Nintendo':['全部','Nintendo'],
+'PlayStation':['全部','PlayStation'],
+'VR':['全部','VR'],
+'Gogoro':['全部','Gogoro']
+};
 
 let state=JSON.parse(localStorage.getItem('scratchState')||'null')||{tokens:500,prize:0,history:[]};
 let currentRedeemItem=null;
+let currentRedeemBrand='全部';
 let currentRedeemCategory='全部';
 let currentCard=null,currentWinnings=0,zonesTotal=0,zonesRevealed=0;
 let currentBuyIdx=0,currentBuyQty=1;
@@ -727,21 +744,42 @@ function showToast(msg){const d=document.createElement('div');d.style.cssText='p
 function renderRedeemTabs(){
 const tabs=document.getElementById('redeemTabs');
 if(!tabs)return;
-tabs.innerHTML=REDEEM_CATEGORIES.map(function(cat){
-return '<button class="redeem-tab '+(cat===currentRedeemCategory?'active':'')+'" onclick="setRedeemCategory(\''+cat+'\')">'+cat+'</button>';
+tabs.innerHTML=REDEEM_BRANDS.map(function(brand){
+return '<button class="redeem-tab '+(brand===currentRedeemBrand?'active':'')+'" onclick="setRedeemBrand(\''+brand+'\')">'+brand+'</button>';
 }).join('');
+renderRedeemSubtabs();
+}
+
+function renderRedeemSubtabs(){
+const subtabs=document.getElementById('redeemSubtabs');
+if(!subtabs)return;
+const cats=REDEEM_CATEGORY_MAP[currentRedeemBrand]||['全部'];
+subtabs.innerHTML=cats.map(function(cat){
+return '<button class="redeem-subtab '+(cat===currentRedeemCategory?'active':'')+'" onclick="setRedeemCategory(\''+cat+'\')">'+cat+'</button>';
+}).join('');
+}
+
+function setRedeemBrand(brand){
+currentRedeemBrand=brand;
+currentRedeemCategory='全部';
+renderRedeemTabs();
+renderRedeemItems();
 }
 
 function setRedeemCategory(cat){
 currentRedeemCategory=cat;
-renderRedeemTabs();
+renderRedeemSubtabs();
 renderRedeemItems();
 }
 
 function renderRedeemItems(){
 const grid=document.getElementById('redeemGrid');
 if(!grid)return;
-const items=REDEEM_ITEMS.filter(function(item){return currentRedeemCategory==='全部'||item.category===currentRedeemCategory;});
+const items=REDEEM_ITEMS.filter(function(item){
+const brandMatch=currentRedeemBrand==='全部'||(REDEEM_CATEGORY_MAP[currentRedeemBrand]||[]).includes(item.category);
+const categoryMatch=currentRedeemCategory==='全部'||item.category===currentRedeemCategory;
+return brandMatch&&categoryMatch;
+});
 grid.innerHTML=items.map(function(item){
 const disabled=state.prize<item.baseRedeemPrice;
 return '<div class="redeem-card">'+
