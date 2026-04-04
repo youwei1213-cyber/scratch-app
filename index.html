@@ -103,6 +103,9 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 .history-item .hi-amount{font-weight:900;font-size:16px}
 .history-item .hi-amount.win{color:#d4a017}
 .history-item .hi-amount.loss{color:#ff4444}
+.redeem-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px}
+.redeem-tab{flex:0 0 auto;padding:9px 14px;border:none;border-radius:999px;background:rgba(0,0,0,0.05);color:#555;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
+.redeem-tab.active{background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e}
 .redeem-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-bottom:80px}
 .redeem-card{background:#fff;border-radius:18px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 6px 18px rgba(0,0,0,0.08)}
 .redeem-thumb{height:132px;background:linear-gradient(135deg,#f1efe9,#e3ddd2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
@@ -377,6 +380,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 <div id="redeemScreen" class="screen">
 <div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">🎁 兌獎區</div></div>
 <div class="redeem-note">僅可使用獎金兌換，價格依 MOMO 參考價換算為 1:11</div>
+<div class="redeem-tabs" id="redeemTabs"></div>
 <div class="redeem-grid" id="redeemGrid"></div>
 </div>
 <div class="bottom-nav" id="bottomNav">
@@ -429,20 +433,22 @@ const CARD_DESCS=[
 ];
 
 const REDEEM_ITEMS=[
-{id:'iphone15pm',name:'iPhone 15 Pro Max 256GB',category:'Apple',emoji:'📱',momoPrice:44900,image:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone16pro',name:'iPhone 16 Pro 256GB',category:'Apple',emoji:'📱',momoPrice:40900,image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80'},
-{id:'iphone17pm',name:'iPhone 17 Pro Max 256GB',category:'Apple',emoji:'📱',momoPrice:46900,image:'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=900&q=80'},
+{id:'iphone15pm',name:'iPhone 15 Pro Max 256GB',category:'iPhone',emoji:'📱',momoPrice:44900,image:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=900&q=80'},
+{id:'iphone16pro',name:'iPhone 16 Pro 256GB',category:'iPhone',emoji:'📱',momoPrice:40900,image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80'},
+{id:'iphone17pm',name:'iPhone 17 Pro Max 256GB',category:'iPhone',emoji:'📱',momoPrice:46900,image:'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=900&q=80'},
 {id:'ipadair',name:'iPad Air M2 11 吋',category:'iPad',emoji:'📱',momoPrice:21900,image:'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=900&q=80'},
 {id:'ipadpro',name:'iPad Pro M4 13 吋',category:'iPad',emoji:'📱',momoPrice:42900,image:'https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=900&q=80'},
 {id:'switcholed',name:'Nintendo Switch OLED',category:'Nintendo',emoji:'🎮',momoPrice:10480,image:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=900&q=80'},
 {id:'switch2',name:'Nintendo Switch 2',category:'Nintendo',emoji:'🎮',momoPrice:15980,image:'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=900&q=80'},
-{id:'ps5',name:'PlayStation 5 Slim',category:'Sony',emoji:'🎮',momoPrice:17580,image:'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?auto=format&fit=crop&w=900&q=80'},
+{id:'ps5',name:'PlayStation 5 Slim',category:'PlayStation',emoji:'🎮',momoPrice:17580,image:'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?auto=format&fit=crop&w=900&q=80'},
 {id:'quest3',name:'Meta Quest 3 VR',category:'VR',emoji:'🥽',momoPrice:18990,image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&w=900&q=80'},
 {id:'gogoro',name:'Gogoro Pulse 最新款',category:'Gogoro',emoji:'🛵',momoPrice:136980,image:'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80'}
 ].map(function(item){return Object.assign({},item,{redeemPrice:item.momoPrice*11})});
+const REDEEM_CATEGORIES=['全部','iPhone','iPad','Nintendo','PlayStation','VR','Gogoro'];
 
 let state=JSON.parse(localStorage.getItem('scratchState')||'null')||{tokens:500,prize:0,history:[]};
 let currentRedeemItem=null;
+let currentRedeemCategory='全部';
 let currentCard=null,currentWinnings=0,zonesTotal=0,zonesRevealed=0;
 let currentBuyIdx=0,currentBuyQty=1;
 let currentScratchCardId=null; // track which myCard is being scratched
@@ -646,10 +652,25 @@ bottomNav.style.display=(id==='scratchScreen')?'none':'flex';
 }
 function showToast(msg){const d=document.createElement('div');d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#ffd700,#ff8c00);color:#1a0a3e;padding:10px 24px;border-radius:30px;font-weight:700;font-size:14px;z-index:200;animation:popIn 0.3s ease;font-family:inherit;white-space:nowrap';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
 
+function renderRedeemTabs(){
+const tabs=document.getElementById('redeemTabs');
+if(!tabs)return;
+tabs.innerHTML=REDEEM_CATEGORIES.map(function(cat){
+return '<button class="redeem-tab '+(cat===currentRedeemCategory?'active':'')+'" onclick="setRedeemCategory(\''+cat+'\')">'+cat+'</button>';
+}).join('');
+}
+
+function setRedeemCategory(cat){
+currentRedeemCategory=cat;
+renderRedeemTabs();
+renderRedeemItems();
+}
+
 function renderRedeemItems(){
 const grid=document.getElementById('redeemGrid');
 if(!grid)return;
-grid.innerHTML=REDEEM_ITEMS.map(function(item){
+const items=REDEEM_ITEMS.filter(function(item){return currentRedeemCategory==='全部'||item.category===currentRedeemCategory;});
+grid.innerHTML=items.map(function(item){
 const disabled=state.prize<item.redeemPrice;
 return '<div class="redeem-card">'+
 '<div class="redeem-thumb">'+
@@ -1843,7 +1864,7 @@ setTimeout(()=>showResult(currentWinnings),800);
 },400);
 }
 
-updateUI();renderRedeemItems();initParticles();
+updateUI();renderRedeemTabs();renderRedeemItems();initParticles();
 </script>
 </body>
 </html>
