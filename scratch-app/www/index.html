@@ -255,7 +255,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🔥 火焰骰子</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate0">50%</span></span><span>最高 <span id="maxPrize0">$25,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate0">67%</span></span><span>最高 <span id="maxPrize0">$25,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar0" style="width:100%"></div></div><div class="stock-text" id="stockText0">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(0)">GO</button>
 </div>
@@ -271,7 +271,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🏇 極速賽馬</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate1">50%</span></span><span>最高 <span id="maxPrize1">$100,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate1">65%</span></span><span>最高 <span id="maxPrize1">$100,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar1" style="width:100%"></div></div><div class="stock-text" id="stockText1">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(1)">GO</button>
 </div>
@@ -287,7 +287,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🗝️ 古墓探險</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate2">45%</span></span><span>最高 <span id="maxPrize2">$200,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate2">67%</span></span><span>最高 <span id="maxPrize2">$200,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar2" style="width:100%"></div></div><div class="stock-text" id="stockText2">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(2)">GO</button>
 </div>
@@ -303,7 +303,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🐉 神龍奪寶</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate3">44%</span></span><span>最高 <span id="maxPrize3">$500,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate3">67%</span></span><span>最高 <span id="maxPrize3">$500,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar3" style="width:100%"></div></div><div class="stock-text" id="stockText3">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(3)">GO</button>
 </div>
@@ -319,7 +319,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">💰 皇家金庫</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate4">46%</span></span><span>最高 <span id="maxPrize4">$1,000,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate4">66%</span></span><span>最高 <span id="maxPrize4">$1,000,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar4" style="width:100%"></div></div><div class="stock-text" id="stockText4">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(4)">GO</button>
 </div>
@@ -335,7 +335,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div class="ticket-info">
 <div class="ticket-name">🌊 深海霸主</div>
-<div class="ticket-meta"><span>中獎率 <span id="winRate5">47%</span></span><span>最高 <span id="maxPrize5">$2,000,000</span></span></div>
+<div class="ticket-meta"><span>中獎率 <span id="winRate5">67%</span></span><span>最高 <span id="maxPrize5">$2,000,000</span></span></div>
 <div class="ticket-stock"><div class="stock-bar"><div class="stock-fill" id="stockBar5" style="width:100%"></div></div><div class="stock-text" id="stockText5">剩餘 100,000 張</div></div>
 <button class="ticket-go-btn" onclick="event.stopPropagation();showBuyModal(5)">GO</button>
 </div>
@@ -412,7 +412,7 @@ function save(){localStorage.setItem('scratchState',JSON.stringify(state))}
 
 /* ===== INVENTORY SYSTEM ===== */
 function initInventory(){
-const POOL_VERSION='v10';
+const POOL_VERSION='v11';
 if(!state.inventory||state.poolVersion!==POOL_VERSION){
 // Only reset if no inventory exists or version changed (admin updated prizes)
 state.inventory={};
