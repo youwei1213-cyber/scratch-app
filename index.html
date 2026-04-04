@@ -482,7 +482,12 @@ const REDEEM_ITEMS=[
 {id:'ps5',name:'PlayStation 5 Slim',category:'PlayStation',emoji:'🎮',momoPrice:17580,image:'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?auto=format&fit=crop&w=900&q=80'},
 {id:'quest3',name:'Meta Quest 3 VR',category:'VR',emoji:'🥽',momoPrice:18990,image:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&w=900&q=80'},
 {id:'gogoro',name:'Gogoro Pulse 最新款',category:'Gogoro',emoji:'🛵',momoPrice:136980,image:'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80'}
-].map(function(item){return Object.assign({},item,{redeemPrice:item.momoPrice*11})});
+].map(function(item){
+const defaultStorages=item.storages||['標準'];
+const storageUpcharges={};
+defaultStorages.forEach(function(storage,idx){storageUpcharges[storage]=idx*22000;});
+return Object.assign({},item,{baseRedeemPrice:item.momoPrice*11,storageUpcharges:storageUpcharges});
+});
 const REDEEM_CATEGORIES=['全部','iPhone','iPad','Nintendo','PlayStation','VR','Gogoro'];
 
 let state=JSON.parse(localStorage.getItem('scratchState')||'null')||{tokens:500,prize:0,history:[]};
@@ -712,7 +717,7 @@ const grid=document.getElementById('redeemGrid');
 if(!grid)return;
 const items=REDEEM_ITEMS.filter(function(item){return currentRedeemCategory==='全部'||item.category===currentRedeemCategory;});
 grid.innerHTML=items.map(function(item){
-const disabled=state.prize<item.redeemPrice;
+const disabled=state.prize<item.baseRedeemPrice;
 return '<div class="redeem-card">'+
 '<div class="redeem-thumb">'+
 '<span class="redeem-badge">'+item.category+'</span>'+
@@ -720,7 +725,7 @@ return '<div class="redeem-card">'+
 '</div>'+
 '<div class="redeem-info">'+
 '<div class="redeem-name">'+item.name+'</div>'+
-'<div class="redeem-price"><div class="label">兌換所需獎金</div><div class="value">$'+item.redeemPrice.toLocaleString()+'</div></div>'+
+'<div class="redeem-price"><div class="label">兌換所需獎金</div><div class="value">$'+item.baseRedeemPrice.toLocaleString()+' 起</div></div>'+
 '<button class="redeem-btn" '+(disabled?'disabled':'')+' onclick="openRedeemConfirm(\''+item.id+'\')">'+(disabled?'獎金不足':'立即兌換')+'</button>'+
 '</div></div>';
 }).join('');
@@ -729,10 +734,10 @@ return '<div class="redeem-card">'+
 function openRedeemConfirm(id){
 const item=REDEEM_ITEMS.find(function(x){return x.id===id});
 if(!item)return;
-if(state.prize<item.redeemPrice){showToast('獎金不足，無法兌換');return;}
+if(state.prize<item.baseRedeemPrice){showToast('獎金不足，無法兌換');return;}
 currentRedeemItem=item;
 document.getElementById('redeemConfirmName').textContent=item.name;
-document.getElementById('redeemConfirmPrice').textContent='$'+item.redeemPrice.toLocaleString();
+document.getElementById('redeemConfirmPrice').textContent='$'+item.baseRedeemPrice.toLocaleString()+' 起';
 document.getElementById('redeemConfirmModal').classList.add('show');
 }
 
@@ -740,23 +745,37 @@ function closeRedeemConfirm(){document.getElementById('redeemConfirmModal').clas
 
 function confirmRedeem(){
 if(!currentRedeemItem)return;
-if(state.prize<currentRedeemItem.redeemPrice){showToast('獎金不足，無法兌換');closeRedeemConfirm();return;}
+if(state.prize<currentRedeemItem.baseRedeemPrice){showToast('獎金不足，無法兌換');closeRedeemConfirm();return;}
 const storageSelect=document.getElementById('variantStorage');
 const colorSelect=document.getElementById('variantColor');
 document.getElementById('variantItemName').textContent=currentRedeemItem.name;
-document.getElementById('variantItemPrice').textContent='$'+currentRedeemItem.redeemPrice.toLocaleString();
 storageSelect.innerHTML=(currentRedeemItem.storages||['標準']).map(function(x){return '<option value="'+x+'">'+x+'</option>';}).join('');
 colorSelect.innerHTML=(currentRedeemItem.colors||['標準']).map(function(x){return '<option value="'+x+'">'+x+'</option>';}).join('');
+storageSelect.onchange=updateVariantPrice;
+updateVariantPrice();
 closeRedeemConfirm();
 showScreen('variantScreen');
+}
+
+function getSelectedRedeemPrice(){
+if(!currentRedeemItem)return 0;
+const storage=document.getElementById('variantStorage').value;
+const extra=(currentRedeemItem.storageUpcharges&&currentRedeemItem.storageUpcharges[storage])||0;
+return currentRedeemItem.baseRedeemPrice+extra;
+}
+
+function updateVariantPrice(){
+const price=getSelectedRedeemPrice();
+document.getElementById('variantItemPrice').textContent='$'+price.toLocaleString();
 }
 
 function goShippingForm(){
 if(!currentRedeemItem)return;
 const storage=document.getElementById('variantStorage').value;
 const color=document.getElementById('variantColor').value;
+const finalPrice=getSelectedRedeemPrice();
 document.getElementById('shippingItemName').textContent=currentRedeemItem.name+' / '+storage+' / '+color;
-document.getElementById('shippingItemPrice').textContent='$'+currentRedeemItem.redeemPrice.toLocaleString();
+document.getElementById('shippingItemPrice').textContent='$'+finalPrice.toLocaleString();
 document.getElementById('shippingName').value='';
 document.getElementById('shippingPhone').value='';
 document.getElementById('shippingAddress').value='';
@@ -770,10 +789,11 @@ const phone=document.getElementById('shippingPhone').value.trim();
 const address=document.getElementById('shippingAddress').value.trim();
 const storage=document.getElementById('variantStorage').value;
 const color=document.getElementById('variantColor').value;
+const finalPrice=getSelectedRedeemPrice();
 if(!name||!phone||!address){showToast('請完整填寫姓名、電話與地址');return;}
-if(state.prize<currentRedeemItem.redeemPrice){showToast('獎金不足，無法兌換');showScreen('redeemScreen');return;}
-state.prize-=currentRedeemItem.redeemPrice;
-state.history.unshift({card:'兌獎區',emoji:'🎁',cost:0,win:-currentRedeemItem.redeemPrice,time:Date.now(),redeem:currentRedeemItem.name+' / '+storage+' / '+color,shipping:{name:name,phone:phone,address:address}});
+if(state.prize<finalPrice){showToast('獎金不足，無法兌換');showScreen('redeemScreen');return;}
+state.prize-=finalPrice;
+state.history.unshift({card:'兌獎區',emoji:'🎁',cost:0,win:-finalPrice,time:Date.now(),redeem:currentRedeemItem.name+' / '+storage+' / '+color,shipping:{name:name,phone:phone,address:address}});
 if(state.history.length>50)state.history.pop();
 save();updateUI();renderRedeemItems();showScreen('redeemScreen');showToast('已送出兌換申請：'+currentRedeemItem.name);currentRedeemItem=null;
 }
