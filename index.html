@@ -120,7 +120,17 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 .redeem-price .value{font-size:20px;font-weight:900;color:#e74c3c}
 .redeem-btn{width:100%;margin-top:10px;padding:10px 12px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit}
 .redeem-btn:disabled{background:#bbb;color:#eee;cursor:not-allowed}
-.redeem-note{font-size:12px;color:rgba(0,0,0,0.48);text-align:center;margin:10px 0 14px}
+.redeem-balance{margin:10px 0 14px;padding:12px 14px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:14px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.05)}
+.redeem-balance .label{font-size:12px;color:rgba(0,0,0,0.45)}
+.redeem-balance .value{font-size:28px;font-weight:900;color:#e74c3c;margin-top:4px}
+.ship-form{display:flex;flex-direction:column;gap:12px;max-width:440px;margin:0 auto;padding-bottom:90px}
+.ship-field{display:flex;flex-direction:column;gap:6px}
+.ship-field label{font-size:13px;font-weight:700;color:#333}
+.ship-field input,.ship-field textarea{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(0,0,0,0.12);background:#fff;font-size:15px;font-family:inherit;color:#222;outline:none}
+.ship-field textarea{min-height:110px;resize:vertical}
+.ship-summary{padding:14px;border-radius:14px;background:#fff;border:1px solid rgba(0,0,0,0.08);box-shadow:0 4px 14px rgba(0,0,0,0.05)}
+.ship-summary .title{font-size:15px;font-weight:800;color:#1a1a1a}
+.ship-summary .price{font-size:24px;font-weight:900;color:#e74c3c;margin-top:8px}
 .ad-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;justify-content:center;align-items:center;z-index:95;flex-direction:column;gap:20px}
 .ad-overlay.show{display:flex}
 .ad-box{width:300px;height:250px;background:linear-gradient(135deg,#333,#555);border-radius:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px}
@@ -379,9 +389,20 @@ body{font-family:'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#f5
 </div>
 <div id="redeemScreen" class="screen">
 <div class="scratch-header"><button class="back-btn" onclick="showScreen('homeScreen')">←</button><div class="scratch-title">🎁 兌獎區</div></div>
-<div class="redeem-note">僅可使用獎金兌換，價格依 MOMO 參考價換算為 1:11</div>
+<div class="redeem-balance"><div class="label">目前可用獎金</div><div class="value" id="redeemBalanceDisplay">$0</div></div>
 <div class="redeem-tabs" id="redeemTabs"></div>
 <div class="redeem-grid" id="redeemGrid"></div>
+</div>
+<div id="shippingScreen" class="screen">
+<div class="scratch-header"><button class="back-btn" onclick="showScreen('redeemScreen')">←</button><div class="scratch-title">📝 填寫寄件資料</div></div>
+<div class="ship-form">
+<div class="ship-summary"><div class="title" id="shippingItemName">商品</div><div style="font-size:12px;color:rgba(0,0,0,0.45);margin-top:6px">送出兌換後將扣除您的獎金</div><div class="price" id="shippingItemPrice">$0</div></div>
+<div class="ship-field"><label for="shippingName">姓名</label><input id="shippingName" type="text" placeholder="請輸入收件人姓名"></div>
+<div class="ship-field"><label for="shippingPhone">電話</label><input id="shippingPhone" type="tel" placeholder="請輸入聯絡電話"></div>
+<div class="ship-field"><label for="shippingAddress">地址</label><textarea id="shippingAddress" placeholder="請輸入完整寄送地址"></textarea></div>
+<button class="result-btn" style="width:100%" onclick="submitRedeemOrder()">確認送出兌換</button>
+<button class="result-btn" style="width:100%;background:#f0f0f0;color:#333;border:1px solid #ddd" onclick="showScreen('redeemScreen')">取消</button>
+</div>
 </div>
 <div class="bottom-nav" id="bottomNav">
 <div class="nav-item active" id="navHome" onclick="showScreen('homeScreen')">
@@ -593,6 +614,8 @@ document.getElementById('scratchTitle').textContent=c.emoji+' '+c.name;
 function updateUI(){
 document.getElementById('tokenDisplay').textContent=state.tokens.toLocaleString();
 document.getElementById('prizeDisplay').textContent=state.prize.toLocaleString();
+const redeemBalanceDisplay=document.getElementById('redeemBalanceDisplay');
+if(redeemBalanceDisplay)redeemBalanceDisplay.textContent='$'+state.prize.toLocaleString();
 // Update stock display, win rate, max prize for new cards
 if(state.inventory){
 CARDS.forEach((c,idx)=>{
@@ -642,7 +665,7 @@ if(id==='homeScreen')updateUI();
 // Update bottom nav active state
 const bottomNav=document.getElementById('bottomNav');
 if(bottomNav){
-const navMap={'homeScreen':'navHome','myCardsScreen':'navMyCards','historyScreen':'navHistory','redeemScreen':'navRedeem'};
+const navMap={'homeScreen':'navHome','myCardsScreen':'navMyCards','historyScreen':'navHistory','redeemScreen':'navRedeem','shippingScreen':'navRedeem'};
 document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
 const activeNav=document.getElementById(navMap[id]);
 if(activeNav)activeNav.classList.add('active');
@@ -696,15 +719,31 @@ document.getElementById('redeemConfirmPrice').textContent='$'+item.redeemPrice.t
 document.getElementById('redeemConfirmModal').classList.add('show');
 }
 
-function closeRedeemConfirm(){document.getElementById('redeemConfirmModal').classList.remove('show');currentRedeemItem=null;}
+function closeRedeemConfirm(){document.getElementById('redeemConfirmModal').classList.remove('show');}
 
 function confirmRedeem(){
 if(!currentRedeemItem)return;
 if(state.prize<currentRedeemItem.redeemPrice){showToast('獎金不足，無法兌換');closeRedeemConfirm();return;}
+document.getElementById('shippingItemName').textContent=currentRedeemItem.name;
+document.getElementById('shippingItemPrice').textContent='$'+currentRedeemItem.redeemPrice.toLocaleString();
+document.getElementById('shippingName').value='';
+document.getElementById('shippingPhone').value='';
+document.getElementById('shippingAddress').value='';
+closeRedeemConfirm();
+showScreen('shippingScreen');
+}
+
+function submitRedeemOrder(){
+if(!currentRedeemItem)return;
+const name=document.getElementById('shippingName').value.trim();
+const phone=document.getElementById('shippingPhone').value.trim();
+const address=document.getElementById('shippingAddress').value.trim();
+if(!name||!phone||!address){showToast('請完整填寫姓名、電話與地址');return;}
+if(state.prize<currentRedeemItem.redeemPrice){showToast('獎金不足，無法兌換');showScreen('redeemScreen');return;}
 state.prize-=currentRedeemItem.redeemPrice;
-state.history.unshift({card:'兌獎區',emoji:'🎁',cost:0,win:-currentRedeemItem.redeemPrice,time:Date.now(),redeem:currentRedeemItem.name});
+state.history.unshift({card:'兌獎區',emoji:'🎁',cost:0,win:-currentRedeemItem.redeemPrice,time:Date.now(),redeem:currentRedeemItem.name,shipping:{name:name,phone:phone,address:address}});
 if(state.history.length>50)state.history.pop();
-save();updateUI();renderRedeemItems();showScreen('redeemScreen');showToast('已送出兌換：'+currentRedeemItem.name);closeRedeemConfirm();
+save();updateUI();renderRedeemItems();showScreen('redeemScreen');showToast('已送出兌換申請：'+currentRedeemItem.name);currentRedeemItem=null;
 }
 
 function showPrizeInfo(idx){const c=CARDS[idx];const inv=state.inventory?state.inventory[idx]:null;document.getElementById('prizeModalTitle').textContent=c.emoji+' '+c.name+' - 獎項配率';let html='<tr><th>獎金</th><th>總張數</th><th>剩餘</th><th>機率</th></tr>';c.prizes.forEach(function(p){const rawPct=p.cnt/c.total*100;const decimals=rawPct<0.001?4:rawPct<0.01?3:rawPct<0.1?2:rawPct<1?1:1;const pct=rawPct.toFixed(decimals);let left=p.cnt;if(inv&&inv.prizesLeft){const found=inv.prizesLeft.find(function(x){return x.amt===p.amt});if(found)left=found.cnt;}html+=`<tr><td class="amount-col">$${p.amt.toLocaleString()}</td><td>${p.cnt.toLocaleString()}</td><td style="color:#e74c3c;font-weight:700">${left.toLocaleString()}</td><td>${pct}%</td></tr>`});const noWin=c.total-c.prizes.reduce((s,p)=>s+p.cnt,0);const noWinLeft=inv?inv.zerosLeft:noWin;if(noWin>0){html+=`<tr><td style="color:rgba(0,0,0,0.4)">未中獎</td><td>${noWin.toLocaleString()}</td><td style="color:rgba(0,0,0,0.4)">${noWinLeft.toLocaleString()}</td><td>${(noWin/c.total*100).toFixed(1)}%</td></tr>`}const remainTotal=inv?inv.remaining:c.total;html+=`<tr><td colspan="4" style="color:rgba(0,0,0,0.3);font-size:12px;padding-top:12px">總張數: ${c.total.toLocaleString()} / 剩餘: ${remainTotal.toLocaleString()}</td></tr>`;document.getElementById('prizeTable').innerHTML=html;document.getElementById('prizeModal').classList.add('show')}
